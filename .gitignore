@@ -1,0 +1,3 @@
+node_modules/
+client/assets/vendor/
+server/config/authKeys.js
