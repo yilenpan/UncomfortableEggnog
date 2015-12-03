@@ -5,6 +5,7 @@
   <title>Webkit</title>
 </head>
 <body>
+  <button id="record">!</button>
 <script>
   if (!('webkitSpeechRecognition' in window)) {
     upgrade();
@@ -15,6 +16,10 @@
     }
     recognition.start();
   }
+  var button = document.getElementById('record');
+  button.addEventListener('click', function () {
+    recognition.start();
+  });
 </script>
 </body>
 </html>
