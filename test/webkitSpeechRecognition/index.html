@@ -15,8 +15,7 @@
   <button>ten times five phrases</button>
 
   <p id="print">Print to screen</p>
-  <p id="json"></p>
-  <input type="text" name="something" speech grammar="grammar.grxml" />
+  <p id="save">Save to file</p>
 
   <script>
   (function(console){
@@ -27,9 +26,6 @@
       }
 
       if(!filename) filename = 'console.json'
-for (var i = 0; i < array.length; i++) {
-  array[i]
-}
 
       if(typeof data === "object"){
         data = JSON.stringify(data, undefined, 4)
@@ -77,8 +73,11 @@ for (var i = 0; i < array.length; i++) {
   var record;
 
   $('#print').on('click', function () {
-    // console.save(phrases);
     $('#json').text(JSON.stringify(phrases));
+  });
+
+  $('#save').on('click', function () {
+    console.save(phrases);
   });
 
   button.on('click', function () {
