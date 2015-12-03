@@ -16,6 +16,7 @@
 
   <p id="print">Print to screen</p>
   <p id="json"></p>
+  <input type="text" name="something" speech grammar="grammar.grxml" />
 
   <script>
   (function(console){
@@ -26,6 +27,9 @@
       }
 
       if(!filename) filename = 'console.json'
+for (var i = 0; i < array.length; i++) {
+  array[i]
+}
 
       if(typeof data === "object"){
         data = JSON.stringify(data, undefined, 4)
@@ -73,7 +77,8 @@
   var record;
 
   $('#print').on('click', function () {
-    console.save(phrases);
+    // console.save(phrases);
+    $('#json').text(JSON.stringify(phrases));
   });
 
   button.on('click', function () {
