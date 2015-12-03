@@ -1,0 +1,14 @@
+{
+  "name": "wit",
+  "version": "1.0.0",
+  "description": "Test for wit",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "http": "0.0.0",
+    "node-wit": "^2.0.0"
+  }
+}
