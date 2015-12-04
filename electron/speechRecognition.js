@@ -63,7 +63,7 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   //create loop so that it never stops listening
-  recognition.onend = function() {
+  recognition.onend = function () {
     recognition.start();
   };
 }
