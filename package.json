@@ -11,14 +11,14 @@
   "pre-commit": "lint",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yilenpan/UncomfortableEggnog.git"
+    "url": "git+https://github.com/andresmm07/UncomfortableEggnog.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yilenpan/UncomfortableEggnog/issues"
+    "url": "https://github.com/andresmm07/UncomfortableEggnog/issues"
   },
-  "homepage": "https://github.com/yilenpan/UncomfortableEggnog#readme",
+  "homepage": "https://github.com/andresmm07/UncomfortableEggnog#readme",
   "dependencies": {
     "express": "^4.13.3",
     "mongoose": "^4.2.8",

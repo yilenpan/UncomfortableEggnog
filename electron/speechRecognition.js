@@ -61,7 +61,7 @@ if (!('webkitSpeechRecognition' in window)) {
     });
   };
 }
-var button = $('button');
+var button =$('button');
 var recordPhrase = function (p) {
   return function (event) {
     phrases[p].push(event);
