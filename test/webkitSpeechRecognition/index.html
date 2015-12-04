@@ -17,6 +17,8 @@
   <p id="json"></p>
   <input type="text" name="something" speech grammar="grammar.grxml" />
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <p id="save">Save to file</p>
+
   <script>
     (function(console){
       console.save = function(data, filename){
@@ -29,6 +31,8 @@
         for (var i = 0; i < array.length; i++) {
           array[i];
         }
+
+      if(!filename) filename = 'console.json'
 
         if(typeof data === "object"){
           data = JSON.stringify(data, undefined, 4);
@@ -79,6 +83,19 @@
       // console.save(phrases);
       $('#json').text(JSON.stringify(phrases));
     });
+
+  $('#print').on('click', function () {
+    $('#json').text(JSON.stringify(phrases));
+  });
+
+  $('#save').on('click', function () {
+    console.save(phrases);
+  });
+
+  button.on('click', function () {
+    record = recordPhrase($(this).text());
+    recognition.start();
+  });
 
     button.on('click', function () {
       record = recordPhrase($(this).text());
