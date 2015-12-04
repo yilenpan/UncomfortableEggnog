@@ -1,4 +1,5 @@
 var exec = require('child_process').exec;
+var mainWindow = require('./main.js');
 
 (function (console) {
   console.save = function (data, filename) {
@@ -61,7 +62,7 @@ if (!('webkitSpeechRecognition' in window)) {
     });
   };
 }
-var button =$('button');
+var button = $('button');
 var recordPhrase = function (p) {
   return function (event) {
     phrases[p].push(event);
@@ -79,3 +80,4 @@ button.on('click', function () {
   record = recordPhrase($(this).text());
   recognition.start();
 });
+
