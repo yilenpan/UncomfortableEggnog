@@ -5,7 +5,7 @@
     .config(config);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
-  function config($stateProvider, $urlRouterProvider) {
+  function config ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('main', {
