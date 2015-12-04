@@ -61,6 +61,11 @@ if (!('webkitSpeechRecognition' in window)) {
     //   term: event.results[0][0].transcript
     // });
   };
+
+  //create loop so that it never stops listening
+  recognition.onend = function() {
+    recognition.start();
+  };
 }
 var button = $('button');
 var recordPhrase = function (p) {
@@ -81,7 +86,10 @@ button.on('click', function () {
   recognition.start();
 });
 
-ipcRenderer.on('startRecord', function (event) {
+//receive event emitted from main process (main.js) to start listening
+ipcRenderer.on('startListening', function (event) {
+  console.log("Start listening");
+  //start listening
   recognition.start();
 });
 

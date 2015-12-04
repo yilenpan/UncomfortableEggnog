@@ -7,7 +7,6 @@ following in your app's source directory (electron folder):
 
 -> electron .
 */
-
 var electron = require('electron');
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
@@ -44,12 +43,23 @@ app.on('ready', function () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
+  //listen only when user uses the shortcut
+  //this line also regisers the shortcut ctrl+r
   var startRecording = globalShortcut.register('ctrl+r', function () {
-    mainWindow.webContents.send('startRecord', 'rec!');
+    //emitted to renderer process (speechRecognition and other js files loaded
+    //when index.html loads) to start recording
+    mainWindow.webContents.send('startListening', 'listening');
+  });
+
+  //start listening when the app starts
+  mainWindow.webContents.on('dom-ready', function () {
+    //emitted to renderer process
+    mainWindow.webContents.send('startListening', 'listening');
   });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
+    //unregister shortcut when window is closed - best practice
     globalShortcut.unregister('ctrl+r');
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
