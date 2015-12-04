@@ -35,16 +35,3 @@ exports.hashPassword = function (next) {
     });
   });
 };
-
-// exports.getUserInfo = function () {
-//   var id = req.params.id;
-//   db.User.findOne( { id: id }, function (err, user) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     console.log(user);
-//     res.send(user);
-//     });
-//   });
-// }
-
