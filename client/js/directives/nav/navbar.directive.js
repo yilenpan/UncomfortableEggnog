@@ -1,12 +1,12 @@
 (function () {
   'use strict';
   angular.module('app')
-    .directive('NavBarDirective', NavBarDirective);
+    .directive('navBarDirective', NavBarDirective);
 
   function NavBarDirective () {
     var directive = {
       restrict: 'AE',
-      template: 'js/html/nav/navbar.top.html',
+      templateUrl: 'js/html/nav/navbar.top.html',
       link: link
     };
 
