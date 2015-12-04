@@ -7,12 +7,19 @@
 </head>
 <body>
 
-  <button>Say Hello World</button>
+ <!--  <button>Say Hello World</button>
   <button>7805333</button>
   <button>search google cats and dogs</button>
   <button>check weather in san francisco</button>
   <button>shutdown in 30</button>
-  <button>ten times five phrases</button>
+  <button>ten times five phrases</button> -->
+
+  <button>kyle cho pro tip</button>
+  <button>check the weather in San Francisco</button>
+  <button>dim screen</button>
+  <button>open sublime</button>
+
+
 
   <p id="print">Print to screen</p>
   <p id="save">Save to file</p>
@@ -44,12 +51,19 @@
   })(console)
   //====Web Speech Audio======//
   var phrases = {
-    "Say Hello World": [],
-    "7805333": [],
-    "search google cats and dogs": [],
-    "check weather in san francisco": [],
-    "shutdown in 30": [],
-    "ten times five phrases": []
+    "kyle cho pro tip": [],
+    "check the weather in San Francisco" : [],
+    "dim screen" : [],
+    "open sublime" : []
+
+    // "Say Hello World": [],
+    // "7805333": [],
+    // "search google cats and dogs": [],
+    // "check weather in san francisco": [],
+    // "shutdown in 30": [],
+    // "ten times five phrases": []
+
+
   };
 
   if (!('webkitSpeechRecognition' in window)) {
@@ -65,14 +79,18 @@
   }
   var button = $('button');
   var recordPhrase = function (p) {
+    console.log("in recordPhrase");
     return function (event) {
       phrases[p].push(event);
+      console.log(event);
     };
   };
 
   var record;
 
   $('#print').on('click', function () {
+  // console.log("clicked button print");
+
     $('#json').text(JSON.stringify(phrases));
   });
 
@@ -81,8 +99,11 @@
   });
 
   button.on('click', function () {
+// console.log("clicked button record text");
     record = recordPhrase($(this).text());
+    // console.log(record);
     recognition.start();
+    console.log("recording started");
   });
 
   </script>
