@@ -15,7 +15,7 @@ module.exports = function (app, express) {
     secret: sessionSecret
   }));
   app.use(express.static(__dirname + '/../../client'));
-    
+
 //=========Custom Routes==========
     app.use('/', routers);
 };

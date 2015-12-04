@@ -10,14 +10,16 @@ mongoose.connect(dbUrl);
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Connection error:'));
-db.once('open', function(cb){
+db.once('open', function (cb) {
   console.log('Connected to db!');
 });
 
 //===========Schemas===========
 var UserSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true }
+  username: { type: String,
+                        required: true },
+  password: { type: String,
+                        required: true }
 });
 
 var PackageEntrySchema = new mongoose.Schema({
@@ -38,19 +40,25 @@ var PackageEntry = db.model('PackageEntry', PackageEntrySchema);
 
 //===========Encryption=========
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
     var user = this;
 
     // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) return next();
+    if (!user.isModified('password')) {
+      return next();
+    }
 
     // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-        if (err) return next(err);
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+        if (err) {
+          return next(err);
+        }
 
         // hash the password along with our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
-            if (err) return next(err);
+        bcrypt.hash(user.password, salt, function (err, hash) {
+            if (err) {
+              return next(err);
+            }
 
             // override the cleartext password with the hashed one
             user.password = hash;
@@ -60,9 +68,11 @@ UserSchema.pre('save', function(next) {
 });
 
 
-var comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
+var comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) {
+          return cb(err);
+        }
         cb(null, isMatch);
     });
 };

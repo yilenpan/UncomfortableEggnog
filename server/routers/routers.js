@@ -1,22 +1,25 @@
 var express = require('express');
 var db = require('../db/db.js');
+var helpers = require('../');
 
-module.exports = function(isLoggedIn) {
-  
+
+module.exports = function (isLoggedIn) {
+
 /*************************************
                      User Routes
 **************************************/
   var router = new express.Router();
 
-  router.get('/users/:id', function(req, res) {
+  router.get('/users/:id', function (req, res) {
     var id = req.params.id;
     db.User.findOne( { id: id }, function (err, user) {
-        if (err) console.log(err);
+        if (err) {
+          console.log(err);
+        }
         console.log(user);
         res.send(user);
       });
     });
-
 
 /*************************************
                      Login Routes
@@ -42,7 +45,7 @@ module.exports = function(isLoggedIn) {
 
 
   //======Default Route=========
-  router.get('/*', function(req, res) {
+  router.get('/*', function (req, res) {
     res.redirect('/');
   });
 
