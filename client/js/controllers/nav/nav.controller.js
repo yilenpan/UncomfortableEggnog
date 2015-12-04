@@ -1,11 +1,11 @@
 (function () {
   'use strict';
   angular.module('app')
-    .controller('AppCtrl', AppCtrl);
+    .controller('NavCtrl', NavCtrl);
 
-  AppCtrl.$inject = [];
+  NavCtrl.$inject = [];
 
-  function AppCtrl () {
+  function NavCtrl () {
     var self = this;
 
   }

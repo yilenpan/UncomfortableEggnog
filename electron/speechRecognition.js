@@ -1,18 +1,21 @@
 var exec = require('child_process').exec;
 
-(function(console){
-  console.save = function(data, filename){
-    if(!data) {
+(function (console) {
+  console.save = function (data, filename) {
+    if (!data) {
       console.error('Console.save: No data');
       return;
     }
 
-    if(!filename) filename = 'console.json'
+    if (!filename) {
+      filename = 'console.json';
+    }
+
     for (var i = 0; i < array.length; i++) {
       array[i];
     }
 
-    if(typeof data === "object") {
+    if (typeof data === "object") {
       data = JSON.stringify(data, undefined, 4);
     }
 
@@ -22,11 +25,11 @@ var exec = require('child_process').exec;
 
     a.download = filename;
     a.href = window.URL.createObjectURL(blob);
-    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':');
+    a.dataset.downloadurl = ['text/json', a.download, a.href ].join(':');
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     a.dispatchEvent(e);
-   }
-})(console)
+  };
+})(console);
 //====Web Speech Audio======//
 var phrases = {
   "Say Hello World": [],
@@ -41,7 +44,7 @@ if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
   var recognition = new webkitSpeechRecognition();
-  recognition.onresult = function(event) {
+  recognition.onresult = function (event) {
     var cmd = event.results[0][0].transcript;
     console.log("CMD: ", cmd);
 
