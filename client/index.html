@@ -10,15 +10,17 @@
   <script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
   <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
-<body style="background-color:#f4f4f4">
+<body>
   <div ui-view="top"></div>
   <div class="container">
     <div ui-view="main"></div>
   </div>
 </body>
 <script src="js/app.module.js"></script>
+<script src="js/factories/utils/api.factory.js"></script>
 <script src="js/controllers/nav/nav.controller.js"></script>
 <script src="js/controllers/landing/landing.controller.js"></script>
 <script src="js/controllers/package/package.controller.js"></script>
+<script src="js/controllers/search/searchResults.controller.js"></script>
 <script src="js/app.config.js"></script>
 </html>

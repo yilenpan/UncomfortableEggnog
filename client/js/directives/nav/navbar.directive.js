@@ -1,17 +1,19 @@
 (function () {
   'use strict';
   angular.module('app')
-    .directive('AppDirective', AppDirective );
+    .directive('NavBarDirective', NavBarDirective);
 
-  function AppDirective () {
+  function NavBarDirective () {
     var directive = {
-      template: '',
+      restrict: 'AE',
+      template: 'js/html/nav/navbar.top.html',
       link: link
     };
 
     return directive;
 
     function link(scope, elem, attrs) {
+      scope.searchTerm;
 
     }
   }

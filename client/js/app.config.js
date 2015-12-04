@@ -33,6 +33,19 @@
             controller: 'PackageCtrl'
           }
         }
+      })
+      .state('search', {
+        url: '/search/:searchTerm',
+        views: {
+          top: {
+            templateUrl: 'js/html/nav/navbar.top.html',
+            controller: 'NavCtrl'
+          },
+          main: {
+            templateUrl: 'js/html/search/search.main.html',
+            controller: 'SearchResultsCtrl'
+          }
+        }
       });
   }
 
