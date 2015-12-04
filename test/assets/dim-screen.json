@@ -1,0 +1,23 @@
+{
+    "kyle cho pro tip": [],
+    "check the weather in San Francisco": [],
+    "dim screen": [
+        {
+            "score": 0.9855660200119019,
+            "term": "dim screen"
+        },
+        {
+            "score": 0.9876290559768677,
+            "term": "dim screen"
+        },
+        {
+            "score": 0.5957431197166443,
+            "term": "dim screen"
+        },
+        {
+            "score": 0.9748646020889282,
+            "term": "dim screen"
+        }
+    ],
+    "open sublime": []
+}
