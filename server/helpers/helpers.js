@@ -23,7 +23,7 @@ exports.hashPassword = function (next) {
     });
 };
 
-exports.findPackageEntries = function (query, cb) {
+exports.findPackageEntries = function (cb) {
   db.PackageEntry.find({}, cb);
 };
 

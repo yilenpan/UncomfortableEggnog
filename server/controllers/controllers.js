@@ -77,7 +77,7 @@ exports.fetchPackages = function (req, res) {
 
 exports.fetchPackage = function (req, res) {
   var id = req.params.id;
-  helpers.findPackage(function (err, packageEntry) {
+  helpers.findPackage(id, function (err, packageEntry) {
     if (err) {
       console.log('There was an error finding package with ID: ' + id + '.');
       res.sendStatus(500);
