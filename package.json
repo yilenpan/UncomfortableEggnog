@@ -16,9 +16,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "git+https://github.com/yilenpan/UncomfortableEggnog.git"
+    "url": "https://github.com/yilenpan/UncomfortableEggnog/issues"
   },
-  "homepage": "git+https://github.com/yilenpan/UncomfortableEggnog.git",
+  "homepage": "https://github.com/yilenpan/UncomfortableEggnog#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.0.6",
