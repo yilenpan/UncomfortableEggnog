@@ -1,4 +1,5 @@
 var exec = require('child_process').exec;
+var ipcRenderer = require('electron').ipcRenderer;
 
 (function (console) {
   console.save = function (data, filename) {
@@ -55,16 +56,21 @@ if (!('webkitSpeechRecognition' in window)) {
     exec('say "kyle cho pro tip ' + cmd + '"', puts);
     exec(cmd, puts);
 
-    record({
-      score: event.results[0][0].confidence,
-      term: event.results[0][0].transcript
-    });
+    // record({
+    //   score: event.results[0][0].confidence,
+    //   term: event.results[0][0].transcript
+    // });
+  };
+
+  //create loop so that it never stops listening
+  recognition.onend = function () {
+    recognition.start();
   };
 }
 var button = $('button');
 var recordPhrase = function (p) {
   return function (event) {
-    phrases[p].push(event);
+    //phrases[p].push(event);
   };
 };
 
@@ -79,3 +85,11 @@ button.on('click', function () {
   record = recordPhrase($(this).text());
   recognition.start();
 });
+
+//receive event emitted from main process (main.js) to start listening
+ipcRenderer.on('startListening', function (event) {
+  console.log("Start listening");
+  //start listening
+  recognition.start();
+});
+
