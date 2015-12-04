@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dbUrl = 'mongodb://localhost/blacklist';
+var dbUrl = 'mongodb://localhost/taser';
 var helpers = require('../helpers/helpers.js');
 
 mongoose.connect(dbUrl);
@@ -12,10 +12,18 @@ db.once('open', function (cb) {
 
 //===========Schemas===========
 var UserSchema = new mongoose.Schema({
-  username: { type: String,
-                        required: true },
-  password: { type: String,
-                        required: true }
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  packages: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "PackageEntry"
+  }]
 });
 
 var PackageEntrySchema = new mongoose.Schema({
@@ -26,7 +34,11 @@ var PackageEntrySchema = new mongoose.Schema({
   // lastUpdated or new Date() upon POST?
   description: String,
   //stringified package object {name, content}
-  packageContents: String
+  packageContents: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 //===========Models===========
