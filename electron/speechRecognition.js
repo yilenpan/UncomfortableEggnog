@@ -1,6 +1,4 @@
 var exec = require('child_process').exec;
-var sys = require('util');
-var terminal = require('child_process').spawn('bash');
 
 (function(console){
   console.save = function(data, filename){

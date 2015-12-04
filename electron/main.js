@@ -1,3 +1,13 @@
+/*
+http://electron.atom.io/docs/latest/tutorial/quick-start/
+npm install electron-prebuilt
+
+If you've installed electron-prebuilt globally with npm, then you will only need to run the 
+following in your app's source directory (electron folder):
+
+-> electron .
+*/
+
 var electron = require('electron');
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
