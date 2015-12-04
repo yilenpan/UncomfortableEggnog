@@ -82,7 +82,6 @@ button.on('click', function () {
 });
 
 ipcRenderer.on('startRecord', function (event) {
-  //record = recordPhrase(" ");
   recognition.start();
 });
 
