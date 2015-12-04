@@ -17,7 +17,7 @@
           },
           main: {
             templateUrl: 'js/html/landing/landing.main.html',
-            controller: 'MainPageCtrl'
+            controller: 'LandingPageCtrl'
           }
         }
       })

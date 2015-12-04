@@ -10,11 +10,15 @@
   <script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
 </head>
 <body>
-  <div ui-view="top"></div>
-  <div ui-view="main"></div>
+  <div class="container">
+    <div ui-view="top"></div>
+    <div ui-view="main"></div>
+  </div>
 </body>
 <script src="js/app.module.js"></script>
-<!-- <script src="js/app.config.js"></script> -->
+<script src="js/controllers/nav/nav.controller.js"></script>
+<script src="js/controllers/landing/landing.controller.js"></script>
+<script src="js/app.config.js"></script>
 <script>
 $('body').append(
   '<a href="http://hackreactor.com"> \
