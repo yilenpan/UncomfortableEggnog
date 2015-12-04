@@ -11,14 +11,14 @@
   "pre-commit": "lint",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andresmm07/UncomfortableEggnog.git"
+    "url": "git+https://github.com/yilenpan/UncomfortableEggnog.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andresmm07/UncomfortableEggnog/issues"
+    "url": "git+https://github.com/yilenpan/UncomfortableEggnog.git"
   },
-  "homepage": "https://github.com/andresmm07/UncomfortableEggnog#readme",
+  "homepage": "git+https://github.com/yilenpan/UncomfortableEggnog.git",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.0.6",
