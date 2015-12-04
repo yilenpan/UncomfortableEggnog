@@ -2,10 +2,13 @@ var express = require('express');
 var db = require('../db/db.js');
 
 module.exports = function(isLoggedIn) {
-  var router = new express.Router();
   
-  router.get('/:id', function(req, res) {
-    // console.dir(req);
+/*************************************
+                     User Routes
+**************************************/
+  var router = new express.Router();
+
+  router.get('/users/:id', function(req, res) {
     var id = req.params.id;
     db.User.findOne( { id: id }, function (err, user) {
         if (err) console.log(err);
@@ -13,8 +16,44 @@ module.exports = function(isLoggedIn) {
         res.send(user);
       });
     });
+
+
+/*************************************
+                     Login Routes
+**************************************/
+
+  router.get('/', helpers.checkUser, handler.renderIndex);
+  router.get('/create', helpers.checkUser, handler.renderIndex);
+
+
+  router.get('/login', helpers.loginUserForm);
+  router.post('/login', helpers.loginUser);
+
+  router.get('/logout', helpers.logoutUser);
+
+  router.get('/signup', helpers.signupUserForm);
+  router.post('/signup', helpers.signupUser);
+
+  /*************************************
+                       Package Routes
+  **************************************/
+  router.get('/packages/:id', helpers.checkUser, handler.fetchLinks);
+  router.post('/packages', helpers.savePackageEntry);
+
+
+  //======Default Route=========
+  router.get('/*', function(req, res) {
+    res.redirect('/');
+  });
+
   return router;
 };
+
+
+
+
+
+
 
 
     // requestHandler.getUserById(id)

@@ -1,5 +1,5 @@
 var bodyParser = require('body-parser');
-// var helpers = require('./helpers.js');
+var helpers = require('../helpers/helpers.js');
 var session = require('express-session');
 var sessionSecret = process.env.sessionSecret || 'don\'t tase me bro';
 var db = require('../db/db.js');
@@ -16,13 +16,6 @@ module.exports = function (app, express) {
   }));
   app.use(express.static(__dirname + '/../../client'));
     
-    app.get('/', function (req, res) {
-    res.sendStatus(200);
-  });
-var userRouter = routers;
-
-  app.use('/user', userRouter);
-
-
-
+//=========Custom Routes==========
+    app.use('/', routers);
 };
