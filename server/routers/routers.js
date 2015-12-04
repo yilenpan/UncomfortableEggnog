@@ -1,6 +1,6 @@
 var express = require('express');
 var db = require('../db/db.js');
-var helpers = require('../');
+var helpers = require('../helpers/helpers.js');
 
 
 module.exports = function (isLoggedIn) {
