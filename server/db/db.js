@@ -13,12 +13,12 @@ db.once('open', function(cb){
 });
 
 //===========Schemas===========
-var userSchema = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true }
 });
 
-var packageEntrySchema = new mongoose.Schema({
+var PackageEntrySchema = new mongoose.Schema({
   likes: Number,
   dislikes: Number,
   downloads: Number,
@@ -30,8 +30,8 @@ var packageEntrySchema = new mongoose.Schema({
 });
 
 //===========Models===========
-var User = db.model('User', userSchema);
-var PackageEntry = db.model('PackageEntry', packageEntrySchema);
+var User = db.model('User', UserSchema);
+var PackageEntry = db.model('PackageEntry', PackageEntrySchema);
 
 
 //===========Encryption=========
@@ -67,3 +67,4 @@ var comparePassword = function(candidatePassword, cb) {
 
 module.exports.db = db;
 module.exports.User = User;
+module.exports.PackageEntry = PackageEntry;
