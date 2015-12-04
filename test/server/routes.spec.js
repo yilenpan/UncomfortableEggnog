@@ -8,9 +8,9 @@ describe('Routes', function () {
       .get('/')
       .expect(200, done);
   });
-  it('Should route to packages', function (done) {
-    request(app)
-      .get('/packages')
-      .expect(200, done);
-  });
+  // it('Should route to packages', function (done) {
+  //   request(app)
+  //     .get('/packages')
+  //     .expect(200, done);
+  // });
 });
