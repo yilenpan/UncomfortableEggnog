@@ -3,9 +3,9 @@ var helpers = require('../helpers/helpers.js');
 var session = require('express-session');
 var sessionSecret = process.env.sessionSecret || 'don\'t tase me bro';
 var db = require('../db/db.js');
-var routers = require('../routers/routers.js');
 
 module.exports = function (app, express) {
+  var router = express.Router();
 //==========Core Middleware==============
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
@@ -16,6 +16,7 @@ module.exports = function (app, express) {
   }));
   app.use(express.static(__dirname + '/../../client'));
 
-//=========Custom Routes==========
-    app.use('/', routers);
+//=========Custom Routes================
+  app.use('/', router);
+  require('../routers/routers.js')(router);
 };

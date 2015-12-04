@@ -1,55 +1,41 @@
-var express = require('express');
+// var express = require('express');
 var db = require('../db/db.js');
 var helpers = require('../helpers/helpers.js');
+var controllers = require('../controllers/controllers.js');
 
-
-module.exports = function (isLoggedIn) {
-
-/*************************************
-                     User Routes
-**************************************/
-  var router = new express.Router();
-
-  router.get('/users/:id', function (req, res) {
-    var id = req.params.id;
-    db.User.findOne( { id: id }, function (err, user) {
-        if (err) {
-          console.log(err);
-        }
-        console.log(user);
-        res.send(user);
-      });
-    });
+module.exports = function (router) {
 
 /*************************************
                      Login Routes
 **************************************/
 
-  router.get('/', helpers.checkUser, handler.renderIndex);
-  router.get('/create', helpers.checkUser, handler.renderIndex);
+  router.get('/login', controllers.loginUserForm);
+  router.post('/login', controllers.loginUser);
 
+  router.get('/logout', controllers.logoutUser);
 
-  router.get('/login', helpers.loginUserForm);
-  router.post('/login', helpers.loginUser);
+  router.get('/signup', controllers.signupUserForm);
+  router.post('/signup', controllers.signupUser);
 
-  router.get('/logout', helpers.logoutUser);
+/*************************************
+                     User Routes
+**************************************/
 
-  router.get('/signup', helpers.signupUserForm);
-  router.post('/signup', helpers.signupUser);
+  router.get('/users/:id', controllers.getUserInfo);
+
 
   /*************************************
                        Package Routes
   **************************************/
-  router.get('/packages/:id', helpers.checkUser, handler.fetchLinks);
-  router.post('/packages', helpers.savePackageEntry);
+  router.get('/packages/:id', controllers.fetchPackages);
+  router.get('/package', controllers.checkUser, controllers.fetchPackage);
+  router.post('/packages', controllers.checkUser, controllers.savePackageEntry);
 
 
   //======Default Route=========
   router.get('/*', function (req, res) {
     res.redirect('/');
   });
-
-  return router;
 };
 
 
