@@ -7,14 +7,13 @@ following in your app's source directory (electron folder):
 
 -> electron .
 */
-
 var electron = require('electron');
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 var globalShortcut = electron.globalShortcut;
 
 // Report crashes to our server.
-//electron.crashReporter.start();
+electron.crashReporter.start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,21 +37,30 @@ app.on('ready', function () {
     height: 600
   });
 
-
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  //this registers a shortcut
-  var ret = globalShortcut.register('ctrl+x', function () {
-    console.log("Command pressed");
+  //listen only when user uses the shortcut
+  //this line also regisers the shortcut ctrl+r
+  var startRecording = globalShortcut.register('ctrl+r', function () {
+    //emitted to renderer process (speechRecognition and other js files loaded
+    //when index.html loads) to start recording
+    mainWindow.webContents.send('startListening', 'listening');
+  });
+
+  //start listening when the app starts
+  mainWindow.webContents.on('dom-ready', function () {
+    //emitted to renderer process
+    mainWindow.webContents.send('startListening', 'listening');
   });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    globalShortcut.unregister('ctrl+x');
+    //unregister shortcut when window is closed - best practice
+    globalShortcut.unregister('ctrl+r');
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
