@@ -27,8 +27,8 @@ module.exports = function (router) {
   /*************************************
                        Package Routes
   **************************************/
-  router.get('/packages/:id', controllers.fetchPackages);
-  router.get('/package', controllers.checkUser, controllers.fetchPackage);
+  router.get('/packages', controllers.fetchPackages);
+  router.get('/packages/:id', controllers.fetchPackage);
   router.post('/packages', controllers.checkUser, controllers.savePackageEntry);
 
 
