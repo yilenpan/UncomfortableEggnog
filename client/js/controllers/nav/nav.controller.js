@@ -3,10 +3,13 @@
   angular.module('app')
     .controller('NavCtrl', NavCtrl);
 
-  NavCtrl.$inject = [];
+  NavCtrl.$inject = ["ApiFactory"];
 
-  function NavCtrl () {
+  function NavCtrl (ApiFactory) {
     var self = this;
+    var get = ApiFactory.get;
+    var post = ApiFactory.post;
+    // TODO: Add search function
 
   }
 })();

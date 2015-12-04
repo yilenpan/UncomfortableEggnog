@@ -1,23 +1,8 @@
-<div class="row">
+<div class="row" ng-controller='LandingPageCtrl as landing'>
   <div class="col-md-12">
     <h1>Hello</h1>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe sint nesciunt voluptates nam vitae error quasi possimus quas quam et incidunt nisi, doloribus aliquam excepturi, inventore cupiditate facere id commodi!</p>
+    <div class="col-xs-4" ng-repeat='package in landing.packages track by $index'>
+      <p>{{package}}</p>
     </div>
   </div>
 </div>
