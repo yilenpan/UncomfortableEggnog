@@ -64,7 +64,7 @@ exports.checkUser = function (req, res, next) {
 **************************************/
 
 exports.fetchPackages = function (req, res) {
-  helpers.findPackageEntries({}, function (err, packages) {
+  helpers.findPackageEntries(function (err, packages) {
     if (err) {
       console.log('There was an error finding packages.');
       res.sendStatus(500);
@@ -77,7 +77,7 @@ exports.fetchPackages = function (req, res) {
 
 exports.fetchPackage = function (req, res) {
   var id = req.params.id;
-  helpers.findPackageEntries( {id: id}, function (err, packageEntry) {
+  helpers.findPackage(function (err, packageEntry) {
     if (err) {
       console.log('There was an error finding package with ID: ' + id + '.');
       res.sendStatus(500);

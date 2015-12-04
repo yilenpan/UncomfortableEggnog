@@ -24,9 +24,12 @@ exports.hashPassword = function (next) {
 };
 
 exports.findPackageEntries = function (query, cb) {
-  db.PackageEntry.find(query, cb);
+  db.PackageEntry.find({}, cb);
 };
 
+exports.findPackage = function (id, cb) {
+  db.PackageEntry.find({id: id}, cb);
+};
 
 
 exports.savePackage = function (entry, cb) {
@@ -38,9 +41,6 @@ exports.findUser = function (id, cb) {
   db.User.findOne( { id: id }, cb);
 };
 
-// exports.findPackage = function (id, cb) {
-//   db.PackageEntry.find({id: id}, cb);
-// }
 
 // exports.hashPassword = function (next) {
 //   var user = this;
