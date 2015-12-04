@@ -16,6 +16,7 @@ var globalShortcut = electron.globalShortcut;
 // Report crashes to our server.
 //electron.crashReporter.start();
 
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
