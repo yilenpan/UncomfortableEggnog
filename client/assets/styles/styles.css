@@ -1,0 +1,24 @@
+div .landing-jumbotron {
+  height:100vh;
+  background-image: url("https://static.pexels.com/photos/20053/pexels-photo.jpg");
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.navigation {
+  padding: 10px;
+}
+
+.search {
+  padding-top: 10px
+}
+
+.center-horiz {
+  margin-left: calc(25vw);
+}
+
+.center-vert {
+  margin-top: calc(35vh);
+}
