@@ -45,12 +45,11 @@ describe('Should talk to the db', function (done) {
       .get('/api/top10')
       .expect(200)
       .end(function (err, json) {
-        json = json.body
-        console.log(json.length);
+        json = json.body;
         expect(json).to.be.an('array');
         expect(json.length).to.equal(10);
         expect(json[0]).to.have.property('downloads');
-        expect(json[0].likes).to.equal(20)
+        expect(json[0].likes).to.equal(20);
         done();
       });
   });
