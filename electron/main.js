@@ -56,7 +56,7 @@ app.on('ready', function () {
   });
 
   //user doesn't want app to be always listening
-  //register shortcut for listening 
+  //register shortcut for listening
   ipcMain.on('registerShortcut', function () {
     console.log('registerShortcut');
     var startRecording = globalShortcut.register('ctrl+r', function () {
