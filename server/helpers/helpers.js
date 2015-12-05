@@ -13,12 +13,10 @@ exports.comparePassword = function (candidatePassword, cb) {
 };
 
 exports.hashPassword = function (next) {
-  var cipher = bluebird.promisify(bcrypt.hash);
-  return cipher(this.password, null, null).bind(this)
-    .then(function (hash) {
-      this.password = hash;
-      next();
-    });
+  return bcrypt.hash(this.password, null, null, function (err, hash) {
+    this.password = hash;
+    next();
+  });
 };
 
 /************************************************

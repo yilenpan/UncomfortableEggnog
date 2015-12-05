@@ -49,7 +49,7 @@ var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
 
 //===========Encryption=========
 
-UserSchema.pre('save', helpers.hashPassword);
+// UserSchema.pre('save', helpers.hashPassword);
 
 
 module.exports.db = db;
