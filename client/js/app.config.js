@@ -30,6 +30,10 @@
       .state('package', {
         url: '/package/:packageName',
         views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
           main: {
             templateUrl: 'js/html/package/package.main.html',
             controller: 'PackageCtrl'
@@ -39,8 +43,25 @@
       .state('search', {
         url: '/search/:searchTerm',
         views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
           main: {
             templateUrl: 'js/html/search/search.main.html',
+            controller: 'SearchResultsCtrl'
+          }
+        }
+      })
+      .state('user', {
+        url: '/user/:userId',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/user/user.main.html',
             controller: 'SearchResultsCtrl'
           }
         }

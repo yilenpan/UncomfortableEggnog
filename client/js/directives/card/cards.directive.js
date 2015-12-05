@@ -1,19 +1,19 @@
 (function () {
   'use strict';
   angular.module('app')
-    .directive('navBarDirective', NavBarDirective);
+    .directive('cards', cards);
 
-  function NavBarDirective () {
+  function cards () {
     var directive = {
       restrict: 'AE',
-      templateUrl: 'js/html/nav/navbar.top.html',
+      template: '<h1>Hello</h1>',
       link: link
     };
 
     return directive;
 
     function link(scope, elem, attrs) {
-
+      console.log('cards');
     }
   }
 })();
