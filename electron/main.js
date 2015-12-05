@@ -8,6 +8,7 @@ following in your app's source directory (electron folder):
 -> electron .
 */
 var electron = require('electron');
+var ipcMain = electron.ipcMain;
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 var globalShortcut = electron.globalShortcut;
@@ -46,16 +47,30 @@ app.on('ready', function () {
 
   //listen only when user uses the shortcut
   //this line also regisers the shortcut ctrl+r
-  var startRecording = globalShortcut.register('ctrl+r', function () {
-    //emitted to renderer process (speechRecognition and other js files loaded
-    //when index.html loads) to start recording
-    mainWindow.webContents.send('startListening', 'listening');
-  });
 
   //start listening when the app starts
   mainWindow.webContents.on('dom-ready', function () {
     //emitted to renderer process
-    mainWindow.webContents.send('startListening', 'listening');
+    console.log('dom ready');
+    mainWindow.webContents.send('listening', 'listening');
+  });
+
+  //user doesn't want app to be always listening
+  //register shortcut for listening 
+  ipcMain.on('registerShortcut', function () {
+    console.log('registerShortcut');
+    var startRecording = globalShortcut.register('ctrl+r', function () {
+      //emitted to renderer process (speechRecognition and other js files loaded
+      //when index.html loads) to start recording
+      mainWindow.webContents.send('listening', 'shortcutListening');
+    });
+  });
+
+  //user wants app to be always listening
+  //unregister shortcut to avoid errors and start loop on renderer
+  ipcMain.on('unregisterShortcut', function () {
+    globalShortcut.unregister('ctrl+r');
+    mainWindow.webContents.send('listening', 'listening');
   });
 
   // Emitted when the window is closed.
