@@ -31,6 +31,7 @@ var PackageEntrySchema = new mongoose.Schema({
   dislikes: Number,
   downloads: Number,
   dateCreated: Date,
+  title: String,
   // lastUpdated or new Date() upon POST?
   description: String,
   //stringified package object {name, content}
