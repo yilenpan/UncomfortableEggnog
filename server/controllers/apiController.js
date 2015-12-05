@@ -24,3 +24,7 @@ module.exports.searchTerm = function (req, res) {
   // TODO: actually search.
   res.json(packages);
 };
+
+module.exports.getPackage = function (req, res) {
+  res.json(packages[2]);
+};

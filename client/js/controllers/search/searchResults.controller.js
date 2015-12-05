@@ -3,11 +3,16 @@
   angular.module('app')
     .controller('SearchResultsCtrl', SearchResultsCtrl);
 
-  SearchResultsCtrl.$inject = [];
+  SearchResultsCtrl.$inject = ['$state', 'ApiFactory'];
 
-  function SearchResultsCtrl () {
+  function SearchResultsCtrl ($state, ApiFactory) {
     var self = this;
-    self.search;
-
+    var post = ApiFactory.post;
+    self.term = $state.params.searchTerm;
+    self.results = [];
+    post('/api/search', $state.params).then(function (data) {
+      self.results = data;
+    });
+    post();
   }
 })();
