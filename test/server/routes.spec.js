@@ -15,6 +15,11 @@ describe('Routes', function () {
   });
   it('Should return 404 to an incorrect package', function (done) {
     request(app)
+      .get('/packages/999999999999')
+      .expect(404, done);
+  });
+  it('Should return 404 to an incorrect package format', function (done) {
+    request(app)
       .get('/packages/badpackage')
       .expect(404, done);
   });
@@ -28,6 +33,7 @@ describe('Routes', function () {
       .get('/users/123')
       .expect(200, done);
   });
+  //integration test (db and routes): move to separate file?
   xit('should accept post to login and redirect', function (done) {
     request(app)
       .post('/login')

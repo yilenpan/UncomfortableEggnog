@@ -4,10 +4,22 @@ var helpers = require('../../server/helpers/helpers');
 
 
 //===== test packages==========
+
+//complete package with contents and other data
 var devPackage = {
-  'git push': 'git push origin master',
-  'make folder apple': 'mkdir apple'
+  title: 'Dev Package',
+  likes: 200,
+  dislikes: 23,
+  downloads: 2053,
+  dateCreated: new Date(),
+  description: 'all the commands you ever need',
+  packageContents: JSON.stringify({
+    'git push': 'git push origin master',
+    'make folder apple': 'mkdir apple'
+  })
 };
+
+//package contents to be mapped later
 var kylePackage = {
   'protip': "say 'kyle cho pro tip: when in doubt hash it out'",
   'kyle install': 'npm install electron-prebuilt -g'
@@ -21,37 +33,25 @@ var shellPackage = {
   'kyle install': 'npm install electron-prebuilt -g'
 };
 
-var packages = [kylePackage, gitPackage, shellPackage].map(function (p) {
-  var entry = {
-    likes: 0,
-    dislikes: 0,
-    downloads: 0,
-    dateCreated: new Date(),
-    packageContents: JSON.stringify(p),
-    userId: fredId
-  };
-
-  return new db.PackageEntry(entry);
-
-});
 
 //====== test users=============
-var fred = new db.User({
-  username: 'Fred',
-  password: '1234'
-});
 
 
 describe('Database helpers', function (done) {
   var fredId;
+
   beforeEach(function (done) {
+    var fred = new db.User({
+      username: 'Fred',
+      password: '1234'
+    });
     // add user to db
     fred.save(function (err, data) {
-      console.log(data);
       fredId = data.id;
-    // add package with our user's id to db
+    // add one test package with our test user's id to db
       devPackage.userId = fredId;
-      devPackage.save(function (err, data) {
+      var devPackageEntry = new db.PackageEntry(devPackage);
+      devPackageEntry.save(function (err, data) {
         done();
       });
     });
@@ -62,6 +62,17 @@ describe('Database helpers', function (done) {
       db.PackageEntry.remove({}, function (err) {
         done();
       });
+    });
+  });
+
+  it('should retrieve package', function (done) {
+    helpers.findPackageByTitle("Dev Package", function (err, data) {
+      // should only findOne
+      expect(err).to.equal(null);
+      expect(data.length).to.equal(1);
+      expect(data[0]).to.be.an('object');
+      expect(data[0].title).to.equal('Dev Package');
+      done();
     });
   });
 
@@ -81,40 +92,51 @@ describe('Database helpers', function (done) {
     });
   });
   it('should save package', function (done) {
-    // create package
-    var kylePackage = {
-      'protip': "say 'kyle cho pro tip: when in doubt hash it out'",
-      'kyle install': 'npm install electron-prebuilt -g'
+    var username = 'Fred';
+    var entry = {
+      title: 'Kyle Cho Pro Tips',
+      likes: 0,
+      dislikes: 0,
+      downloads: 0,
+      dateCreated: new Date(),
+      packageContents: JSON.stringify(kylePackage)
     };
-    var user = 'Fred';
-    helpers.savePackage(user, kylePackage, function (err, result) {
+
+    helpers.savePackage(username, entry, function (err, result) {
       expect(err).to.equal(null);
-      // db.PackageEntry.findOne({}, function (err, data) {
-      //   expect(err).to.be(null);
-      //   expect(data)
-      // });
-      done();
+      db.PackageEntry.findOne({title: 'Kyle Cho Pro Tips'}, function (err, data) {
+        expect(err).to.equal(null);
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('title');
+        done();
+      });
     });
   });
 
-  it('should retrieve package', function (done) {
-    helpers.findPackageByTitle("git-package", function (err, data) {
-      // should only findOne
-      expect(data).to.be.an('object');
-      expect(err).to.equal(null);
-      expect(data.title).to.be('git-package');
-      done();
-    });
-  });
 
   it('should retrieve a user\'s packages', function (done) {
-    db.PackageEntry.collection.insert(packages, function (err, data) {
-      expect(err).to.equal(null);
-      helpers.findPackagesByUser('fred', function (err, data) {
+    //populate DB with packages associated with our test user
+    helpers.findUserByUsername('Fred', function (err, user) {
+      var packages = [kylePackage, gitPackage, shellPackage].map(function (p) {
+        var entry = {
+          likes: 0,
+          dislikes: 0,
+          downloads: 0,
+          dateCreated: new Date(),
+          packageContents: JSON.stringify(p),
+          userId: user._id
+        };
+        return entry;
+      });
+      db.PackageEntry.collection.insert(packages, function (err, data) {
         expect(err).to.equal(null);
-        expect(data.length).to.equal(4);
-        expect(data[0]).to.have.property('title');
-        done();
+        helpers.findPackagesByUsername('Fred', function (err, data) {
+          console.log(data);
+          expect(err).to.equal(null);
+          expect(data.length).to.equal(4);
+          expect(data[0]).to.have.property('title');
+          done();
+        });
       });
     });
   });

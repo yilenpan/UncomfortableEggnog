@@ -27,11 +27,11 @@ var UserSchema = new mongoose.Schema({
 });
 
 var PackageEntrySchema = new mongoose.Schema({
+  title: String,
   likes: Number,
   dislikes: Number,
   downloads: Number,
   dateCreated: Date,
-  title: String,
   // lastUpdated or new Date() upon POST?
   description: String,
   //stringified package object {name, content}
@@ -43,8 +43,8 @@ var PackageEntrySchema = new mongoose.Schema({
 });
 
 //===========Models===========
-var User = db.model('User', UserSchema);
-var PackageEntry = db.model('PackageEntry', PackageEntrySchema);
+var User = mongoose.model('User', UserSchema);
+var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
 
 
 //===========Encryption=========

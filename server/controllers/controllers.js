@@ -61,31 +61,6 @@ exports.signupUser = function (req, res) {
 };
 
 /*************************************
-                     User Handlers
-**************************************/
-
-//~~~~~~~~~~~~refactor this to helpers~~~~~~~~~
-exports.getUserInfo = function (req, res) {
-  var id = req.params.id;
-  helpers.findUserById(id, function (err, user) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(500);
-    }
-    console.log(user);
-    res.send(user);
-  });
-};
-
-exports.checkUser = function (req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
-
-/*************************************
                      Package Handlers
 **************************************/
 
@@ -103,22 +78,27 @@ exports.fetchPackages = function (req, res) {
 
 exports.fetchPackageById = function (req, res) {
   var id = req.params.id;
-  helpers.findPackageById(id, function (err, packageEntry) {
-    if (err) {
-      console.log('There was an error finding package with ID: ' + id + '.');
-      res.sendStatus(500);
-    } else if (packageEntry.length === 0) {
-        console.log('No entry found with ID: ' + id);
-        res.sendStatus(404);
-    } else {
-       console.log('Sending package with ID ' + id + ' to client.');
-       res.send(packages);
-    }
-  });
+  //handle incorrect id
+  if (typeof id !== 'number') {
+    res.sendStatus(404);
+  } else {
+    helpers.findPackageById(id, function (err, packageEntry) {
+      if (err) {
+        console.log('There was an error finding package with ID: ' + id + '.');
+        res.sendStatus(500);
+      } else if (!packageEntry) {
+          console.log('No entry found with ID: ' + id);
+          res.sendStatus(404);
+      } else {
+         console.log('Sending package with ID ' + id + ' to client.');
+         res.send(packages);
+      }
+    });
+  }
 };
 
 exports.fetchPackageByTitle = function (req, res) {
-  var id = req.params.title;
+  var title = req.params.title;
   helpers.findPackageByTitle(id, function (err, packageEntry) {
     if (err) {
       console.log('There was an error finding package with title: ' + title + '.');
@@ -145,4 +125,29 @@ exports.savePackageEntry = function (req, res) {
       res.send(packageEntry);
     }
   });
+};
+
+/*************************************
+                     User Handlers
+**************************************/
+
+//~~~~~~~~~~~~refactor this to helpers~~~~~~~~~
+exports.getUserInfo = function (req, res) {
+  var id = req.params.id;
+  helpers.findUserById(id, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+    console.log(user);
+    res.send(user);
+  });
+};
+
+exports.checkUser = function (req, res, next) {
+  if (!exports.isLoggedIn(req)) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
 };
