@@ -2,72 +2,66 @@
 
 var natural = require('natural');
 var fs = require('fs');
-
 var tokenizer = new natural.WordTokenizer();
+// var metaphone = natural.Metaphone, soundEx = natural.SoundEx;
 
-//get all the test commands from test data
-var parseTestData = function (testObject) {
-  var commands = [];
-  for (var key in testObject) {
-    commands.push(key);
-  }
-  return commands;
-};
 
 //match inputphrase and return  matching command
-var commandUtil = function (commands, input) {
-   // console.log("input is", input);
+var commandUtil = function (input, commands, filepath) {
+  // when add new commands
+  // fs.writeFileSync(filepath + 'commands.json', commands, 'utf8');
+  for (var key in commands) {
+    // console.log (commands[key])
+    for (var i = 0; i < commands[key].length; i++) {
+      if (input.term === commands[key][i]) {
+        console.log("term is: ", input.term, " exact match found, phrase is :", commands[key][i]);
+        return key;
+      } else if (natural.JaroWinklerDistance(input.term, commands[key][i]) > 0.7) {
+        console.log("do you mean: ", commands[key][i], "? (y/n)");
+        console.log("assuming user said yes for testing purposes... ");
 
-  // for (var i = 0; i < commands.length; i++) {
-  //   // console.log(commands[i], input);
-  //   if (input.term === commands[i]) {
-  //     console.log("match found, phrase is :", commands[i])
-  //     return commands[i];
-  //   }
-  // }
+        commands[key].push(input.term);
 
+        console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
 
-  // var wordTokenizer = new natural.WordTokenizer();
-  // var wordPuncTokenizer = new natural.WordPunctTokenizer();
-  // var treeTokenizer = new natural.TreebankWordTokenizer();
-  // var regexTokenizer = new natural.RegexpTokenizer({pattern: /\$/});
+        console.log("term is: ", input.term, " close match found, phrase is :", commands[key][i]);
+        return key;
+      } else if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(commands[key][i])) > 0.7) {
+        console.log("do you mean: ", commands[key][i], "? (y/n)");
+        console.log("assuming user said yes for testing purposes... ");
 
-  // console.log("wordTokenizer", wordTokenizer.tokenize("my 2 dogs hasn't any $fleas."));
-  // console.log("wordPuncTokenizer", wordPuncTokenizer.tokenize("my 2 dogs hasn't any $fleas."));
-  // console.log("treeTokenizer", treeTokenizer.tokenize("my 2 dogs hasn't any $fleas."));
-  // console.log("regexTokenizer", regexTokenizer.tokenize("my 2 dogs hasn't any $fleas."));
+        commands[key].push(input.term);
+        console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
 
-  console.log(natural.JaroWinklerDistance("san Francisco", "san francisco"));
-  console.log(natural.JaroWinklerDistance("Francisco", "Frencisca"));
-  console.log(natural.JaroWinklerDistance("weather", "whether"));
-  console.log(natural.JaroWinklerDistance("dixon", "dicksonx"));
-  console.log(natural.JaroWinklerDistance("way", "weigh"));
-  console.log(natural.JaroWinklerDistance('not', 'same'));
-
-    // console.log("no match");
-    // return null;
-};
-
-//process the test data
-var runTest = function () {
-  var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/check-weather.json', 'utf8'));
-  // var commands = parseTestData(testObject);
-
-  for (var key in testObject) {
-    // console.log(testObject[key]);
-    for (var i = 0; i < testObject[key].length; i++) {
-      commandUtil(commands, testObject[key][i]);
+        console.log("term is: ", input.term, " phonetic match found, phrase is :", commands[key][i]);
+        return key;
+      }
     }
   }
+
+  console.log("term is: ", input.term, " no match");
+  return null;
+
 };
 
 
-
+var regMatch = function (arr, term) {
+  var regTerm = new RegExp(term, 'i'); // creates new regexp obj
+  return _.some(arr, function (key) {
+    return key.match(regTerm); // tests key against regTerm
+  });
+};
 
 // runTest();
 
-var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/check-weather.json', 'utf8'));
-var commands = parseTestData(testObject);
-commandUtil(commands, testObject['check the weather in San Francisco'][0]);
+var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/parse-test.json', 'utf8'));
+var commands = JSON.parse(fs.readFileSync)('./commands.json');
+
+for (var i = 0; i < testObject.length; i++) {
+  commandUtil(commands, testObject[i]);
+}
+
+// commandUtil();
 
 module.exports.commandUtil = commandUtil;
+module.exports.regMatch = regMatch;
