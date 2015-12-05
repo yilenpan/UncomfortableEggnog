@@ -36,6 +36,16 @@ exports.findUserByUsername = function (username, cb) {
   }, cb);
 };
 
+exports.saveUser = function (username, password, cb) {
+  //assumes server controller checked if username already exists in db
+  // console.log(JSON.stringify(db.User))
+  db.User.create({
+    username: 'Mitchell',
+    password: '1234'
+  }, cb);
+// user.save(cb);
+};
+
 /********************************************
                      Package Database Helpers
 *********************************************/
