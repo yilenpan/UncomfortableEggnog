@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var dbUrl = 'mongodb://localhost/taser';
-var helpers = require('../helpers/helpers.js');
+var helpers = require('../helpers/helpers');
 
 mongoose.connect(dbUrl);
 var db = mongoose.connection;
@@ -49,8 +49,16 @@ var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
 
 //===========Encryption=========
 
-// UserSchema.pre('save', helpers.hashPassword);
-
+UserSchema.pre('save', function (next, done) {
+  helpers.hashPassword(this.password, function (err, hash) {
+    if (err) {
+      next(err);
+    } else {
+      this.password = hash;
+      next();
+    }
+  }.bind(this));
+});
 
 module.exports.db = db;
 module.exports.User = User;
