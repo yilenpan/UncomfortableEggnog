@@ -1,5 +1,5 @@
 //helpers are a set of functions that work with the database.
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 var db = require('../db/db.js');
 
