@@ -2,46 +2,47 @@
 
 var natural = require('natural');
 var fs = require('fs');
+var _ = require('underscore');
 var tokenizer = new natural.WordTokenizer();
-// var metaphone = natural.Metaphone, soundEx = natural.SoundEx;
-
+var metaphone = natural.Metaphone;
+var soundEx = natural.SoundEx;
 
 //match inputphrase and return  matching command
-var commandUtil = function (input, commands, filepath) {
-  // when add new commands
-  // fs.writeFileSync(filepath + 'commands.json', commands, 'utf8');
+var commandUtil = function (input, commands, commandsPath) {
   for (var key in commands) {
-    // console.log (commands[key])
-    for (var i = 0; i < commands[key].length; i++) {
-      if (input.term === commands[key][i]) {
-        console.log("term is: ", input.term, " exact match found, phrase is :", commands[key][i]);
-        return key;
-      } else if (natural.JaroWinklerDistance(input.term, commands[key][i]) > 0.7) {
-        console.log("do you mean: ", commands[key][i], "? (y/n)");
-        console.log("assuming user said yes for testing purposes... ");
+    if (regMatch(commands[key], input.term)) {
+      console.log("term is: ", input.term, " exact match found, phrase is :", key);
+      return key;
+    }
 
-        commands[key].push(input.term);
+    if (natural.JaroWinklerDistance(input.term, key) > 0.8) {
+      console.log("do you mean: ", key, "? (y/n)");
+      console.log("assuming user said yes for testing purposes... ");
 
-        console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
+      commands[key].push(input.term);
 
-        console.log("term is: ", input.term, " close match found, phrase is :", commands[key][i]);
-        return key;
-      } else if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(commands[key][i])) > 0.7) {
-        console.log("do you mean: ", commands[key][i], "? (y/n)");
-        console.log("assuming user said yes for testing purposes... ");
+      // when add new commands
+      fs.writeFileSync(commandsPath, JSON.stringify(commands), 'utf8');
 
-        commands[key].push(input.term);
-        console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
+      console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
 
-        console.log("term is: ", input.term, " phonetic match found, phrase is :", commands[key][i]);
-        return key;
-      }
+      console.log("term is: ", input.term, " close match found, phrase is :", key);
+      return key;
+    } else if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(key)) > 0.8) {
+      console.log("do you mean: ", key, "? (y/n)");
+      console.log("assuming user said yes for testing purposes... ");
+
+      commands[key].push(input.term);
+      fs.writeFileSync(commandsPath, JSON.stringify(commands), 'utf8');
+      console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
+
+      console.log("term is: ", input.term, " phonetic match found, phrase is :", key);
+      return key;
     }
   }
 
   console.log("term is: ", input.term, " no match");
   return null;
-
 };
 
 
@@ -52,16 +53,12 @@ var regMatch = function (arr, term) {
   });
 };
 
-// runTest();
+// var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/parse-test.json', 'utf8'));
+// var commands = JSON.parse(fs.readFileSync('./commands.json', 'utf8'));
 
-var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/parse-test.json', 'utf8'));
-var commands = JSON.parse(fs.readFileSync)('./commands.json');
-
-for (var i = 0; i < testObject.length; i++) {
-  commandUtil(commands, testObject[i]);
-}
-
-// commandUtil();
+// for (var i = 0; i < testObject.length; i++) {
+//   commandUtil(testObject[i], commands);
+// }
 
 module.exports.commandUtil = commandUtil;
 module.exports.regMatch = regMatch;

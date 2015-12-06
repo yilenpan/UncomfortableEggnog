@@ -8,54 +8,66 @@ var _ = require('underscore');
 var commandsPath = __dirname + '/../../match/commands.json';
 var commands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
 
-
-// when new command, add to command obj
-  // fs.writeFile('commands.json', "module.exports = " + JSON.stringify(commands), function () {...});
-
-
-// This will match "DIM SCREEN" to 'dim screen'
-// This will match "DIm SCReEN" to 'dim screen'
-
+//after testing, write this back to the commands.json file
+var revertCommands = {"kyle cho pro tip": ["kyle cho pro tip"],
+  "check the weather in San Francisco": ["check the weather in San Francisco"],
+  "dim screen": ["dim screen"],
+  "open sublime": ["open sublime"]
+};
 
 
 describe('Natural language string matching algorithm', function () {
 
   it('should match exact phrases', function (done) {
-    var exactCommands = _.every(Object.keys(commands), function (input) {
-      return cmdUtil(key, commands, commandPath);
+    var exactMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/exact-match-test.json', 'utf8'));
+    var exactCommands = _.every(exactMatch, function (input, key) {
+      return (cmdUtil(input[0], commands, commandsPath) === key);
     });
-    expect(exactCommands).to.be(true);
+    expect(exactCommands).to.equal(true);
     done();
   });
 
+  it('should match phrases with different cases', function (done) {
+    var caseMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/case-match-test.json', 'utf8'));
+    var caseCommands = _.every(caseMatch, function (input, key) {
+      return (cmdUtil(input[0], commands, commandsPath) === key);
+    });
+    expect(caseCommands).to.equal(true);
+    done();
+  });
 
   it('should match phrases with score > 0.75', function (done) {
-    // if the term matches a command, filter it out
-    // TODO: change testCases to goodTestCases
-    // TODO: have badTestCases as well
-    var filtered = testCases.filter(function (test) {
-      return !regMatch(Object.keys(commands), test.term);
+    var closeMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/close-match-test.json', 'utf8'));
+    var closeCommands = _.every(closeMatch, function (input, key) {
+      return (cmdUtil(input[0], commands, commandsPath) === key);
     });
+    expect(closeCommands).to.equal(true);
+    // fs.writeFileSync(commandsPath, JSON.stringify(revertCommands), 'utf8');
+    done();
+  });
 
-    // tests to see that every term in the testCases matches a command
-    var matchCommands = _.every(filtered, function (test) {
-      var term = test.term;
-      return cmdUtil(term, commands, commandPath);
+  it('should return null for a bad match', function (done) {
+    var noMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/no-match-test.json', 'utf8'));
+    var noMatchCommands = _.every(noMatch, function (input, key) {
+      return (cmdUtil(input[0], commands, commandsPath) === null);
     });
-    // test to see if they still match
-    expect(matchCommands).to.be(true);
+    expect(noMatchCommands).to.equal(true);
     done();
   });
 
-  it('should check to see if a close match exists', function (done) {
-    // TODO: if close match, FOR NOW, just add it into the object
-      // test to see if the command matches
-      // check to see if command.json has changed
-    done();
-  });
+  // it('should add new close-match commands', function (done) {
+  //   var closeMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/close-match-test.json', 'utf8'));
+  //   _.each(closeMatch, function (input, key) {
+  //     cmdUtil(input[0], commands, commandsPath);
+  //   });
 
-  it('should return null or whatever for a bad match', function (done) {
-    done();
-  });
+  //   var updatedCommands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
+  //   var closeCommands = _.every(closeMatch, function (input, key) {
+  //     return (cmdUtil(input[0], commands, commandsPath) === key);
+  //   });
+  //   expect(closeCommands).to.equal(true);
+  //   // fs.writeFileSync(commandsPath, JSON.stringify(revertCommands), 'utf8');
+  //   done();
+  // });
 
 });
