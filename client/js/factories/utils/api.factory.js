@@ -12,8 +12,8 @@
     };
     return services;
 
-    function parse (data) {
-      return data.results;
+    function parse (results) {
+      return results.data;
     }
 
     /**

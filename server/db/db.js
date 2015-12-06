@@ -48,6 +48,7 @@ var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
 
 
 //===========Encryption=========
+
 UserSchema.pre('save', function (next, done) {
   helpers.hashPassword(this.password, function (err, hash) {
     if (err) {
