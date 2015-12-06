@@ -38,7 +38,7 @@ app.on('ready', function () {
     width: 800,
     height: 600
   });
-
+  console.log('window:', mainWindow.width);
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 

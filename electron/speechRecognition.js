@@ -19,7 +19,7 @@ if (!('webkitSpeechRecognition' in window)) {
     var userCommand = event.results[0][0].transcript;
     console.log("Command: ", userCommand);
 
-    //execute user command 
+    //execute user command
     //in final product, we have to match this user command to a shell command
     exec(userCommand, function (error, stdout, stderr) {
       if (error) {
@@ -31,7 +31,7 @@ if (!('webkitSpeechRecognition' in window)) {
 
     // shell commands tested to make sure it is possible to do it from JS
 
-    // //get the weather test
+    //get the weather test
     // exec('open https://www.google.com/?gws_rd=ssl#q=weather+san+francisco', function (error, stdout, stderr) {
     //   console.log(stdout);
     // });
