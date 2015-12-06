@@ -9,6 +9,8 @@ var soundEx = natural.SoundEx;
 
 //match inputphrase and return  matching command
 var commandUtil = function (input, commands, commandsPath) {
+  console.log(typeof input.term);
+  console.log("INPUT: ", input.term);
   for (var key in commands) {
     if (regMatch(commands[key], input.term)) {
       console.log("term is: ", input.term, " exact match found, phrase is :", key);
