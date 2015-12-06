@@ -33,7 +33,7 @@ exports.loginUser = function (req, res) {
         res.status(400).json({error: 'User was not found.'});
     } else {
   //check password match
-        helpers.comparePassword(password, function (err, isMatch) {
+        helpers.comparePassword(password, user.password, function (err, isMatch) {
           if (err) {
             console.log('There was an error logging in user.');
             res.sendStatus(500);
@@ -136,7 +136,9 @@ exports.fetchPackageByTitle = function (req, res) {
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
-  helpers.savePackage(entry, function (err, packageEntry) {
+  //make req.session.user object === db user model?
+  console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
+  helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');
       res.sendStatus(500);
@@ -150,8 +152,6 @@ exports.savePackageEntry = function (req, res) {
 /*************************************
                      User Handlers
 **************************************/
-
-//~~~~~~~~~~~~refactor this to helpers~~~~~~~~~
 exports.getUserInfo = function (req, res) {
   var id = req.params.id;
   helpers.findUserById(id, function (err, user) {

@@ -1,5 +1,5 @@
 //helpers are a set of functions that work with the database.
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 var bluebird = require('bluebird');
 var db = require('../db/db.js');
 
@@ -8,17 +8,24 @@ var SALT_WORK_FACTOR = 10;
 /************************************************
                      Login Database Helpers
 *************************************************/
-exports.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, cb);
+exports.comparePassword = function (candidatePassword, hashPassword, cb) {
+  bcrypt.compare(candidatePassword, hashPassword, cb);
 };
 
-exports.hashPassword = function (next) {
-  var cipher = bluebird.promisify(bcrypt.hash);
-  return cipher(this.password, null, null).bind(this)
-    .then(function (hash) {
-      this.password = hash;
-      next();
-    });
+exports.hashPassword = function (password, cb) {
+  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+    if (err) {
+      next(err);
+    } else {
+      bcrypt.hash(password, salt, function (err, hash) {
+        if (err) {
+          cb(err);
+         } else {
+          cb(null, hash);
+         }
+      });
+    }
+  });
 };
 
 /************************************************
@@ -33,17 +40,18 @@ exports.findUserById = function (id, cb) {
 exports.findUserByUsername = function (username, cb) {
   db.User.findOne({
     username: username
-  }, cb);
+  }).exec(cb);
 };
 
 exports.saveUser = function (username, password, cb) {
   //assumes server controller checked if username already exists in db
-  // console.log(JSON.stringify(db.User))
-  db.User.create({
-    username: 'Mitchell',
-    password: '1234'
-  }, cb);
-// user.save(cb);
+  var user = new db.User({
+    username: username,
+    password: password,
+    packages: []
+  });
+  console.log(user);
+  user.save(cb);
 };
 
 /********************************************
@@ -64,6 +72,7 @@ exports.findPackageEntries = function (cb) {
 };
 
 exports.savePackage = function (user, entry, cb) {
+  console.log('trying to save... ' + user + ' ,' + entry);
   exports.findUserByUsername(user, function (err, user) {
     if (err) {
       console.log('Error finding user.');
