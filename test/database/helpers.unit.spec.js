@@ -76,7 +76,7 @@ describe('Database helpers', function (done) {
     });
   });
 
-  xit('should hash password', function (done) {
+  it('should hash password', function (done) {
     // pulls fred out of the db
     db.User.findOne( {
       username: 'Fred'
