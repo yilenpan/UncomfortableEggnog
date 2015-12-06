@@ -43,7 +43,7 @@ exports.loginUser = function (req, res) {
           } else {
   //username and password matched on login: start session.
               req.session.user = user;
-              res.redirect('/');
+              res.sendStatus(200);
             }
           });
         }
@@ -73,7 +73,7 @@ exports.signupUser = function (req, res) {
         } else {
           //user successfully signed up, now login user automatically
           req.session.user = user;
-          res.redirect('/');
+          res.sendStatus(200);
         }
       });
     }
