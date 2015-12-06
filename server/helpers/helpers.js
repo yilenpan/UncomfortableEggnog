@@ -15,9 +15,9 @@ exports.comparePassword = function (candidatePassword, hashPassword, cb) {
 exports.hashPassword = function (password, cb) {
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
     if (err) {
-      next(err);
+      cb(err);
     } else {
-      bcrypt.hash(password, salt, function (err, hash) {
+      bcrypt.hash(password, salt, null, function (err, hash) {
         if (err) {
           cb(err);
          } else {
