@@ -4,6 +4,12 @@
   angular.module('app')
     .config(config);
 
+    // search results
+    // user page to set profile pic, contact info, change password
+    // login
+    // sign up
+    // add package view
+
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
   function config ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -25,8 +31,8 @@
         url: '/package/:packageName',
         views: {
           top: {
-            templateUrl: 'js/html/nav/navbar.top.html',
-            controller: 'NavCtrl'
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
           },
           main: {
             templateUrl: 'js/html/package/package.main.html',
@@ -38,11 +44,24 @@
         url: '/search/:searchTerm',
         views: {
           top: {
-            templateUrl: 'js/html/nav/navbar.top.html',
-            controller: 'NavCtrl'
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
           },
           main: {
             templateUrl: 'js/html/search/search.main.html',
+            controller: 'SearchResultsCtrl'
+          }
+        }
+      })
+      .state('user', {
+        url: '/user/:userId',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/user/user.main.html',
             controller: 'SearchResultsCtrl'
           }
         }

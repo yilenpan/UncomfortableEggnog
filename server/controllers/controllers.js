@@ -24,22 +24,22 @@ exports.loginUser = function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
   //check username match
-  helpers.findUserbyUsername(username, function (err, user) {
+  helpers.findUserByUsername(username, function (err, user) {
     if (err) {
       console.log('There was an error logging in user.');
       res.sendStatus(500);
-    } else if (user.username === undefined) {
+    } else if (!user) {
         console.log('User was not found.');
-        res.sendStatus(400);
+        res.status(400).json({error: 'User was not found.'});
     } else {
   //check password match
-        helpers.comparePassword(password, function (err, isMatch) {
+        helpers.comparePassword(password, user.password, function (err, isMatch) {
           if (err) {
             console.log('There was an error logging in user.');
             res.sendStatus(500);
           } else if (!isMatch) {
               console.log('User password did not match.');
-              res.sendStatus(400);
+              res.status(400).json({error: 'User password did not match.'});
           } else {
   //username and password matched on login: start session.
               req.session.user = user;
@@ -52,12 +52,32 @@ exports.loginUser = function (req, res) {
 
 
 exports.logoutUser = function (req, res) {
-
+  req.session.destroy();
+  res.redirect('/');
 };
 
 
 exports.signupUser = function (req, res) {
-
+  //assumes req.password is a string
+  var username = req.body.username;
+  var password = req.body.password;
+  helpers.findUserByUsername(username, function (err, user) {
+    if (user) {
+      console.log('That username already exists.');
+      res.status(400).json({ error: 'That username already exists.' });
+    } else {
+      helpers.saveUser(username, password, function (err, user) {
+        if (err) {
+          console.log('There was an error saving user.');
+          res.sendStatus(500);
+        } else {
+          //user successfully signed up, now login user automatically
+          req.session.user = user;
+          res.redirect('/');
+        }
+      });
+    }
+  });
 };
 
 /*************************************
@@ -116,7 +136,9 @@ exports.fetchPackageByTitle = function (req, res) {
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
-  helpers.savePackage(entry, function (err, packageEntry) {
+  //make req.session.user object === db user model?
+  console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
+  helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');
       res.sendStatus(500);
@@ -130,8 +152,6 @@ exports.savePackageEntry = function (req, res) {
 /*************************************
                      User Handlers
 **************************************/
-
-//~~~~~~~~~~~~refactor this to helpers~~~~~~~~~
 exports.getUserInfo = function (req, res) {
   var id = req.params.id;
   helpers.findUserById(id, function (err, user) {
