@@ -1,95 +1,87 @@
+//this allows the execution of shell commands from JS
 var exec = require('child_process').exec;
+//used to communicate between main process and renderer process
 var ipcRenderer = require('electron').ipcRenderer;
-
-(function (console) {
-  console.save = function (data, filename) {
-    if (!data) {
-      console.error('Console.save: No data');
-      return;
-    }
-
-    if (!filename) {
-      filename = 'console.json';
-    }
-
-    for (var i = 0; i < array.length; i++) {
-      array[i];
-    }
-
-    if (typeof data === "object") {
-      data = JSON.stringify(data, undefined, 4);
-    }
-
-    var blob = new Blob([data], {type: 'text/json'});
-    var e = document.createEvent('MouseEvents');
-    var a = document.createElement('a');
-
-    a.download = filename;
-    a.href = window.URL.createObjectURL(blob);
-    a.dataset.downloadurl = ['text/json', a.download, a.href ].join(':');
-    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    a.dispatchEvent(e);
-  };
-})(console);
-//====Web Speech Audio======//
-var phrases = {
-  "Say Hello World": [],
-  "7805333": [],
-  "search google cats and dogs": [],
-  "check weather in san francisco": [],
-  "shutdown in 30": [],
-  "ten times five phrases": []
-};
+var listening = true;
 
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
   var recognition = new webkitSpeechRecognition();
-  recognition.onresult = function (event) {
-    var cmd = event.results[0][0].transcript;
-    console.log("CMD: ", cmd);
 
-    function puts(error, stdout, stderr) {
-      console.log(stdout);
-    }
-
-    exec('say "kyle cho pro tip ' + cmd + '"', puts);
-    exec(cmd, puts);
-
-    // record({
-    //   score: event.results[0][0].confidence,
-    //   term: event.results[0][0].transcript
-    // });
-  };
-
-  //create loop so that it never stops listening
-  recognition.onend = function () {
+  //default behavior is always listen so start loop
+  recognition.onend = function (event) {
     recognition.start();
   };
-}
-var button = $('button');
-var recordPhrase = function (p) {
-  return function (event) {
-    //phrases[p].push(event);
+
+  recognition.onresult = function (event) {
+    //get the user command
+    var userCommand = event.results[0][0].transcript;
+    console.log("Command: ", userCommand);
+
+    //execute user command
+    //in final product, we have to match this user command to a shell command
+    exec(userCommand, function (error, stdout, stderr) {
+      if (error) {
+        throw new Error(error);
+      }
+      //TODO: depending of user command, do something with stdout
+      console.log(stdout);
+    });
+
+    // shell commands tested to make sure it is possible to do it from JS
+
+    //get the weather test
+    // exec('open https://www.google.com/?gws_rd=ssl#q=weather+san+francisco', function (error, stdout, stderr) {
+    //   console.log(stdout);
+    // });
+
+    // //dim screen to 0%
+    // var dim = 'osascript -e \'tell application "System Events" to repeat 50 times\' -e \'key code 107\' -e \'delay 0.1\' -e \'end repeat\'';
+    // exec(dim, function (error, stdout, stderr) {
+    //   console.log(stdout);
+    // });
+
+    // //say kyle cho pro tip
+    // exec("say kyle cho pro tip" + userCommand, function (error, stdout, stderr) {
+    //   console.log(stdout);
+    // });
+
   };
-};
 
-var record;
-
-$('#print').on('click', function () {
-  // console.save(phrases);
-  $('#json').text(JSON.stringify(phrases));
-});
-
-button.on('click', function () {
-  record = recordPhrase($(this).text());
-  recognition.start();
-});
+}
 
 //receive event emitted from main process (main.js) to start listening
-ipcRenderer.on('startListening', function (event) {
-  console.log("Start listening");
+ipcRenderer.on('listening', function (event) {
+
+  console.log("Taser is listening!");
   //start listening
   recognition.start();
+
 });
+
+//function to toggle between keypress shortcut and always listening
+var toggleListen = function (event) {
+  if (listening) {
+    listening = false;
+    //register shortcut and stop listening
+    ipcRenderer.send('registerShortcut', "true");
+    //stop the infinite loop
+    recognition.onend = function (event) {
+      recognition.stop();
+    };
+  } else {
+    listening = true;
+    //start always listening
+    ipcRenderer.send('unregisterShortcut', "true");
+    //start the infinite loop
+    recognition.onend = function (event) {
+      recognition.start();
+    };
+  }
+};
+
+//we will need to refactor this to angular instead of jquery if we use angular for front-end
+$('button').on('click', toggleListen);
+
 
