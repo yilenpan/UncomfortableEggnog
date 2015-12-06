@@ -8,13 +8,14 @@ module.exports = function (router) {
 /*************************************
                      Login Routes
 **************************************/
-
-  router.get('/login', controllers.loginUserForm);
+  // TODO: Client side login
+  // router.get('/login', controllers.loginUserForm);
   router.post('/login', controllers.loginUser);
 
   router.get('/logout', controllers.logoutUser);
 
-  router.get('/signup', controllers.signupUserForm);
+  // TODO: Client side signup
+  // router.get('/signup', controllers.signupUserForm);
   router.post('/signup', controllers.signupUser);
 
 /*************************************
@@ -28,12 +29,12 @@ module.exports = function (router) {
                        Package Routes
   **************************************/
   router.get('/packages', controllers.fetchPackages);
-  router.get('/packages/:id', controllers.fetchPackage);
+  router.get('/packages/:id', controllers.fetchPackageById);
   router.post('/packages', controllers.checkUser, controllers.savePackageEntry);
 
 
   //======Default Route=========
   router.get('/*', function (req, res) {
-    res.redirect('/');
+    res.sendStatus(404);
   });
 };

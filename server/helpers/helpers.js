@@ -5,62 +5,110 @@ var db = require('../db/db.js');
 
 var SALT_WORK_FACTOR = 10;
 
-exports.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+/************************************************
+                     Login Database Helpers
+*************************************************/
+exports.comparePassword = function (candidatePassword, hashPassword, cb) {
+  bcrypt.compare(candidatePassword, hashPassword, cb);
+};
+
+
+exports.hashPassword = function (password, cb) {
+  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
     if (err) {
-      return cb(err);
+      cb(err);
+    } else {
+      bcrypt.hash(password, salt, null, function (err, hash) {
+        if (err) {
+          cb(err);
+         } else {
+          cb(null, hash);
+         }
+      });
     }
-    cb(null, isMatch);
   });
 };
 
-exports.hashPassword = function (next) {
-  var cipher = bluebird.promisify(bcrypt.hash);
-  return cipher(this.password, null, null).bind(this)
-    .then(function (hash) {
-      this.password = hash;
-      next();
-    });
+/************************************************
+                     User Database Helpers
+*************************************************/
+
+
+exports.findUserById = function (id, cb) {
+  db.User.findOne(id, cb);
+};
+
+exports.findUserByUsername = function (username, cb) {
+  db.User.findOne({
+    username: username
+  }).exec(cb);
+};
+
+exports.saveUser = function (username, password, cb) {
+  //assumes server controller checked if username already exists in db
+  var user = new db.User({
+    username: username,
+    password: password,
+    packages: []
+  });
+  console.log(user);
+  user.save(cb);
+};
+
+/********************************************
+                     Package Database Helpers
+*********************************************/
+
+//find by title
+exports.findPackageByTitle = function (title, cb) {
+  db.PackageEntry.find({title: title}, cb);
+};
+
+exports.findPackageById = function (id, cb) {
+  db.PackageEntry.findById({_id: id}, cb);
 };
 
 exports.findPackageEntries = function (cb) {
   db.PackageEntry.find({}, cb);
 };
 
-exports.findPackage = function (id, cb) {
-  db.PackageEntry.find({id: id}, cb);
+exports.savePackage = function (user, entry, cb) {
+  console.log('trying to save... ' + user + ' ,' + entry);
+  exports.findUserByUsername(user, function (err, user) {
+    if (err) {
+      console.log('Error finding user.');
+      cb(err);
+    } else {
+      entry.userId = user._id;
+      var packageEntry = new db.PackageEntry(entry);
+      packageEntry.save(function (err, entry) {
+        if (err) {
+          console.log('Error saving package.');
+          cb(err);
+        } else {
+          user.packages.push(entry._id);
+          user.save(function (err, entry) {
+            if (err) {
+              console.log('Error updating user.');
+              cb(err);
+            } else {
+              cb(err, entry);
+            }
+          });
+        }
+      });
+    }
+  });
 };
 
-
-exports.savePackage = function (entry, cb) {
-  var packageEntry = new db.PackageEntry(entry);
-  packageEntry.save(cb);
+exports.findPackagesByUsername = function (username, cb) {
+  // finds user, then finds the packages associated to user
+  exports.findUserByUsername(username, function (err, user) {
+    if (err) {
+      console.log(err);
+      cb(err);
+    } else {
+      db.PackageEntry.find({userId: user._id}, cb);
+    }
+  });
 };
-
-exports.findUser = function (id, cb) {
-  db.User.findOne( { id: id }, cb);
-};
-
-
-// exports.hashPassword = function (next) {
-//   var user = this;
-// // only hash the password if it has been modified (or is new)
-//   if (!user.isModified('password')) {
-//     return next();
-//   }
-// // generate a salt
-//   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-//     if (err) {
-//       return next(err);
-//     }
-// // hash the password along with our new salt
-//     bcrypt.hash(user.password, salt, function (err, hash) {
-//       if (err) {
-//         return next(err);
-//       }
-// // override the cleartext password with the hashed one
-//       user.password = hash;
-//       next();
-//     });
-//   });
-// };

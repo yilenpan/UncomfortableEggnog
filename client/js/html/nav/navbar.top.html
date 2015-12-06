@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" ng-controller="NavCtrl">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -12,8 +12,8 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <form class="navbar-form navbar-left" style="width:65%" role="search">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+      <form ng-submit="search(term)" class="navbar-form navbar-left" style="width:65%" role="search">
         <div class="col-md-10 search" style="padding:0;border-radius:0;">
           <input style="width:75%;margin:0;border-margin:0;" ng-model="term" type="text" placeholder="Search">
           <button style="width:20%;margin:0;border-margin:0;">Submit</button>
