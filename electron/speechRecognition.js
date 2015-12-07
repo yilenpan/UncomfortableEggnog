@@ -12,14 +12,14 @@ var fileCommands = fileInfo.commands;
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
-  var recognition = new webkitSpeechRecognition();
+  var commandRecognition = new webkitSpeechRecognition();
 
   //default behavior is always listen so start loop
-  recognition.onend = function (event) {
-    recognition.start();
+  commandRecognition.onend = function (event) {
+    commandRecognition.start();
   };
 
-  recognition.onresult = function (event) {
+  commandRecognition.onresult = function (event) {
     //get the user command
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
@@ -29,8 +29,8 @@ if (!('webkitSpeechRecognition' in window)) {
 
     var command = matchingFunctions.cmdUtil(userCommand, fileCommands, filePath);
     console.log("COMMAND: ", command);
-    //execute user command
-    //in final product, we have to match this user command to a shell command
+
+    //execute shell command
     exec(command, function (error, stdout, stderr) {
       if (error) {
         throw new Error(error);
@@ -66,7 +66,7 @@ ipcRenderer.on('listening', function (event) {
 
   console.log("Taser is listening!");
   //start listening
-  recognition.start();
+  commandRecognition.start();
 
 });
 
@@ -77,16 +77,16 @@ var toggleListen = function (event) {
     //register shortcut and stop listening
     ipcRenderer.send('registerShortcut', "true");
     //stop the infinite loop
-    recognition.onend = function (event) {
-      recognition.stop();
+    commandRecognition.onend = function (event) {
+      commandRecognition.stop();
     };
   } else {
     listening = true;
     //start always listening
     ipcRenderer.send('unregisterShortcut', "true");
     //start the infinite loop
-    recognition.onend = function (event) {
-      recognition.start();
+    commandRecognition.onend = function (event) {
+      commandRecognition.start();
     };
   }
 };
