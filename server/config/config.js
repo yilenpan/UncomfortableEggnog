@@ -1,7 +1,7 @@
 var bodyParser = require('body-parser');
 var helpers = require('../helpers/helpers.js');
 var session = require('express-session');
-var sessionSecret = process.env.sessionSecret || require('./authKeys').sessionSecret;
+var sessionSecret = process.env.sessionSecret || require('./authKeys').sessionSecret || 'test';
 var db = require('../db/db.js');
 
 module.exports = function (app, express) {
