@@ -65,6 +65,19 @@
             controller: 'SearchResultsCtrl'
           }
         }
+      })
+      .state('signup', {
+        url: '/signup',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/signup/signup.main.html',
+            controller: 'SignUpCtrl'
+          }
+        }
       });
   }
 
