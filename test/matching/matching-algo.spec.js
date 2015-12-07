@@ -44,7 +44,7 @@ describe('Natural language string matching algorithm', function () {
     done();
   });
 
-  it('should match phrases similar phrases', function (done) {
+  it('should match similar phrases', function (done) {
     var closeMatch = JSON.parse(fs.readFileSync(__dirname + '/../assets/close-match-test.json', 'utf8'));
     var closeCommands = _.every(closeMatch, function (input, key) {
       return (matching(input[0], phrasesPath) === key);
