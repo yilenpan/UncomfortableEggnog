@@ -82,7 +82,6 @@ describe('Database helpers', function (done) {
       username: 'Fred'
     }, function (err, user) {
       if (err) {
-        console.log(err);
         done();
       } else {
     // expect password to not equal 1234
@@ -131,7 +130,6 @@ describe('Database helpers', function (done) {
       db.PackageEntry.collection.insert(packages, function (err, data) {
         expect(err).to.equal(null);
         helpers.findPackagesByUsername('Fred', function (err, data) {
-          console.log(data);
           expect(err).to.equal(null);
           expect(data.length).to.equal(4);
           expect(data[0]).to.have.property('title');

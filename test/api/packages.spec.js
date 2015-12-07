@@ -8,11 +8,7 @@ var async = require('async');
 
 var packages = _.range(30).map(function (x) {
   return {
-    title: x + 'Dev Package',
-    // likes: x,
-    // dislikes: x,
-    // downloads: x,
-    // dateCreated: new Date(),
+    title: x + ' Dev Package',
     description: 'all the commands you ever need',
     packageContents: JSON.stringify({
       'git push': 'git push origin master',
@@ -31,7 +27,6 @@ describe('Should talk to the db', function (done) {
       async.map(packages, function (packageE, cb) {
         helpers.savePackage(user.username, packageE, cb);
       }, function (err, data) {
-        console.log(data);
         done();
       });
     });
@@ -50,12 +45,13 @@ describe('Should talk to the db', function (done) {
       .get('/api/top10')
       .expect(200)
       .end(function (err, json) {
-        console.log(json.body);
         json = json.body;
         expect(json).to.be.an('array');
         expect(json.length).to.equal(10);
         expect(json[0]).to.have.property('downloads');
-        // expect(json[0].likes).to.equal(29);
+        expect(json[0]).to.have.property('likes');
+        expect(json[0]).to.have.property('dislikes');
+        expect(json[0]).to.have.property('dateCreated');
         done();
       });
   });
@@ -63,8 +59,14 @@ describe('Should talk to the db', function (done) {
     request(app)
       .post('/api/search')
       .send({
-        searchTerm: 'devPackage'
+        searchTerm: '10'
       })
-      .expect(200, done);
+      .expect(200)
+      .end(function (err, json) {
+        json = json.body;
+        expect(json).to.be.an('array');
+        expect(json[0].title).to.equal('10 Dev Package');
+        done();
+      });
   });
 });

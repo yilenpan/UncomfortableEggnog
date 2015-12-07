@@ -74,8 +74,17 @@ exports.findPackageEntries = function (cb) {
 };
 
 exports.searchPackages = function (term, cb) {
-  //TODO: implement search
-  exports.findPackageEntries(cb);
+   db.PackageEntry.find({
+     $text: { $search: term }
+   }, {
+     score: { $meta: "textScore" }
+   })
+   .limit(10)
+   .sort({ score: {$meta: "textScore"}})
+   .exec(function (e,d) {
+     cb(e, d);
+   });
+
 };
 
 exports.savePackage = function (user, entry, cb) {

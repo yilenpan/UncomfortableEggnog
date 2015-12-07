@@ -6,14 +6,6 @@ var helpers = require('../helpers/helpers');
 /*************************************
                      Login Handlers
 **************************************/
-// TODO: Client side login
-// exports.loginUserForm = function (req, res) {
-
-// };
-
-// TODO: Client side signup
-// exports.signupUserForm = function (req, res) {
-// };
 
 exports.isLoggedIn = function (req, res) {
   return req.session ? !!req.session.user : false;

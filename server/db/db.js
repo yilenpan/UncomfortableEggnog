@@ -42,6 +42,19 @@ var PackageEntrySchema = new mongoose.Schema({
   }
 });
 
+// ==== Search ======
+
+PackageEntrySchema.index({
+  "$**": 'text'
+}, {
+  name: "TextIndex",
+  weights: {
+    title: 10,
+    description: 3
+  }
+});
+
+
 //===========Models===========
 var User = mongoose.model('User', UserSchema);
 var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
