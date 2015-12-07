@@ -42,8 +42,7 @@ exports.loginUser = function (req, res) {
               res.status(400).json({error: 'User password did not match.'});
           } else {
   //username and password matched on login: start session.
-              req.session.user = user;
-              res.sendStatus(200);
+              res.redirect('/');
             }
           });
         }
@@ -72,8 +71,8 @@ exports.signupUser = function (req, res) {
           res.sendStatus(500);
         } else {
           //user successfully signed up, now login user automatically
-          req.session.user = user;
-          res.sendStatus(200);
+          req.session.username = user.username;
+          res.json({username: user.username});
         }
       });
     }
@@ -153,6 +152,7 @@ exports.savePackageEntry = function (req, res) {
                      User Handlers
 **************************************/
 exports.getUserInfo = function (req, res) {
+  console.log(req.session);
   var id = req.params.id;
   helpers.findUserById(id, function (err, user) {
     if (err) {

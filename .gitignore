@@ -2,3 +2,4 @@ node_modules/
 client/assets/vendor/
 **/.DS_STORE
 server/config/authKeys.js
+.DS_Store
