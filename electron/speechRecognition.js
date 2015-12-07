@@ -3,6 +3,11 @@ var exec = require('child_process').exec;
 //used to communicate between main process and renderer process
 var ipcRenderer = require('electron').ipcRenderer;
 var listening = true;
+var matchingFunctions = require('./matchAlgorithm/matchingAlgorithm.js');
+
+var fileInfo = matchingFunctions.readFile();
+// var filePath = fileInfo.commandPath;
+// var fileCommands = fileInfo.commands;
 
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
@@ -16,12 +21,17 @@ if (!('webkitSpeechRecognition' in window)) {
 
   recognition.onresult = function (event) {
     //get the user command
-    var userCommand = event.results[0][0].transcript;
-    console.log("Command: ", userCommand);
+    var transcript = event.results[0][0].transcript;
+    var confidence = event.results[0][0].confidence;
 
+    var userCommand = {score: confidence,
+      term: transcript};
+
+    var command = matchingFunctions.cmdUtil(userCommand, fileInfo);
+    console.log("COMMAND: ", command);
     //execute user command
     //in final product, we have to match this user command to a shell command
-    exec(userCommand, function (error, stdout, stderr) {
+    exec(command, function (error, stdout, stderr) {
       if (error) {
         throw new Error(error);
       }
