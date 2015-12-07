@@ -15,7 +15,6 @@
     function parse (results) {
       return results.data;
     }
-
     /**
      * Makes a get request
      *

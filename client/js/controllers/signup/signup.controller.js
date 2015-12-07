@@ -12,11 +12,17 @@
         username: self.username,
         password: self.password
       }).then(function (result) {
-        console.log(result);
         // TODO: if err, show err, else redirect
+        self.username = '';
+        self.password = '';
+        if (result.error) {
+          console.log('error: ', result.error);
+        } else {
+          console.log('result: ', result);
+          $state.go('main');
+        }
         // TODO: User page
         // refactor to jwt
-        $state.go('main');
       });
     };
 

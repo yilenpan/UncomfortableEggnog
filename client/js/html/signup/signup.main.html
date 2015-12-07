@@ -1,7 +1,37 @@
 <div class="row" ng-controller="SignUpCtrl as su">
-  <form ng-submit="su.post()">
+<form class="form-horizontal" ng-submit="su.post()">
+<fieldset>
+
+<!-- Title -->
+<legend>Sign Up</legend>
+
+<!-- Username input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Username</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="Enter your username" 
+  class="form-control input-md" ng-model="su.username">
+  <span class="help-block">{{}}</span>  
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="passwordinput">Password</label>
+  <div class="col-md-4">
+    <input id="passwordinput" name="passwordinput" type="password" 
+    placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
+    <span class="help-block">{{}}</span>
+  </div>
+  <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+</div>
+
+
+
+</fieldset>
+</form>
+</div>
+<!--   <form ng-submit="su.post()">
     <input ng-model="su.username" placeholder="Username" type="text">
     <input ng-model="su.password" placeholder="Password"type="text">
-    <input type="submit" value="Submit">
-  </form>
-</div>
+  </form> -->
