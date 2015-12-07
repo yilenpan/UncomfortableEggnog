@@ -60,6 +60,14 @@ UserSchema.pre('save', function (next, done) {
   }.bind(this));
 });
 
+PackageEntrySchema.pre('save', function (next, done) {
+  this.likes = 0;
+  this.dislikes = 0;
+  this.downloads = 0;
+  this.dateCreated = new Date();
+  next();
+});
+
 module.exports.db = db;
 module.exports.User = User;
 module.exports.PackageEntry = PackageEntry;
