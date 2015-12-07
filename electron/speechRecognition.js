@@ -12,14 +12,35 @@ var fileInfo = matchingFunctions.readFile();
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
+  var initRecognition = new webkitSpeechRecognition();
   var commandRecognition = new webkitSpeechRecognition();
 
   //default behavior is always listen so start loop
-  commandRecognition.onend = function (event) {
-    commandRecognition.start();
+  initRecognition.onend = function (event) {
+    initRecognition.start();
+  };
+
+  initRecognition.onresult = function (event) {
+    //get the user command
+    var transcript = event.results[0][0].transcript;
+    var confidence = event.results[0][0].confidence;
+    console.log("transcript: ", transcript);
+    if (transcript === 'hello world') {
+      console.log("INSIDE IF");
+      initRecognition.stop();
+      commandRecognition.start();
+      initRecognition.onend = function (event) {
+        initRecognition.stop();
+      };
+      commandRecognition.onend = function (event) {
+        commandRecognition.start();
+      };
+    }
+
   };
 
   commandRecognition.onresult = function (event) {
+    console.log("command listening");
     //get the user command
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
@@ -37,28 +58,18 @@ if (!('webkitSpeechRecognition' in window)) {
       }
       //TODO: depending of user command, do something with stdout
       console.log(stdout);
+      //start initRecognition again
+      initRecognition.start();
+      //make the loop so that it starts listening again
+      initRecognition.onend = function (event) {
+        initRecognition.start();
+      };
+      commandRecognition.onend = function (event) {
+        commandRecognition.stop();
+      };
     });
 
-    // shell commands tested to make sure it is possible to do it from JS
-
-    //get the weather test
-    // exec('open https://www.google.com/?gws_rd=ssl#q=weather+san+francisco', function (error, stdout, stderr) {
-    //   console.log(stdout);
-    // });
-
-    // //dim screen to 0%
-    // var dim = 'osascript -e \'tell application "System Events" to repeat 50 times\' -e \'key code 107\' -e \'delay 0.1\' -e \'end repeat\'';
-    // exec(dim, function (error, stdout, stderr) {
-    //   console.log(stdout);
-    // });
-
-    // //say kyle cho pro tip
-    // exec("say kyle cho pro tip" + userCommand, function (error, stdout, stderr) {
-    //   console.log(stdout);
-    // });
-
   };
-
 }
 
 //receive event emitted from main process (main.js) to start listening
@@ -66,7 +77,7 @@ ipcRenderer.on('listening', function (event) {
 
   console.log("Taser is listening!");
   //start listening
-  commandRecognition.start();
+  initRecognition.start();
 
 });
 
@@ -77,16 +88,16 @@ var toggleListen = function (event) {
     //register shortcut and stop listening
     ipcRenderer.send('registerShortcut', "true");
     //stop the infinite loop
-    commandRecognition.onend = function (event) {
-      commandRecognition.stop();
+    initRecognition.onend = function (event) {
+      initRecognition.stop();
     };
   } else {
     listening = true;
     //start always listening
     ipcRenderer.send('unregisterShortcut', "true");
     //start the infinite loop
-    commandRecognition.onend = function (event) {
-      commandRecognition.start();
+    initRecognition.onend = function (event) {
+      initRecognition.start();
     };
   }
 };
