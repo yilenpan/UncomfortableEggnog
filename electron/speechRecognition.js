@@ -6,8 +6,8 @@ var listening = true;
 var matchingFunctions = require('./matchAlgorithm/matchingAlgorithm.js');
 
 var fileInfo = matchingFunctions.readFile();
-var filePath = fileInfo.commandPath;
-var fileCommands = fileInfo.commands;
+// var filePath = fileInfo.commandPath;
+// var fileCommands = fileInfo.commands;
 
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
@@ -27,7 +27,7 @@ if (!('webkitSpeechRecognition' in window)) {
     var userCommand = {score: confidence,
       term: transcript};
 
-    var command = matchingFunctions.cmdUtil(userCommand, fileCommands, filePath);
+    var command = matchingFunctions.cmdUtil(userCommand, fileInfo);
     console.log("COMMAND: ", command);
 
     //execute shell command
