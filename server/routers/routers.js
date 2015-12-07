@@ -16,10 +16,7 @@ module.exports = function (router) {
 
   // TODO: Client side signup
   // router.get('/signup', controllers.signupUserForm);
-  router.post('/signup', function (req, res, next) {
-    console.log(req.body);
-    next();
-  }, controllers.signupUser);
+  router.post('/signup', controllers.signupUser);
 
 /*************************************
                      User Routes

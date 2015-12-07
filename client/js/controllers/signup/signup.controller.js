@@ -15,6 +15,7 @@
         console.log(result);
         // TODO: if err, show err, else redirect
         // TODO: User page
+        // refactor to jwt
         $state.go('main');
       });
     };

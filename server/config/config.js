@@ -1,7 +1,7 @@
 var bodyParser = require('body-parser');
 var helpers = require('../helpers/helpers.js');
 var session = require('express-session');
-var sessionSecret = process.env.sessionSecret || 'don\'t tase me bro';
+var sessionSecret = process.env.sessionSecret || require('./authKeys').sessionSecret;
 var db = require('../db/db.js');
 
 module.exports = function (app, express) {
@@ -11,9 +11,10 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(session({
+    secret: sessionSecret,
     resave: false,
-    saveUninitialized: false,
-    secret: sessionSecret
+    saveUninitialized: true,
+    cookie: { secure: true }
   }));
   app.use(express.static(__dirname + '/../../client'));
 
