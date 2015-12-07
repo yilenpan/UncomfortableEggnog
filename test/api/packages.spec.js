@@ -28,8 +28,8 @@ describe('Should talk to the db', function (done) {
       username: 'Fred',
       password: '1234'
     }, function (err, user) {
-      async.map(packages, function (package, cb) {
-        helpers.savePackage(user.username, package, cb);
+      async.map(packages, function (packageE, cb) {
+        helpers.savePackage(user.username, packageE, cb);
       }, function (err, data) {
         console.log(data);
         done();

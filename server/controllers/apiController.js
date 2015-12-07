@@ -38,7 +38,7 @@ module.exports.searchTerm = function (req, res) {
     } else {
       res.json(data);
     }
-  })
+  });
 };
 
 module.exports.getPackage = function (req, res) {
@@ -51,7 +51,7 @@ module.exports.getPackage = function (req, res) {
     }
   });
 };
-// 
+//
 // module.exports.addPackage = function (req, res) {
 //   // TODO: make sure that the session has the username
 //   var username = req.session.username || 'Fred';
