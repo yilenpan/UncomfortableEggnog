@@ -16,7 +16,6 @@ var regMatch = function (arr, term) {
 };
 
 var matching = function (input, phrasesPath) {
-
   var phrases = JSON.parse(fs.readFileSync(phrasesPath, 'utf8'));
 
   for (var key in phrases) {
@@ -38,7 +37,9 @@ var matching = function (input, phrasesPath) {
 
       console.log("term is: ", input.term, " close match found, phrase is :", key);
       return key;
-    } else if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(key)) > 0.8) {
+    }
+
+    if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(key)) > 0.8) {
       // console.log("do you mean: ", key, "? (y/n)");
       // console.log("assuming user said yes for testing purposes... ");
 
@@ -60,6 +61,7 @@ var commandUtil = function (input, fileInfo) {
   return fileInfo.commands[phrase];
 };
 
+//for testing
 // var commands = JSON.parse(fs.readFileSync('./commands.json', 'utf8'));
 // var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/parse-test.json', 'utf8'));
 
