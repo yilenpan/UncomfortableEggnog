@@ -52,7 +52,7 @@ if (!('webkitSpeechRecognition' in window)) {
       var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedPhrase + "\"?");
 
       if (guessCorrectly) {
-        //matchingFunctions.addPhrase(matchObj);
+        matchingFunctions.addPhrase(matchObj);
         executeShellComand(matchObj.command);
 
       } else {

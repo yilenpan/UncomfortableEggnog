@@ -1,4 +1,4 @@
-var cmdUtil = require('../../match/command-util').commandUtil;
+var commandUtil = require('../../match/command-util');
 var fs = require('fs');
 
 var readFile = function () {
@@ -15,6 +15,7 @@ var readFile = function () {
 
 module.exports = {
   readFile: readFile,
-  cmdUtil: cmdUtil
+  cmdUtil: commandUtil.commandUtil,
+  addPhrase: commandUtil.addPhrase
 };
 
