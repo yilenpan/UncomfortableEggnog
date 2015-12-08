@@ -6,14 +6,6 @@ var helpers = require('../helpers/helpers');
 /*************************************
                      Login Handlers
 **************************************/
-// TODO: Client side login
-// exports.loginUserForm = function (req, res) {
-
-// };
-
-// TODO: Client side signup
-// exports.signupUserForm = function (req, res) {
-// };
 
 exports.isLoggedIn = function (req, res) {
   return req.session ? !!req.session.user : false;
@@ -30,7 +22,7 @@ exports.loginUser = function (req, res) {
       res.sendStatus(500);
     } else if (!user) {
         console.log('User was not found.');
-        res.status(400).json({error: 'User was not found.'});
+        res.status(401).json({error: 'User was not found.'});
     } else {
   //check password match
         helpers.comparePassword(password, user.password, function (err, isMatch) {
@@ -39,10 +31,10 @@ exports.loginUser = function (req, res) {
             res.sendStatus(500);
           } else if (!isMatch) {
               console.log('User password did not match.');
-              res.status(400).json({error: 'User password did not match.'});
+              res.status(401).json({error: 'User password did not match.'});
           } else {
   //username and password matched on login: start session.
-              // req.session.user = user;
+              req.session.user = user;
               res.redirect('/');
             }
           });
@@ -64,7 +56,10 @@ exports.signupUser = function (req, res) {
   helpers.findUserByUsername(username, function (err, user) {
     if (user) {
       console.log('That username already exists.');
-      res.status(400).json({ error: 'That username already exists.' });
+      res.status(200).json({
+        errorType: 'username',
+        error: 'That username already exists.'
+      });
     } else {
       helpers.saveUser(username, password, function (err, user) {
         if (err) {
@@ -72,8 +67,7 @@ exports.signupUser = function (req, res) {
           res.sendStatus(500);
         } else {
           //user successfully signed up, now login user automatically
-          // req.session.user = user;
-          req.session.username = user.username;
+          req.session.user = user;
           res.json({username: user.username});
         }
       });
@@ -137,8 +131,9 @@ exports.fetchPackageByTitle = function (req, res) {
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
+  console.log(entry);
   //make req.session.user object === db user model?
-  console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
+  // console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
   helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');

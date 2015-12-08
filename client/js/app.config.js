@@ -27,6 +27,19 @@
           }
         }
       })
+      .state('createPackage', {
+        url: '/package/create',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/packageCreate/package.create.main.html',
+            controller: 'PackageCreateCtrl'
+          }
+        }
+      })
       .state('package', {
         url: '/package/:packageName',
         views: {
@@ -76,6 +89,19 @@
           main: {
             templateUrl: 'js/html/signup/signup.main.html',
             controller: 'SignUpCtrl'
+          }
+        }
+      })
+      .state('login', {
+        url: '/login',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/login/login.main.html',
+            controller: 'LoginCtrl'
           }
         }
       });
