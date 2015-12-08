@@ -79,7 +79,7 @@ exports.searchPackages = function (term, cb) {
    }, {
      score: { $meta: "textScore" }
    })
-   .limit(10)
+  //  .limit(10)
    .sort({ score: {$meta: "textScore"}})
    .exec(function (e,d) {
      cb(e, d);
