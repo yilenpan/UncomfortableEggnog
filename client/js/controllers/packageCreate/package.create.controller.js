@@ -26,7 +26,6 @@
         return commands;
       }, {});
       post('/packages', {
-        username: 'Fred', //TODO: REMOVE
         title: self.title,
         description: self.description,
         packageContents: self.packageContents

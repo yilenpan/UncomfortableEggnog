@@ -2,6 +2,7 @@
 var db = require('../db/db.js');
 var helpers = require('../helpers/helpers.js');
 var controllers = require('../controllers/controllers.js');
+var verifyUser = require('../middleware/middleware').verifyUser;
 
 module.exports = function (router) {
 
@@ -30,7 +31,7 @@ module.exports = function (router) {
   **************************************/
   router.get('/packages', controllers.fetchPackages);
   // router.get('/packages/:id', controllers.fetchPackageById);
-  router.post('/packages', controllers.savePackageEntry);
+  router.post('/packages', verifyUser, controllers.savePackageEntry);
 
 
   //======Default Route=========
