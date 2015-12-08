@@ -20,6 +20,17 @@ module.exports.searchTerm = function (req, res) {
   });
 };
 
+module.exports.getUserPackages = function (req, res) {
+  var name = req.params.userName;
+  helpers.findPackagesByUsername(name, function (err, packages) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json(packages);
+    }
+  });
+};
+
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
   console.log(title);

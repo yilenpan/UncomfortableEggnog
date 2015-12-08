@@ -40,7 +40,7 @@ describe('Should talk to the db', function (done) {
     });
   });
 
-  xit('should add create a package and we should be able to find it', function (done) {
+  it('should add create a package and we should be able to find it', function (done) {
     helpers.savePackage('Fred', {
       title: 'Kyle Cho Package',
       description: 'kyle cho\'s personal commands',
@@ -75,7 +75,7 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
-  xit('should return search results for search', function (done) {
+  it('should return search results for search', function (done) {
     request(app)
       .post('/api/search')
       .send({
@@ -89,7 +89,7 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
-  xit('should return all packages from user', function (done) {
+  it('should return all packages from user', function (done) {
     request(app)
       .get('/api/users/Fred/packages')
       .expect(200)
@@ -97,7 +97,25 @@ describe('Should talk to the db', function (done) {
         var json = data.body;
         expect(json).to.be.an('array');
         expect(json.length).to.equal(30);
-
+        done();
+      });
+  });
+  it('should let you edit packages', function (done) {
+    var packageEdit = packages[10];
+    packageEdit.title = "KyleChoAwesome";
+    request(app)
+      .post('/api/package/10 Dev Package/edit')
+      .send(packageEdit)
+      .expect(201)
+      .end(function (err, data) {
+        request(app)
+          .get('/api/package/KyleChoAwesome')
+          .expect(200)
+          .end(function (err, data) {
+            var json = data.body;
+            expect(json.title).to.equal(packageEdit.title);
+            done();
+          });
       });
   });
 

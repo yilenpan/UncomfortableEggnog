@@ -114,7 +114,7 @@ exports.findPackagesByUsername = function (username, cb) {
       console.log(err);
       cb(err);
     } else {
-      db.PackageEntry.find({userId: user._id}, cb);
+      exports.findPackagesByUserId(user._id, cb);
     }
   });
 };
