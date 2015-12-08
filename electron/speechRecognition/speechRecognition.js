@@ -48,12 +48,6 @@ if (!('webkitSpeechRecognition' in window)) {
     //get the shell command using the matching algorithm
     var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
 
-    matchObj = {
-      command: "open /Applications/Sublime\\ Text\\ 2.app",
-      guessedPhrase: "open sublime",
-      exact: true
-    };
-
     if (!matchObj.exact) {
       var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedPhrase + "\"?");
 
