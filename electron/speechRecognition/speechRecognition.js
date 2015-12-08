@@ -83,7 +83,7 @@ ipcRenderer.on('listening', function (event) {
 });
 
 var executeShellComand = function (shellCommand) {
-  exec(shellCommand, function (error, stdout, stderr) {
+  exec("osascript -e 'tell application \"iTunes\" to play'", function (error, stdout, stderr) {
     console.log("executed shell command");
 
     //start prefixRecognition again now that the command has been executed
