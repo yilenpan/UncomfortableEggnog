@@ -26,11 +26,11 @@ var addPhrase = function (newPhraseObj) {
   var phrases = JSON.parse(fs.readFileSync(newPhraseObj.phrasesPath, 'utf8'));
 
   //push in new phrase
-  phrases[newPhraseObj.phrase].push(newPhraseObj.inputphrase);
+  phrases[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
 
   // write back to phrases
   fs.writeFileSync(newPhraseObj.phrasesPath, JSON.stringify(phrases), 'utf8');
-  console.log("saving ", newPhraseObj.inputphrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
+  console.log("saving ", newPhraseObj.inputPhrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
 };
 
 //split input phrase into prefix and variable
