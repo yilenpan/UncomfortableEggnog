@@ -3,5 +3,13 @@
  "dim screen": "osascript -e 'tell application \"System Events\" to repeat 10 times' -e 'key code 107' -e 'delay 0.1' -e 'end repeat'",
  "open": "open /Applications/",
  "list folders": "ls",
+ "volume down": "osascript -e 'display notification \"Volume Down\" with title \"Volume\"'",
+ "volume up": "osascript -e 'display notification \"Volume Up\" with title \"Volume\"'",
+ "volume off": "osascript -e 'display notification \"Volume Off\" with title \"Volume\"'",
+ "Shut up": "osascript -e 'display notification \"Volume Off - jeez\" with title \"Volume\"'",
+ "Play": "osascript -e 'display notification \"Playing song...\" with title \"spotify\"'",
+ "Youtube": "open https://www.youtube.com/results?search_query=",
+ "shutdown": "osascript -e 'display notification \"Volume Up\" with title \"Volume\"'",
+ "google": "open https://www.google.com/?q=",
  "null": ""
 }

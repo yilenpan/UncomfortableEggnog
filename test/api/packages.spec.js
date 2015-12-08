@@ -89,4 +89,16 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
+  xit('should return all packages from user', function (done) {
+    request(app)
+      .get('/api/users/Fred/packages')
+      .expect(200)
+      .end(function (err, data) {
+        var json = data.body;
+        expect(json).to.be.an('array');
+        expect(json.length).to.equal(30);
+
+      });
+  });
+
 });
