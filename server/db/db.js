@@ -42,6 +42,19 @@ var PackageEntrySchema = new mongoose.Schema({
   }
 });
 
+// ==== Search ======
+
+PackageEntrySchema.index({
+  "$**": 'text'
+}, {
+  name: "TextIndex",
+  weights: {
+    title: 10,
+    description: 3
+  }
+});
+
+
 //===========Models===========
 var User = mongoose.model('User', UserSchema);
 var PackageEntry = mongoose.model('PackageEntry', PackageEntrySchema);
@@ -58,6 +71,14 @@ UserSchema.pre('save', function (next, done) {
       next();
     }
   }.bind(this));
+});
+
+PackageEntrySchema.pre('save', function (next, done) {
+  this.likes = 0;
+  this.dislikes = 0;
+  this.downloads = 0;
+  this.dateCreated = new Date();
+  next();
 });
 
 module.exports.db = db;

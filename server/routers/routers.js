@@ -30,7 +30,7 @@ module.exports = function (router) {
   **************************************/
   router.get('/packages', controllers.fetchPackages);
   router.get('/packages/:id', controllers.fetchPackageById);
-  router.post('/packages', controllers.checkUser, controllers.savePackageEntry);
+  router.post('/packages', /*controllers.checkUser,*/ controllers.savePackageEntry);
 
 
   //======Default Route=========
