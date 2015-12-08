@@ -6,14 +6,6 @@ var helpers = require('../helpers/helpers');
 /*************************************
                      Login Handlers
 **************************************/
-// TODO: Client side login
-// exports.loginUserForm = function (req, res) {
-
-// };
-
-// TODO: Client side signup
-// exports.signupUserForm = function (req, res) {
-// };
 
 exports.isLoggedIn = function (req, res) {
   return req.session ? !!req.session.user : false;
@@ -139,8 +131,9 @@ exports.fetchPackageByTitle = function (req, res) {
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
+  console.log(entry);
   //make req.session.user object === db user model?
-  console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
+  // console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
   helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');

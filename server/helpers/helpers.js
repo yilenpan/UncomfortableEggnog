@@ -51,7 +51,6 @@ exports.saveUser = function (username, password, cb) {
     password: password,
     packages: []
   });
-  console.log(user);
   user.save(cb);
 };
 
@@ -69,11 +68,26 @@ exports.findPackageById = function (id, cb) {
 };
 
 exports.findPackageEntries = function (cb) {
-  db.PackageEntry.find({}, cb);
+  db.PackageEntry.find({}).sort({
+    "likes": -1
+  }).limit(10).exec(cb);
+};
+
+exports.searchPackages = function (term, cb) {
+   db.PackageEntry.find({
+     $text: { $search: term }
+   }, {
+     score: { $meta: "textScore" }
+   })
+  //  .limit(10)
+   .sort({ score: {$meta: "textScore"}})
+   .exec(function (e,d) {
+     cb(e, d);
+   });
+
 };
 
 exports.savePackage = function (user, entry, cb) {
-  console.log('trying to save... ' + user + ' ,' + entry);
   exports.findUserByUsername(user, function (err, user) {
     if (err) {
       console.log('Error finding user.');
@@ -86,15 +100,7 @@ exports.savePackage = function (user, entry, cb) {
           console.log('Error saving package.');
           cb(err);
         } else {
-          user.packages.push(entry._id);
-          user.save(function (err, entry) {
-            if (err) {
-              console.log('Error updating user.');
-              cb(err);
-            } else {
-              cb(err, entry);
-            }
-          });
+          cb(null, entry);
         }
       });
     }
