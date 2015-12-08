@@ -18,7 +18,7 @@
   }
 
   function errorHandler (results) {
-    console.log(results);
+    console.log("error :", results);
     return results.data;
   }
 
@@ -33,7 +33,7 @@
       return $http({
         method: 'GET',
         url: url
-      }).then(parse);
+      }).then(parse, errorHandler);
     }
 
     /**

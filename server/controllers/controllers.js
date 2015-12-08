@@ -70,7 +70,10 @@ exports.signupUser = function (req, res) {
       helpers.saveUser(username, password, function (err, user) {
         if (err) {
           console.log('There was an error saving user.');
-          res.sendStatus(500);
+          res.status(500).json({
+            errorType: 'userSave',
+            error: 'There was an error saving user.'
+          });
         } else {
           //user successfully signed up, now login user automatically
           req.session.user = user;
