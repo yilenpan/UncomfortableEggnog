@@ -64,7 +64,10 @@ exports.signupUser = function (req, res) {
   helpers.findUserByUsername(username, function (err, user) {
     if (user) {
       console.log('That username already exists.');
-      res.status(200).json({ error: 'That username already exists.' });
+      res.status(200).json({
+        errorType: 'username',
+        error: 'That username already exists.'
+      });
     } else {
       helpers.saveUser(username, password, function (err, user) {
         if (err) {

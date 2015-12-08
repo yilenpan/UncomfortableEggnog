@@ -15,7 +15,9 @@
         // TODO: if err, show err, else redirect
         self.username = '';
         self.password = '';
-        if (result.error) {
+        if (result.errorType === 'username') {
+          console.log(result.error);
+          self.usernameError = result.error;
           console.log('error: ', result.error);
         } else {
           console.log('result: ', result);

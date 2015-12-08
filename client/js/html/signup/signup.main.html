@@ -13,12 +13,12 @@
       <label class="col-sm-2 control-label" for="username">First Name</label>  
       <div class="col-sm-4">
         <input id="textinput" name="textinput" type="text" placeholder="First Name" 
-            class="form-control input-md" ng-model="su.username">
+            class="form-control input-md" ng-model="su.firstname">
       </div>
       <label class="col-sm-2 control-label" for="textinput">Last Name</label>  
       <div class="col-sm-4">
         <input id="textinput" name="textinput" type="text" placeholder="Last Name" 
-            class="form-control input-md" ng-model="su.username">
+            class="form-control input-md" ng-model="su.lastname">
       </div> 
     </div>
   </div>
@@ -31,8 +31,8 @@
   <div class="col-md-6">
     <input id="textinput" name="textinput" type="text" placeholder="Enter your username" 
     class="form-control input-md" ng-model="su.username">
+  <span class="help-block alert-danger">{{su.usernameError}}</span>  
   </div>
-  <span class="help-block">{{}}</span>  
   </div>
 </div>
 
