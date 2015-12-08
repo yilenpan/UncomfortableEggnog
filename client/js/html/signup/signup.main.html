@@ -1,4 +1,3 @@
-<link rel='stylesheet' href='js/html/signup/styles.css'>
 <div ng-controller="SignUpCtrl as su">
 <form class="form-horizontal" ng-submit="su.post()" role="form">
 <fieldset>
@@ -8,7 +7,7 @@
 
 <!-- Name input-->
 <div class="form-group">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="form-group row">
       <label class="col-sm-2 control-label" for="username">First Name</label>  
       <div class="col-sm-4">
@@ -28,7 +27,7 @@
 <div class="form-group">
   <div class="col-md-9">
   <label class="col-md-3 control-label" for="textinput">Username</label>  
-  <div class="col-md-6">
+  <div class="col-md-9">
     <input id="textinput" name="textinput" type="text" placeholder="Enter your username" 
     class="form-control input-md" ng-model="su.username">
   <span class="help-block alert-danger">{{su.usernameError}}</span>  
@@ -40,7 +39,7 @@
 <div class="form-group">
   <div class="col-md-9">
   <label class="col-md-3 control-label" for="passwordinput">Password</label>
-    <div class="col-md-6">
+    <div class="col-md-9">
     <input id="passwordinput" name="passwordinput" type="password" 
     placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
     <span class="help-block">{{}}</span>
