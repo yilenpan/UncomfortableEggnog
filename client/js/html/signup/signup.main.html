@@ -1,5 +1,6 @@
+<link rel="stylesheet" href="assets/styles/signup/signup.styles.css">
 <div ng-controller="SignUpCtrl as su">
-  <form class="form-horizontal" ng-submit="su.post()" role="form" novalidate>
+  <form class="form-horizontal form-signup" name="signupForm" ng-submit="su.post()" role="form" novalidate>
     <fieldset style="width: 50%">
     <!-- Title -->
       <legend>Sign Up</legend>
@@ -10,7 +11,8 @@
           <div class="row">
             <div class="col-md-6">
               <label class="control-label" for="firstname">First Name*</label>  
-              <input type="text" placeholder="First Name" class="form-control input-md" ng-model="su.firstname">
+              <input type="text" placeholder="First Name" class="form-control input-md" 
+              ng-model="su.firstname"> 
             </div>
             <div class="col-md-6">
               <label class="control-label" for="lastname">Last Name*</label>  
@@ -24,27 +26,34 @@
       <div class="form-group">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" ng-class='signupForm.website.$dirty && signupForm.website.$invalid ? "has-error" : "" '>
               <label class="control-label" for="Website">Website</label>  
-              <input type="text" placeholder="www.yourwebsite.com" class="form-control input-md" ng-model="su.website">
+              <input type="url" name="website" placeholder="www.yourwebsite.com" class="form-control input-md" ng-model="su.website">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" ng-class='signupForm.email.$dirty && signupForm.email.$invalid ? "has-error" : "" '>
               <label class="control-label" for="lastname">Email*</label>  
-              <input type="email" placeholder="Email" class="form-control input-md" ng-model="su.email">
+              <input type="email" name="email" ng-required="email" placeholder="Email" class="form-control input-md" ng-model="su.email" required>
             </div> 
           </div>
         </div>
       </div>
 
       <!-- Username input-->
-      <div class="form-group">
+      <div class="form-group" ng-class='signupForm.username.$dirty && signupForm.username.$invalid ? "has-error" : "" '>
         <div class="col-md-12">
-            <label class="control-label" for="textinput">Username*</label>  
-            <input id="textinput" name="textinput" type="text" placeholder="Enter your desired username" 
-              class="form-control input-md" ng-model="su.username">
-              <div>
-                <span class="help-block alert-danger fade in" data-dismiss="alert">{{su.usernameError}}</span>  
-              </div>
+          <label class="control-label" for="textinput">Username*</label>  
+          <input id="textinput" name="username" type="text" placeholder="Enter your desired username" 
+            class="form-control input-md" ng-model="su.username" 
+            ng-minlength="4" ng-maxlength="12" ng-required="boolean">
+          <div>
+          <div role="alert">
+            <span class="text-danger" ng-show="signupForm.username.$error.minlength">
+              Username is too short (4 to 12 characters allowed)</span>
+            <span class="text-danger" ng-show="signupForm.username.$error.maxlength">
+              Username is too long (4 to 12 characters allowed)</span>
+          </div>
+            <span class="help-block alert-danger fade in" data-dismiss="alert">{{su.usernameError}}</span>  
+          </div>
         </div>
       </div>
 
@@ -54,14 +63,14 @@
           <div class="row">
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Password*</label>
-              <input id="passwordinput" name="passwordinput" type="password" 
+              <input name="passwordinput" type="password" 
                   placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
               <span class="help-block">{{}}</span>
             </div>
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Repeat Password</label>
-              <input id="passwordinput" name="passwordinput" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
+              <input name="passwordinput" type="password" 
+                  placeholder="Enter your password" class="form-control input-md" ng-model="su.passwordRepeat">
               <span class="help-block">{{}}</span>
             </div>    
           </div>
@@ -76,7 +85,7 @@
               <span class="text-danger">{{su.defaultErrorMsg}}</span>
             </div>
           <div class="col-md-2" style="padding-right: 0; text-align:right">
-              <span>* required</span>
+              <span><strong>* required</strong></span>
           </div>
         </div>
       </div>

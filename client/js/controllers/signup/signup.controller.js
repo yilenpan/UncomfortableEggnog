@@ -8,6 +8,7 @@
   function SignUpCtrl (ApiFactory, $state) {
     var self = this;
     self.user = {};
+    self.validity = '';
     self.post = function () {
       console.log(self.user);
       ApiFactory.post('/signup', {
