@@ -30,7 +30,7 @@ exports.loginUser = function (req, res) {
       res.sendStatus(500);
     } else if (!user) {
         console.log('User was not found.');
-        res.status(400).json({error: 'User was not found.'});
+        res.status(401).json({error: 'User was not found.'});
     } else {
   //check password match
         helpers.comparePassword(password, user.password, function (err, isMatch) {
@@ -39,10 +39,10 @@ exports.loginUser = function (req, res) {
             res.sendStatus(500);
           } else if (!isMatch) {
               console.log('User password did not match.');
-              res.status(400).json({error: 'User password did not match.'});
+              res.status(401).json({error: 'User password did not match.'});
           } else {
   //username and password matched on login: start session.
-              // req.session.user = user;
+              req.session.user = user;
               res.redirect('/');
             }
           });
@@ -64,7 +64,10 @@ exports.signupUser = function (req, res) {
   helpers.findUserByUsername(username, function (err, user) {
     if (user) {
       console.log('That username already exists.');
-      res.status(400).json({ error: 'That username already exists.' });
+      res.status(200).json({
+        errorType: 'username',
+        error: 'That username already exists.'
+      });
     } else {
       helpers.saveUser(username, password, function (err, user) {
         if (err) {
@@ -72,8 +75,7 @@ exports.signupUser = function (req, res) {
           res.sendStatus(500);
         } else {
           //user successfully signed up, now login user automatically
-          // req.session.user = user;
-          req.session.username = user.username;
+          req.session.user = user;
           res.json({username: user.username});
         }
       });
