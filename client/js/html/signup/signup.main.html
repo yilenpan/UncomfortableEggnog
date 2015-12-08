@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="assets/styles/signup/signup.styles.css">
 <div ng-controller="SignUpCtrl as su">
-  <form class="form-horizontal form-signup" name="signupForm" ng-submit="su.post()" role="form" novalidate>
+  <form class="form-horizontal form-signup" name="signupForm" ng-submit="su.validateAndPost()" role="form" novalidate>
     <fieldset style="width: 50%">
     <!-- Title -->
       <legend>Sign Up</legend>
@@ -11,12 +11,12 @@
           <div class="row">
             <div class="col-md-6">
               <label class="control-label" for="firstname">First Name*</label>  
-              <input type="text" placeholder="First Name" class="form-control input-md" 
-              ng-model="su.firstname"> 
+              <input type="text" placeholder="First Name" name="first name" class="form-control input-md" 
+              ng-model-options="{ updateOn: 'blur' }" ng-model="su.firstname" required> 
             </div>
             <div class="col-md-6">
               <label class="control-label" for="lastname">Last Name*</label>  
-              <input type="text" placeholder="Last Name" class="form-control input-md" ng-model="su.lastname">
+              <input type="text" placeholder="Last Name" name="last name" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.lastname" required>
             </div> 
           </div>
         </div>
@@ -26,15 +26,24 @@
       <div class="form-group">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-8" ng-class='signupForm.website.$dirty && signupForm.website.$invalid ? "has-error" : "" '>
+            <div class="col-md-8" ng-class='signupForm.URL.$dirty && signupForm.URL.$invalid ? "has-error" : "" '>
               <label class="control-label" for="Website">Website</label>  
-              <input type="url" name="website" placeholder="www.yourwebsite.com" class="form-control input-md" ng-model="su.website">
+              <input type="url" name="URL" placeholder="www.yourwebsite.com" class="form-control input-md" 
+                ng-model-options="{ updateOn: 'blur' }" ng-model="su.website"/>
             </div>
-            <div class="col-md-4" ng-class='signupForm.email.$dirty && signupForm.email.$invalid ? "has-error" : "" '>
+            <div class="col-md-4" ng-class='signupForm.email.$touched && signupForm.email.$invalid ? "has-error" : "" '>
+            <!-- ng-class='signupForm.email.$dirty && signupForm.email.$valid ? "has-success" : "" '> -->
               <label class="control-label" for="lastname">Email*</label>  
-              <input type="email" name="email" ng-required="email" placeholder="Email" class="form-control input-md" ng-model="su.email" required>
+              <input type="email" name="email"  placeholder="Email" class="form-control input-md" 
+                ng-model-options="{ updateOn: 'blur' }" ng-model="su.email" required/>
             </div> 
           </div>
+            <div>  
+              <span class="text-danger" ng-show="signupForm.URL.$invalid">
+               {{su.errorMessages.URL}}</span>
+             <span class="text-danger" ng-show="signupForm.email.$invalid && su.email.length !== 0" style="float:right">
+               {{su.errorMessages.email}}</span>
+            </div>
         </div>
       </div>
 
@@ -43,22 +52,22 @@
         <div class="col-md-12">
           <label class="control-label" for="textinput">Username*</label>  
           <input id="textinput" name="username" type="text" placeholder="Enter your desired username" 
-            class="form-control input-md" ng-model="su.username" 
-            ng-minlength="4" ng-maxlength="12" ng-required="boolean" ng-pattern="/^[A-Za-z0-9_]{1,15}$/">
+            class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.username" 
+            ng-minlength="4" ng-maxlength="12" ng-pattern="/^[A-Za-z0-9_]{1,15}$/" required />
           <div>
             <!-- refactor this to warning block directive -->
           <div role="alert">
             <div>  
               <span class="text-danger" ng-show="signupForm.username.$error.minlength">
-                Username is too short (4 to 12 characters allowed).</span>
+                {{su.errorMessages.minlength}}</span>
             </div>
             <div> 
               <span class="text-danger" ng-show="signupForm.username.$error.maxlength">
-                Username is too long (4 to 12 characters allowed).</span>
+                {{su.errorMessages.maxlength}}.</span>
             </div>    
             <div>
               <span class="text-danger" ng-show="signupForm.username.$dirty && signupForm.username.$error.pattern">
-                Please only use letters, numbers, and/or underscores in your username (no whitespaces allowed).</span>
+                {{su.errorMessages.pattern}}</span>
             </div>  
           </div>
             <span class="help-block alert-danger fade in" data-dismiss="alert">{{su.usernameError}}</span>  
@@ -72,14 +81,15 @@
           <div class="row">
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Password*</label>
-              <input name="passwordinput" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
+              <input name="password" type="password" 
+                  placeholder="Enter your password" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.password" required>
               <span class="help-block">{{}}</span>
             </div>
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Repeat Password</label>
-              <input name="passwordinput" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model="su.passwordRepeat">
+              <input name="password" type="password" 
+                  placeholder="Enter your password" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" 
+                  ng-model="su.passwordRepeat" />
               <span class="help-block">{{}}</span>
             </div>    
           </div>
@@ -90,18 +100,21 @@
             <div class="col-md-3" style="padding-left: 0">
               <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
             </div>
-            <div class="col-md-7">
-              <span class="text-danger">{{su.defaultErrorMsg}}</span>
-            </div>
-          <div class="col-md-2" style="padding-right: 0; text-align:right">
-              <span><strong>* required</strong></span>
+            <div class="col-md-7 container error-display-container"> 
+              
+              <div class="col-md-12" ng-repeat="err in su.errorList">
+                <span class="text-danger">{{err}}</span>
+              </div>
           </div>
+            <div class="col-md-2" style="padding-right: 0; text-align:right">
+                <span><strong>* required</strong></span>
+            </div>
         </div>
       </div>
     </fieldset>
   </form>
 </div>
 <!--   <form ng-submit="su.post()">
-    <input ng-model="su.username" placeholder="Username" type="text">
-    <input ng-model="su.password" placeholder="Password"type="text">
+    <input ng-model-options="{ updateOn: 'blur' }" ng-model="su.username" placeholder="Username" type="text">
+    <input ng-model-options="{ updateOn: 'blur' }" ng-model="su.password" placeholder="Password"type="text">
   </form> -->
