@@ -44,13 +44,22 @@
           <label class="control-label" for="textinput">Username*</label>  
           <input id="textinput" name="username" type="text" placeholder="Enter your desired username" 
             class="form-control input-md" ng-model="su.username" 
-            ng-minlength="4" ng-maxlength="12" ng-required="boolean">
+            ng-minlength="4" ng-maxlength="12" ng-required="boolean" ng-pattern="/^[A-Za-z0-9_]{1,15}$/">
           <div>
+            <!-- refactor this to warning block directive -->
           <div role="alert">
-            <span class="text-danger" ng-show="signupForm.username.$error.minlength">
-              Username is too short (4 to 12 characters allowed)</span>
-            <span class="text-danger" ng-show="signupForm.username.$error.maxlength">
-              Username is too long (4 to 12 characters allowed)</span>
+            <div>  
+              <span class="text-danger" ng-show="signupForm.username.$error.minlength">
+                Username is too short (4 to 12 characters allowed).</span>
+            </div>
+            <div> 
+              <span class="text-danger" ng-show="signupForm.username.$error.maxlength">
+                Username is too long (4 to 12 characters allowed).</span>
+            </div>    
+            <div>
+              <span class="text-danger" ng-show="signupForm.username.$dirty && signupForm.username.$error.pattern">
+                Please only use letters, numbers, and/or underscores in your username (no whitespaces allowed).</span>
+            </div>  
           </div>
             <span class="help-block alert-danger fade in" data-dismiss="alert">{{su.usernameError}}</span>  
           </div>
