@@ -1,7 +1,7 @@
 {"kyle cho pro tip": "say kyle cho pro tip",
  "check the": "open https://www.google.com/?gws_rd=ssl#q=",
  "dim screen": "osascript -e 'tell application \"System Events\" to repeat 10 times' -e 'key code 107' -e 'delay 0.1' -e 'end repeat'",
- "open sublime": "open /Applications/Sublime\\ Text\\ 2.app",
+ "open": "open /Applications/",
  "list folders": "ls",
  "null": ""
 }
