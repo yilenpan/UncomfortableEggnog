@@ -48,7 +48,9 @@ var matching = function (commandObj) {
       commandObj.phrase = key;
       return commandObj;
     }
+  }
 
+  for (var key in phrases) {
     if (natural.JaroWinklerDistance(commandObj.prefix, key) > threshold) {
       console.log("term is: ", commandObj.inputPhrase, " possible close match found");
       commandObj.exact = false;
