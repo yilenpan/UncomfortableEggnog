@@ -63,8 +63,8 @@ exports.findPackageByTitle = function (title, cb) {
   db.PackageEntry.find({title: title}, cb);
 };
 
-exports.findPackageById = function (id, cb) {
-  db.PackageEntry.findById({_id: id}, cb);
+exports.findPackagesByUserId = function (id, cb) {
+  db.PackageEntry.find({userId: id}, cb);
 };
 
 exports.findPackageEntries = function (cb) {
@@ -97,7 +97,7 @@ exports.savePackage = function (user, entry, cb) {
       var packageEntry = new db.PackageEntry(entry);
       packageEntry.save(function (err, entry) {
         if (err) {
-          console.log('Error saving package.');
+          console.log('Error saving package.' + err);
           cb(err);
         } else {
           cb(null, entry);

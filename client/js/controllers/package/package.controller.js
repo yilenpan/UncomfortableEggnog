@@ -1,9 +1,9 @@
 (function () {
-  var dummyUser = {
-    "username": "Fred",
-    "email": "fred@hackreactor.com",
-    "github": "www.github.com/fred"
-  };
+  // var dummyUser = {
+  //   "username": "Fred",
+  //   "email": "fred@hackreactor.com",
+  //   "github": "www.github.com/fred"
+  // };
   'use strict';
   angular.module('app')
     .controller('PackageCtrl', PackageCtrl);
@@ -21,10 +21,8 @@
     var init = function () {
       get('/api/package/' + packageName)
         .then(function (data) {
-          // TODO: data.packageInfo
-          // TODO: data.userInfo
-          self.info = data;
-          self.user = dummyUser;
+          self.info = data.package;
+          self.user = data.user;
         });
     };
     self.toggleStar = function () {
