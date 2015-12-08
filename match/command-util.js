@@ -5,8 +5,14 @@ var fs = require('fs');
 var _ = require('underscore');
 
 var metaphone = natural.Metaphone;
+var Trie = natural.Trie;
 
-//match inputphrase and return  matching command
+var initialize = function () {
+  var trie = new Trie(false);
+  trie.addString("open");
+  trie.addStrings(["check the", "what is the", "look up the", "how is the"]);
+  return trie;
+};
 
 var regMatch = function (arr, term) {
   var regTerm = new RegExp(term, 'i'); // creates new regexp obj
@@ -15,51 +21,101 @@ var regMatch = function (arr, term) {
   });
 };
 
-var matching = function (input, phrasesPath) {
-  var phrases = JSON.parse(fs.readFileSync(phrasesPath, 'utf8'));
+var addPhrase = function (newPhraseObj) {
+  //read from phrasesPath
+  var phrases = JSON.parse(fs.readFileSync(newPhraseObj.phrasesPath, 'utf8'));
+
+  //push in new phrase
+  phrases[newPhraseObj.phrase].push(newPhraseObj.inputphrase);
+
+  // write back to phrases
+  fs.writeFileSync(newPhraseObj.phrasesPath, JSON.stringify(phrases), 'utf8');
+  console.log("saving ", newPhraseObj.inputphrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
+};
+
+//split input phrase into prefix and variable
+var findPrefix = function (input) {
+  return trie.findPrefix(input);
+};
+
+var matching = function (commandObj) {
+  var threshold = 0.8;
+  var phrases = JSON.parse(fs.readFileSync(commandObj.phrasesPath, 'utf8'));
 
   for (var key in phrases) {
-    if (regMatch(phrases[key], input.term)) {
-      console.log("term is: ", input.term, " exact match found, phrase is :", key);
-      return key;
+    if (regMatch(phrases[key], commandObj.prefix)) {
+      console.log("term is: ", commandObj.inputPhrase, " exact match found");
+      commandObj.phrase = key;
+      return commandObj;
     }
 
-    if (natural.JaroWinklerDistance(input.term, key) > 0.8) {
-      // console.log("do you mean: ", key, "? (y/n)");
-      // console.log("assuming user said yes for testing purposes... ");
-
-      phrases[key].push(input.term);
-
-      // when add new phrases
-      fs.writeFileSync(phrasesPath, JSON.stringify(phrases), 'utf8');
-
-      console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
-
-      console.log("term is: ", input.term, " close match found, phrase is :", key);
-      return key;
+    if (natural.JaroWinklerDistance(commandObj.prefix, key) > threshold) {
+      console.log("term is: ", commandObj.inputPhrase, " possible close match found");
+      commandObj.exact = false;
+      commandObj.phrase = key;
+      return commandObj;
     }
 
-    if (natural.JaroWinklerDistance(metaphone.process(input.term), metaphone.process(key)) > 0.8) {
-      // console.log("do you mean: ", key, "? (y/n)");
-      // console.log("assuming user said yes for testing purposes... ");
-
-      phrases[key].push(input.term);
-      fs.writeFileSync(phrasesPath, JSON.stringify(phrases), 'utf8');
-      console.log("saving ", input.term, "as acceptable phrase for \'", key, "\'");
-
-      console.log("term is: ", input.term, " phonetic match found, phrase is :", key);
-      return key;
+    if (natural.JaroWinklerDistance(metaphone.process(commandObj.prefix), metaphone.process(key)) > threshold) {
+      console.log("term is: ", commandObj.inputPhrase, " possible phonetic match found");
+      commandObj.exact = false;
+      commandObj.phrase = key;
+      return commandObj;
     }
   }
 
-  console.log("term is: ", input.term, " no match");
-  return null;
+  console.log("term is: ", commandObj.inputPhrase, " no match");
+  commandObj.exact = false;
+  commandObj.phrase = null;
+  return commandObj;
+};
+
+var formatVariable = function (prefix, variable) {
+  if (variable[0] === " ") {
+    variable = variable.substr(1);
+  }
+
+  if (prefix === 'open') {
+    variable = variable.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+    variable = variable.replace(/\ /g, "\\ ") + ".app";
+  }
+  return variable;
 };
 
 var commandUtil = function (input, fileInfo) {
-  var phrase = matching(input, fileInfo.phrasesPath);
-  return fileInfo.commands[phrase];
+  var commandObj = {
+    command: "",
+    exact: true,
+    phrase: "",
+    prefix: "",
+    variable: "",
+    inputPhrase: input.term,
+    phrasesPath: fileInfo.phrasesPath,
+    guessedPhrase: ""
+  };
+
+  var prefixArray = findPrefix(commandObj.inputPhrase);
+  if (prefixArray[0] !== null) {
+    commandObj.prefix = prefixArray[0];
+    commandObj.variable = prefixArray[1];
+  } else {
+    commandObj.prefix = prefixArray[1];
+  }
+
+  commandObj = matching(commandObj);
+  var phrase = commandObj.phrase;
+  commandObj.guessedPhrase = commandObj.phrase + commandObj.variable;
+
+  //add bash shell
+  commandObj.variable = formatVariable(commandObj.prefix, commandObj.variable);
+  commandObj.command = fileInfo.commands[phrase] + commandObj.variable;
+  console.log(commandObj);
+  return commandObj;
 };
+
+var trie = initialize();
 
 //for testing
 // var commands = JSON.parse(fs.readFileSync('./commands.json', 'utf8'));
@@ -67,9 +123,17 @@ var commandUtil = function (input, fileInfo) {
 
 // for (var i = 0; i < testObject.length; i++) {
 //   var command = commandUtil(testObject[i], {commands: commands, phrasesPath: './phrases.json'});
-//   console.log(command);
+//   // var command = commandUtil({
+  //           "score": 0.9855742454528809,
+  //           "term": "open sublime text 2"
+  //       }, {commands: commands, phrasesPath: './phrases.json'});
+
+  // open https://www.google.com/?gws_rd=ssl#q=weather+san+francisco
+  // console.log(command);
+//  addPhrase(command);
 // }
 
 module.exports.commandUtil = commandUtil;
 module.exports.matching = matching;
 module.exports.regMatch = regMatch;
+module.exports.addPhrase = addPhrase;
