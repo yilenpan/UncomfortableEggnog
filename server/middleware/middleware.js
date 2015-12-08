@@ -13,7 +13,7 @@ module.exports = {
           console.log(req.user);
           next();
         }
-      })
+      });
     } else {
       res.redirect('/');
     }

@@ -49,7 +49,7 @@ exports.saveUser = function (username, password, cb) {
   //assumes server controller checked if username already exists in db
   var user = new db.User({
     username: username,
-    password: password,
+    password: password
     // packages: []
   });
   user.save(cb);
@@ -94,7 +94,7 @@ exports.editPackage = function (req, cb) {
       _.extend(pkg, req.body);
       pkg.save(cb);
     } else {
-      cb({error: 'Not Your Package'})
+      cb({error: 'Not Your Package'});
     }
   });
 };
