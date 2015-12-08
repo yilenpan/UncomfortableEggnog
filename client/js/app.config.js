@@ -4,11 +4,7 @@
   angular.module('app')
     .config(config);
 
-    // search results
     // user page to set profile pic, contact info, change password
-    // login
-    // sign up
-    // add package view
 
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
   function config ($stateProvider, $urlRouterProvider) {
@@ -104,7 +100,21 @@
             controller: 'LoginCtrl'
           }
         }
+      })
+      .state('userPackages', {
+        url: '/users/:userName/packages',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/userPackages/userPackages.main.html',
+            controller: 'UserPackagesCtrl'
+          }
+        }
       });
+
   }
 
 })();

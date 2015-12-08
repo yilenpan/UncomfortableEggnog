@@ -51,7 +51,7 @@ module.exports.getPackage = function (req, res) {
 
 
 module.exports.editPackage = function (req, res) {
-  helpers.editPackage(req.body, function (err, packageEntry) {
+  helpers.editPackage(req, function (err, packageEntry) {
     if (err) {
       res.redirect('/');
     } else {

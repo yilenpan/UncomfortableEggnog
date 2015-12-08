@@ -19,12 +19,13 @@
           console.log(result.error);
           self.usernameError = result.error;
           console.log('error: ', result.error);
-        } else {
-          console.log('result: ', result);
+        } else if (result.token) {
+          console.log("inside controller" + result.token);
+          localStorage.setItem('token', result.token);
           $state.go('main');
+        } else {
+          $state.go('login');
         }
-        // TODO: User page
-        // refactor to jwt
       });
     };
 

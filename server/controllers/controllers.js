@@ -1,16 +1,17 @@
 
 //controllers are request handers that work with routes.
-
+var jwt = require('jsonwebtoken');
 var helpers = require('../helpers/helpers');
+var jwtKey = 'test';
 
 /*************************************
                      Login Handlers
 **************************************/
-
-exports.isLoggedIn = function (req, res) {
-  return req.session ? !!req.session.user : false;
-};
-
+//
+// exports.isLoggedIn = function (req, res) {
+//   return req.session ? !!req.session.user : false;
+// };
+//
 
 exports.loginUser = function (req, res) {
   var username = req.body.username;
@@ -33,9 +34,14 @@ exports.loginUser = function (req, res) {
               console.log('User password did not match.');
               res.status(401).json({error: 'User password did not match.'});
           } else {
-  //username and password matched on login: start session.
-              req.session.user = user;
-              res.redirect('/');
+              // TODO: jwt sign
+              var token = jwt.sign(user, jwtKey, {
+                expiresIn: 9999999
+              });
+              res.json({
+                success: true,
+                token: token
+              });
             }
           });
         }
@@ -67,8 +73,13 @@ exports.signupUser = function (req, res) {
           res.sendStatus(500);
         } else {
           //user successfully signed up, now login user automatically
-          req.session.user = user;
-          res.json({username: user.username});
+          var token = jwt.sign(user, jwtKey, {
+            expiresIn: 9999999
+          });
+          res.json({
+            success: true,
+            token: token
+          });
         }
       });
     }
@@ -149,7 +160,6 @@ exports.savePackageEntry = function (req, res) {
                      User Handlers
 **************************************/
 exports.getUserInfo = function (req, res) {
-  console.log(req.session);
   var id = req.params.id;
   helpers.findUserById(id, function (err, user) {
     if (err) {
@@ -161,10 +171,10 @@ exports.getUserInfo = function (req, res) {
   });
 };
 
-exports.checkUser = function (req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
+// exports.checkUser = function (req, res, next) {
+//   if (!exports.isLoggedIn(req)) {
+//     res.redirect('/login');
+//   } else {
+//     next();
+//   }
+// };

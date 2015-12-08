@@ -18,25 +18,40 @@ var packages = _.range(30).map(function (x) {
 });
 
 describe('Should talk to the db', function (done) {
+  var token;
+  before(function (done) {
+    db.User.remove({}, function (err) {
+      request(app)
+        .post('/signup')
+        .send({
+          username: 'Fred',
+          password: '1234'
+        })
+        .expect(200)
+        .end(function (err, data) {
+          token = data.body.token;
+          done();
+        });
+    });
+  });
 
   beforeEach(function (done) {
-    db.User.create({
-      username: 'Fred',
-      password: '1234'
-    }, function (err, user) {
-      async.map(packages, function (packageE, cb) {
-        helpers.savePackage(user.username, packageE, cb);
-      }, function (err, data) {
-        done();
-      });
+    async.map(packages, function (packageE, cb) {
+      helpers.savePackage('Fred', packageE, cb);
+    }, function (err, data) {
+      done();
     });
   });
 
   afterEach(function (done) {
+    db.PackageEntry.remove({}, function (err) {
+      done();
+    });
+  });
+
+  after(function (done) {
     db.User.remove({}, function (err) {
-      db.PackageEntry.remove({}, function (err) {
-        done();
-      });
+      done();
     });
   });
 
@@ -51,6 +66,7 @@ describe('Should talk to the db', function (done) {
     }, function (err, data) {
       request(app)
         .post('/api/search')
+        .set('token', token)
         .send({searchTerm: 'Cho'})
         .expect(200, function (err, data) {
           var json = data.body;
@@ -63,6 +79,7 @@ describe('Should talk to the db', function (done) {
   it('should retrieve the top10 packages in the db', function (done) {
     request(app)
       .get('/api/top10')
+      .set('token', token)
       .expect(200)
       .end(function (err, json) {
         json = json.body;
@@ -78,6 +95,7 @@ describe('Should talk to the db', function (done) {
   it('should return search results for search', function (done) {
     request(app)
       .post('/api/search')
+      .set('token', token)
       .send({
         searchTerm: '10'
       })
@@ -92,6 +110,7 @@ describe('Should talk to the db', function (done) {
   it('should return all packages from user', function (done) {
     request(app)
       .get('/api/users/Fred/packages')
+      .set('token', token)
       .expect(200)
       .end(function (err, data) {
         var json = data.body;
@@ -107,16 +126,18 @@ describe('Should talk to the db', function (done) {
       packageEdit.id = res._id;
       request(app)
         .post('/api/package/10 Dev Package/edit')
+        .set('token', token)
         .send(packageEdit)
         .expect(201)
         .end(function (err, data) {
-          expect(data.body.title).to.equal(packageEdit.title);
+          expect(data.body.title).to.equal("KyleChoAwesome");
           request(app)
-            .get('/api/package/' + packageEdit.title)
+            .get('/api/package/' + "KyleChoAwesome")
+            .set('token', token)
             .expect(200)
             .end(function (err, data) {
               var json = data.body;
-              expect(json.package.title).to.equal(packageEdit.title);
+              expect(json.package.title).to.equal("KyleChoAwesome");
               done();
             });
         });

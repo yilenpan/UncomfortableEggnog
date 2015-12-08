@@ -50,7 +50,7 @@ exports.saveUser = function (username, password, cb) {
   var user = new db.User({
     username: username,
     password: password,
-    packages: []
+    // packages: []
   });
   user.save(cb);
 };
@@ -86,12 +86,16 @@ exports.searchPackages = function (term, cb) {
    });
 };
 
-exports.editPackage = function (newPackage, cb) {
-  var id = newPackage.id;
-  delete newPackage.id;
+exports.editPackage = function (req, cb) {
+  var id = req.body.id;
+  var user = req.user;
   db.PackageEntry.findById(id, function (err, pkg) {
-    _.extend(pkg, newPackage);
-    pkg.save(cb);
+    if (pkg.userId.toString() === user._id) {
+      _.extend(pkg, req.body);
+      pkg.save(cb);
+    } else {
+      cb({error: 'Not Your Package'})
+    }
   });
 };
 

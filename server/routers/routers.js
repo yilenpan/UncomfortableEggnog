@@ -29,8 +29,8 @@ module.exports = function (router) {
                        Package Routes
   **************************************/
   router.get('/packages', controllers.fetchPackages);
-  router.get('/packages/:id', controllers.fetchPackageById);
-  router.post('/packages', /*controllers.checkUser,*/ controllers.savePackageEntry);
+  // router.get('/packages/:id', controllers.fetchPackageById);
+  router.post('/packages', controllers.savePackageEntry);
 
 
   //======Default Route=========

@@ -16,6 +16,12 @@
       return results.data;
     }
 
+    function checkToken () {
+      if (localStorage.getItem('token')) {
+        $http.defaults.headers.common.token = localStorage.getItem('token');
+      }
+    }
+
     /**
      * Makes a get request
      *
@@ -24,6 +30,7 @@
      */
 
     function get (url) {
+      checkToken();
       return $http({
         method: 'GET',
         url: url
@@ -39,6 +46,7 @@
      */
 
     function post (url, data) {
+      checkToken();
       return $http({
         method: 'POST',
         url: url,
