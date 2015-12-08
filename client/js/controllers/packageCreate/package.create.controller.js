@@ -3,9 +3,9 @@
   angular.module('app')
     .controller('PackageCreateCtrl', PackageCreateCtrl);
 
-  PackageCreateCtrl.$inject = ['ApiFactory'];
+  PackageCreateCtrl.$inject = ['ApiFactory', '$state'];
 
-  function PackageCreateCtrl (ApiFactory) {
+  function PackageCreateCtrl (ApiFactory, $state) {
     var self = this;
     var post = ApiFactory.post;
     self.commands = [

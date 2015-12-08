@@ -12,9 +12,15 @@
     };
     return services;
 
-    function parse (results) {
-      return results.data;
-    }
+  function parse (results) {
+    console.log(results);
+    return results.data;
+  }
+
+  function errorHandler (results) {
+    console.log(results);
+    return results.data;
+  }
 
     /**
      * Makes a get request
@@ -43,7 +49,7 @@
         method: 'POST',
         url: url,
         data: data
-      }).then(parse);
+      }).then(parse, errorHandler);
     }
   }
 

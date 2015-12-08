@@ -13,12 +13,14 @@
         password: self.password
       }).then(function (result) {
         // TODO: if err, show err, else redirect
-        self.username = '';
-        self.password = '';
+          self.username = '';
+          self.password = '';
+          self.errorMessage = '';
+
         if (result.error) {
-          console.log('error: ', result.error);
+            self.errorMessage = result.error;
+          // otherwise password / default error;
         } else {
-          console.log('result: ', result);
           $state.go('main');
         }
         // TODO: User page

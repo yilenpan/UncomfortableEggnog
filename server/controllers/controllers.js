@@ -21,8 +21,11 @@ exports.loginUser = function (req, res) {
       console.log('There was an error logging in user.');
       res.sendStatus(500);
     } else if (!user) {
-        console.log('User was not found.');
-        res.status(401).json({error: 'User was not found.'});
+        console.log('Username was not found.');
+        res.status(401).json({
+          errorType: 'username',
+          error: 'That username was not found.'
+        });
     } else {
   //check password match
         helpers.comparePassword(password, user.password, function (err, isMatch) {
@@ -31,7 +34,10 @@ exports.loginUser = function (req, res) {
             res.sendStatus(500);
           } else if (!isMatch) {
               console.log('User password did not match.');
-              res.status(401).json({error: 'User password did not match.'});
+              res.status(401).json({
+                errorType: 'password',
+                error: 'Incorrect Password.'
+            });
           } else {
   //username and password matched on login: start session.
               req.session.user = user;

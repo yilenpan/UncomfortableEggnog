@@ -9,7 +9,6 @@ module.exports = function (router) {
                      Login Routes
 **************************************/
   // TODO: Client side login
-  // router.get('/login', controllers.loginUserForm);
   router.post('/login', controllers.loginUser);
 
   router.get('/logout', controllers.logoutUser);

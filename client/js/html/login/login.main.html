@@ -1,29 +1,28 @@
 <!-- Username input-->
 <div ng-controller="LoginCtrl as login">
-<form class="form-horizontal" ng-submit="su.post()" role="form">
+<form class="form-horizontal" ng-submit="login.post()" role="form">
 <legend>Login</legend>
 <fieldset>
 
 <div class="form-group"
 >
-  <div class="col-md-9">
+  <div class="col-md-6">
   <label class="col-md-3 control-label" for="textinput">Username</label>  
   <div class="col-md-9">
     <input id="textinput" name="textinput" type="text" placeholder="Enter your username" 
-    class="form-control input-md" ng-model="su.username">
-  <span class="help-block">{{}}</span>  
+    class="form-control input-md" ng-model="login.username">
   </div>
   </div>
 </div>
 
 <!-- Password input-->
 <div class="form-group">
-  <div class="col-md-9">
+  <div class="col-md-6">
   <label class="col-md-3 control-label" for="passwordinput">Password</label>
     <div class="col-md-9">
     <input id="passwordinput" name="passwordinput" type="password" 
-    placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
-    <span class="help-block">{{}}</span>
+    placeholder="Enter your password" class="form-control input-md" ng-model="login.password">
+    <span class="help-block alert-danger">{{login.errorMessage}}</span>
   </div>
   </div>
   <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
