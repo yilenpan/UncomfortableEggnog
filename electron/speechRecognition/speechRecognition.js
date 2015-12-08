@@ -24,7 +24,7 @@ if (!('webkitSpeechRecognition' in window)) {
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
     console.log(transcript);
-    if (transcript === 'hello world') {
+    if (transcript === 'hello Jarvis') {
       //if transcript matches prefix then stop listening for prefix and start listening for command
       prefixRecognition.stop();
       commandRecognition.start();
@@ -48,21 +48,27 @@ if (!('webkitSpeechRecognition' in window)) {
     //get the shell command using the matching algorithm
     var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
 
-    if (!matchObj.exact) {
+    //check if the user command matched exactly with something in phrases.json
+    if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
+      //if it didn't match, try to guess the command
       var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedPhrase + "\"?");
 
+      //make sure the command is not empty and if the guess was correct
       if (guessCorrectly) {
+        //if guess was correct, add the phrase to the json file and execute
+        //shell command
         matchingFunctions.addPhrase(matchObj);
         executeShellComand(matchObj.command);
 
       } else {
-        prefixRecognition.start();
-        prefixRecognition.onend = function (event) {
-          prefixRecognition.start();
-        };
+        //if guess was incorrect, start listening for prefix again
+        startListeningForPrefix();
       }
-    } else {
+    } else if (matchObj.guessedPhrase !== 'null') {
       executeShellComand(matchObj.command);
+
+    } else {
+      startListeningForPrefix();
     }
   };
 }
@@ -75,6 +81,28 @@ ipcRenderer.on('listening', function (event) {
   prefixRecognition.start();
 
 });
+
+var executeShellComand = function (shellCommand) {
+  exec(shellCommand, function (error, stdout, stderr) {
+    console.log("executed shell command");
+
+    //start prefixRecognition again now that the command has been executed
+    startListeningForPrefix();
+    //if error throw error - this means the command is not a valid shell command
+    if (error) {
+      throw new Error(error);
+    }
+
+    //if no error exit
+  });
+};
+
+var startListeningForPrefix = function () {
+  prefixRecognition.start();
+  prefixRecognition.onend = function (event) {
+    prefixRecognition.start();
+  };
+};
 
 //function to toggle between keypress shortcut and always listening
 var toggleListen = function (event) {
@@ -95,21 +123,6 @@ var toggleListen = function (event) {
       prefixRecognition.start();
     };
   }
-};
-
-var executeShellComand = function (shellCommand) {
-  exec(shellCommand, function (error, stdout, stderr) {
-    console.log("executed shell command");
-    if (error) {
-      throw new Error(error);
-    }
-    //start prefixRecognition again now that the command has been executed
-    prefixRecognition.start();
-    //re-start the loop so that it starts listening again
-    prefixRecognition.onend = function (event) {
-      prefixRecognition.start();
-    };
-  });
 };
 
 //we will need to refactor this to react instead of jquery if we use react for front-end
