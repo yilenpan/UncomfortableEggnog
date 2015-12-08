@@ -40,7 +40,7 @@ describe('Should talk to the db', function (done) {
     });
   });
 
-  xit('should add create a package and we should be able to find it', function (done) {
+  it('should add create a package and we should be able to find it', function (done) {
     helpers.savePackage('Fred', {
       title: 'Kyle Cho Package',
       description: 'kyle cho\'s personal commands',
@@ -75,7 +75,7 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
-  xit('should return search results for search', function (done) {
+  it('should return search results for search', function (done) {
     request(app)
       .post('/api/search')
       .send({
@@ -89,4 +89,10 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
+  it('should return all packages from user', function (done) {
+    request(app)
+      .get('/api/users/Fred/packages')
+      .expect(200, done);
+  });
+
 });

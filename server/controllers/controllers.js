@@ -134,7 +134,7 @@ exports.savePackageEntry = function (req, res) {
   console.log(entry);
   //make req.session.user object === db user model?
   // console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
-  helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
+  helpers.savePackage(req.body.username, entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');
       res.sendStatus(500);

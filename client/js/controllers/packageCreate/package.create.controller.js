@@ -3,9 +3,9 @@
   angular.module('app')
     .controller('PackageCreateCtrl', PackageCreateCtrl);
 
-  PackageCreateCtrl.$inject = ['ApiFactory'];
+  PackageCreateCtrl.$inject = ['ApiFactory', "$state"];
 
-  function PackageCreateCtrl (ApiFactory) {
+  function PackageCreateCtrl (ApiFactory, $state) {
     var self = this;
     var post = ApiFactory.post;
     self.commands = [
@@ -31,7 +31,7 @@
         description: self.description,
         packageContents: self.packageContents
       }).then(function (r) {
-        $state.go('package({packageName:' + self.title + ' })');
+        $state.go('package', {packageName: self.title});
       });
     };
 
