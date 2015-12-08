@@ -89,7 +89,7 @@ describe('Should talk to the db', function (done) {
         done();
       });
   });
-  it('should return all packages from user', function (done) {
+  xit('should return all packages from user', function (done) {
     request(app)
       .get('/api/users/Fred/packages')
       .expect(200, done);
