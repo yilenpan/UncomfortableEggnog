@@ -129,8 +129,9 @@ exports.fetchPackageByTitle = function (req, res) {
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
+  console.log(entry);
   //make req.session.user object === db user model?
-  console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
+  // console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
   helpers.savePackage(req.body.username, req.body.entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');
