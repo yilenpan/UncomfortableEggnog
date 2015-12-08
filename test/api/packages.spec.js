@@ -102,21 +102,25 @@ describe('Should talk to the db', function (done) {
   });
   it('should let you edit packages', function (done) {
     var packageEdit = packages[10];
-    packageEdit.title = "KyleChoAwesome";
-    request(app)
-      .post('/api/package/10 Dev Package/edit')
-      .send(packageEdit)
-      .expect(201)
-      .end(function (err, data) {
-        request(app)
-          .get('/api/package/KyleChoAwesome')
-          .expect(200)
-          .end(function (err, data) {
-            var json = data.body;
-            expect(json.title).to.equal(packageEdit.title);
-            done();
-          });
-      });
+    db.PackageEntry.findOne({title: '10 Dev Package'}, function (err, res) {
+      packageEdit.title = "KyleChoAwesome";
+      packageEdit.id = res._id;
+      request(app)
+        .post('/api/package/10 Dev Package/edit')
+        .send(packageEdit)
+        .expect(201)
+        .end(function (err, data) {
+          expect(data.body.title).to.equal(packageEdit.title);
+          request(app)
+            .get('/api/package/' + packageEdit.title)
+            .expect(200)
+            .end(function (err, data) {
+              var json = data.body;
+              expect(json.package.title).to.equal(packageEdit.title);
+              done();
+            });
+        });
+    });
   });
 
 });

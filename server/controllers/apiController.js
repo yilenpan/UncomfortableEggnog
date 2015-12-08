@@ -33,7 +33,6 @@ module.exports.getUserPackages = function (req, res) {
 
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
-  console.log(title);
   helpers.findPackageByTitle(title, function (err, entry) {
     helpers.findUserById(entry[0].userId, function (err, user) {
       if (err) {
@@ -52,5 +51,11 @@ module.exports.getPackage = function (req, res) {
 
 
 module.exports.editPackage = function (req, res) {
-  res.send('OK');
+  helpers.editPackage(req.body, function (err, packageEntry) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json(packageEntry);
+    }
+  });
 };

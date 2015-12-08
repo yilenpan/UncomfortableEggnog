@@ -2,6 +2,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 var db = require('../db/db.js');
+var _ = require('underscore');
 
 var SALT_WORK_FACTOR = 10;
 
@@ -79,12 +80,19 @@ exports.searchPackages = function (term, cb) {
    }, {
      score: { $meta: "textScore" }
    })
-  //  .limit(10)
    .sort({ score: {$meta: "textScore"}})
    .exec(function (e,d) {
      cb(e, d);
    });
+};
 
+exports.editPackage = function (newPackage, cb) {
+  var id = newPackage.id;
+  delete newPackage.id;
+  db.PackageEntry.findById(id, function (err, pkg) {
+    _.extend(pkg, newPackage);
+    pkg.save(cb);
+  });
 };
 
 exports.savePackage = function (user, entry, cb) {
