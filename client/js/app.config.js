@@ -91,6 +91,19 @@
             controller: 'SignUpCtrl'
           }
         }
+      })
+      .state('login', {
+        url: '/login',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/login/login.main.html',
+            controller: 'LoginCtrl'
+          }
+        }
       });
   }
 

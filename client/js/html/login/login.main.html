@@ -1,0 +1,24 @@
+<!-- Username input-->
+<div class="form-group">
+  <div class="col-md-9">
+  <label class="col-md-3 control-label" for="textinput">Username</label>  
+  <div class="col-md-6">
+    <input id="textinput" name="textinput" type="text" placeholder="Enter your username" 
+    class="form-control input-md" ng-model="su.username">
+  </div>
+  <span class="help-block">{{}}</span>  
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <div class="col-md-9">
+  <label class="col-md-3 control-label" for="passwordinput">Password</label>
+    <div class="col-md-6">
+    <input id="passwordinput" name="passwordinput" type="password" 
+    placeholder="Enter your password" class="form-control input-md" ng-model="su.password">
+    <span class="help-block">{{}}</span>
+  </div>
+  </div>
+  <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+</div>
