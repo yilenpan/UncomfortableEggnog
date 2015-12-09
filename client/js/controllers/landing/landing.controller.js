@@ -11,8 +11,7 @@
     var post = ApiFactory.post;
     self.packages = [];
     get('/api/top10').then(function (data) {
-      console.log(data);
-      self.packages = data.body;
+      self.packages = data;
     });
 
   }
