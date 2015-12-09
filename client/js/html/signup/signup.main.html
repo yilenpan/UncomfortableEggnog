@@ -86,10 +86,12 @@
       <div class="form-group">
         <div class="col-md-12">  
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" ng-class="{'has-error': su.isInputInvalid(signupForm.password), 
+                'has-success': su.isInputValid(signupForm.password)}">
               <label class="control-label" for="passwordinput">Password*</label>
               <input name="password" type="password" 
-                  placeholder="Enter your password" class="form-control input-md required" ng-model="su.fields.password.value" required>
+                  placeholder="Enter your password" class="form-control input-md required" 
+                  ng-model="su.fields.password.value" required ng-blur='su.setPristine(signupForm.password)'>
               <div class="progress">
                 <div class="progress-bar"
                 role="progressbar"
@@ -102,35 +104,32 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" ng-class="{'has-error': su.isInputInvalid(signupForm['password repeat']), 
+                'has-success': su.isInputValid(signupForm['password repeat'])}">
               <label class="control-label" for="passwordinput">Repeat Password</label>
               <input name="password repeat" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model="su.fields.passwordRepeat.value" />
-              <!-- <span class="help-block">{{}}</span> -->
+                  placeholder="Enter your password" class="form-control input-md" 
+                  ng-model="su.fields['password repeat'].value" required ng-blur='su.setPristine(signupForm["password repeat"])'/>
             </div>    
           </div>
         </div>
       </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3" style="padding-left: 0">
-              <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
-            </div>
-            <div class="col-md-7 container error-display-container"> 
-              
-              <div class="col-md-12" ng-repeat="err in su.errorList">
-                <span class="text-danger">{{err}}</span>
-              </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-3" style="padding-left: 0">
+            <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
           </div>
-            <div class="col-md-2" style="padding-right: 0; text-align:right">
-                <span><strong>* required</strong></span>
+          <div class="col-md-7 container error-display-container">  
+            <div class="col-md-12" ng-repeat="err in su.errorList">
+              <span class="text-danger">{{err}}</span>
             </div>
+          </div>
+          <div class="col-md-2" style="padding-right: 0; text-align:right">
+              <span><strong>* required</strong></span>
+          </div>
         </div>
       </div>
     </fieldset>
   </form>
 </div>
-<!--   <form ng-submit="su.post()">
-    <input ng-model="su.username" placeholder="Username" type="text">
-    <input ng-model="su.password" placeholder="Password"type="text">
-  </form> -->
+
