@@ -1,9 +1,4 @@
 (function () {
-  // var dummyUser = {
-  //   "username": "Fred",
-  //   "email": "fred@hackreactor.com",
-  //   "github": "www.github.com/fred"
-  // };
   'use strict';
   angular.module('app')
     .controller('PackageCtrl', PackageCtrl);
@@ -25,19 +20,23 @@
           self.user = data.user;
         });
     };
-    self.toggleStar = function () {
-      if (self.star) {
-        post('/api/package/' + packageName, {likes: 1})
-          .then(function (r) {
-            self.star = !self.star;
-          });
-      } else {
-        post('/api/package/' + packageName, {likes: -1})
-          .then(function (r) {
-            self.star = !self.star;
-          });
-      }
-    };
+    // TODO: implement stars
+    // Clicking it will add one like to the package
+    // Clicking it again will remove the like from the package
+
+    // self.toggleStar = function () {
+    //   if (self.star) {
+    //     post('/api/package/' + packageName, {likes: 1})
+    //       .then(function (r) {
+    //         self.star = !self.star;
+    //       });
+    //   } else {
+    //     post('/api/package/' + packageName, {likes: -1})
+    //       .then(function (r) {
+    //         self.star = !self.star;
+    //       });
+    //   }
+    // };
     init();
   }
 })();

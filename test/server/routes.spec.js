@@ -33,14 +33,4 @@ describe('Routes', function () {
       .get('/users/123')
       .expect(200, done);
   });
-  //integration test (db and routes): move to separate file?
-  xit('should accept post to login and redirect', function (done) {
-    request(app)
-      .post('/login')
-      .send({
-        username: 'Mitchell',
-        password: "1234"
-      })
-      .expect(301, done);
-  });
 });

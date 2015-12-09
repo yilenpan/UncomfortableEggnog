@@ -1,16 +1,14 @@
 
 //controllers are request handers that work with routes.
-
+var jwt = require('jsonwebtoken');
 var helpers = require('../helpers/helpers');
+var jwtKey = 'test';
 
 /*************************************
                      Login Handlers
 **************************************/
 
-exports.isLoggedIn = function (req, res) {
-  return req.session ? !!req.session.user : false;
-};
-
+// TODO: refactor this to a users controller
 
 exports.loginUser = function (req, res) {
   var username = req.body.username;
@@ -24,7 +22,7 @@ exports.loginUser = function (req, res) {
         console.log('User was not found.');
         res.status(401).json({error: 'User was not found.'});
     } else {
-  //check password match
+
         helpers.comparePassword(password, user.password, function (err, isMatch) {
           if (err) {
             console.log('There was an error logging in user.');
@@ -33,19 +31,21 @@ exports.loginUser = function (req, res) {
               console.log('User password did not match.');
               res.status(401).json({error: 'User password did not match.'});
           } else {
-  //username and password matched on login: start session.
-              req.session.user = user;
-              res.redirect('/');
+              // if successful, we encrypt the user object and send it out
+              // as a token. This will be decrypted by the middleware and
+              // applied to req
+              var token = jwt.sign(user, jwtKey, {
+                expiresIn: 9999999
+              });
+              res.json({
+                success: true,
+                token: token,
+                username: user.username
+              });
             }
           });
         }
     });
-};
-
-
-exports.logoutUser = function (req, res) {
-  req.session.destroy();
-  res.redirect('/');
 };
 
 
@@ -66,9 +66,17 @@ exports.signupUser = function (req, res) {
           console.log('There was an error saving user.');
           res.sendStatus(500);
         } else {
-          //user successfully signed up, now login user automatically
-          req.session.user = user;
-          res.json({username: user.username});
+          // if successful, we encrypt the user object and send it out
+          // as a token. This will be decrypted by the middleware and
+          // applied to req
+          var token = jwt.sign(user, jwtKey, {
+            expiresIn: 9999999
+          });
+          res.json({
+            success: true,
+            token: token,
+            username: user.username
+          });
         }
       });
     }
@@ -79,6 +87,7 @@ exports.signupUser = function (req, res) {
                      Package Handlers
 **************************************/
 
+// TODO: refactor this out to a packages controller
 exports.fetchPackages = function (req, res) {
   helpers.findPackageEntries(function (err, packages) {
     if (err) {
@@ -112,29 +121,13 @@ exports.fetchPackageById = function (req, res) {
   }
 };
 
-exports.fetchPackageByTitle = function (req, res) {
-  var title = req.params.title;
-  helpers.findPackageByTitle(id, function (err, packageEntry) {
-    if (err) {
-      console.log('There was an error finding package with title: ' + title + '.');
-      res.sendStatus(500);
-    } else if (packageEntry.length === 0) {
-        console.log('No entry found with ID: ' + id);
-        res.sendStatus(404);
-    } else {
-       console.log('Sending package with ID ' + id + ' to client.');
-       res.send(packages);
-    }
-  });
-};
+
 
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
   var entry = req.body;
-  console.log(entry);
-  //make req.session.user object === db user model?
-  // console.log('trying to save... ' + req.body.username + ' ,' + req.entry);
-  helpers.savePackage(req.body.username, entry, function (err, packageEntry) {
+  var user = req.user;
+  helpers.savePackage(user.username, entry, function (err, packageEntry) {
     if (err) {
       console.log('There was an error saving package.');
       res.sendStatus(500);
@@ -149,7 +142,6 @@ exports.savePackageEntry = function (req, res) {
                      User Handlers
 **************************************/
 exports.getUserInfo = function (req, res) {
-  console.log(req.session);
   var id = req.params.id;
   helpers.findUserById(id, function (err, user) {
     if (err) {
@@ -159,12 +151,4 @@ exports.getUserInfo = function (req, res) {
     console.log(user);
     res.send(user);
   });
-};
-
-exports.checkUser = function (req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
 };
