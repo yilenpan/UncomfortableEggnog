@@ -26,15 +26,26 @@ var UserSchema = new mongoose.Schema({
   }]
 });
 
+
 var PackageEntrySchema = new mongoose.Schema({
   title: String,
-  likes: Number,
-  dislikes: Number,
-  downloads: Number,
-  dateCreated: Date,
-  // lastUpdated or new Date() upon POST?
+  likes: {
+    type: Number,
+    default: 0
+  },
+  dislikes: {
+    type: Number,
+    default: 0
+  },
+  downloads: {
+    type: Number,
+    default: 0
+  },
+  dateCreated: {
+    type: Date,
+    default: new Date()
+  },
   description: String,
-  //stringified package object {name, content}
   packageContents: mongoose.Schema.Types.Mixed,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -73,13 +84,6 @@ UserSchema.pre('save', function (next, done) {
   }.bind(this));
 });
 
-PackageEntrySchema.pre('save', function (next, done) {
-  this.likes = 0;
-  this.dislikes = 0;
-  this.downloads = 0;
-  this.dateCreated = new Date();
-  next();
-});
 
 module.exports.db = db;
 module.exports.User = User;

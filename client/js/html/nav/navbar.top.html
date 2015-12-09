@@ -1,6 +1,5 @@
 <nav class="navbar navbar-default" ng-controller="NavCtrl">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -10,8 +9,6 @@
       </button>
       <a class="navbar-brand" ui-sref="main">Taser</a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
       <form ng-submit="search(term)" class="navbar-form navbar-left" style="width:65%" role="search">
         <div class="col-md-10 search" style="padding:0;border-radius:0;">
@@ -20,10 +17,11 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="signup">Sign Up</a></li>
-        <li><a href="#">login</a></li>
-        <li><a href="#">logout</a></li>
+        <li ng-hide="isLoggedIn()"><a ui-sref="signup">Sign Up</a></li>
+        <li ng-hide="isLoggedIn()"><a ui-sref="login">login</a></li>
+        <li ng-show="isLoggedIn()"><a ng-click="goToAccount()">My Account</a></li>
+        <li ng-show="isLoggedIn()"><a ng-click="destroySession()" ui-sref="main">Logout</a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
