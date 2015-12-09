@@ -3,7 +3,7 @@
   angular.module('app')
     .controller('PackageCreateCtrl', PackageCreateCtrl);
 
-  PackageCreateCtrl.$inject = ['ApiFactory', "$state"];
+  PackageCreateCtrl.$inject = ['ApiFactory', '$state'];
 
   function PackageCreateCtrl (ApiFactory, $state) {
     var self = this;

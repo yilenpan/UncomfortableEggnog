@@ -19,8 +19,11 @@ exports.loginUser = function (req, res) {
       console.log('There was an error logging in user.');
       res.sendStatus(500);
     } else if (!user) {
-        console.log('User was not found.');
-        res.status(401).json({error: 'User was not found.'});
+        console.log('Username was not found.');
+        res.status(401).json({
+          errorType: 'username',
+          error: 'That username was not found.'
+        });
     } else {
 
         helpers.comparePassword(password, user.password, function (err, isMatch) {
@@ -29,7 +32,10 @@ exports.loginUser = function (req, res) {
             res.sendStatus(500);
           } else if (!isMatch) {
               console.log('User password did not match.');
-              res.status(401).json({error: 'User password did not match.'});
+              res.status(401).json({
+                errorType: 'password',
+                error: 'Incorrect Password.'
+            });
           } else {
               // if successful, we encrypt the user object and send it out
               // as a token. This will be decrypted by the middleware and
@@ -64,7 +70,10 @@ exports.signupUser = function (req, res) {
       helpers.saveUser(username, password, function (err, user) {
         if (err) {
           console.log('There was an error saving user.');
-          res.sendStatus(500);
+          res.status(500).json({
+            errorType: 'userSave',
+            error: 'There was an error saving user.'
+          });
         } else {
           // if successful, we encrypt the user object and send it out
           // as a token. This will be decrypted by the middleware and

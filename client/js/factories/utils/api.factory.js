@@ -12,9 +12,15 @@
     };
     return services;
 
-    function parse (results) {
-      return results.data;
-    }
+  function parse (results) {
+    console.log(results);
+    return results.data;
+  }
+
+  function errorHandler (results) {
+    console.log("error :", results);
+    return results.data;
+  }
 
     function checkToken () {
       // checks to see if we have a token, if we do, we set $http to have header
@@ -36,7 +42,7 @@
       return $http({
         method: 'GET',
         url: url
-      }).then(parse);
+      }).then(parse, errorHandler);
     }
 
     /**
@@ -53,7 +59,7 @@
         method: 'POST',
         url: url,
         data: data
-      }).then(parse);
+      }).then(parse, errorHandler);
     }
   }
 
