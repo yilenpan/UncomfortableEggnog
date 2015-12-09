@@ -20,6 +20,7 @@ module.exports.searchTerm = function (req, res) {
   });
 };
 
+// TODO: this may be a duplicate function.
 
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
@@ -40,6 +41,9 @@ module.exports.getPackage = function (req, res) {
 };
 
 
+// gets a username in the params, then we return out the packages associated
+// to the username
+
 module.exports.getUserPackages = function (req, res) {
   var name = req.params.userName;
   helpers.findPackagesByUsername(name, function (err, packages) {
@@ -51,11 +55,14 @@ module.exports.getUserPackages = function (req, res) {
   });
 };
 
+// Takes the userId and the package title
 module.exports.isUserPackage = function (req, res) {
   var title = req.params.packageName;
   var userId = req.user._id;
-  console.log(userId);
   helpers.findPackageByTitle(title, function (err, entry) {
+    // checks to see if theres an error or if the packages dont match
+      // if no match, responds with error obj
+
     if (err || entry[0].userId.toString() !== userId) {
       res.json({error: true});
     } else {
@@ -64,6 +71,8 @@ module.exports.isUserPackage = function (req, res) {
   });
 };
 
+// passes req to editPackage, where it will check user obj against
+// the package before updating db
 module.exports.editPackage = function (req, res) {
   helpers.editPackage(req, function (err, packageEntry) {
     if (err) {

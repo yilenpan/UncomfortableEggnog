@@ -8,6 +8,7 @@ var jwtKey = 'test';
                      Login Handlers
 **************************************/
 
+// TODO: refactor this to a users controller
 
 exports.loginUser = function (req, res) {
   var username = req.body.username;
@@ -21,7 +22,7 @@ exports.loginUser = function (req, res) {
         console.log('User was not found.');
         res.status(401).json({error: 'User was not found.'});
     } else {
-  //check password match
+
         helpers.comparePassword(password, user.password, function (err, isMatch) {
           if (err) {
             console.log('There was an error logging in user.');
@@ -30,7 +31,9 @@ exports.loginUser = function (req, res) {
               console.log('User password did not match.');
               res.status(401).json({error: 'User password did not match.'});
           } else {
-              // TODO: jwt sign
+              // if successful, we encrypt the user object and send it out
+              // as a token. This will be decrypted by the middleware and
+              // applied to req
               var token = jwt.sign(user, jwtKey, {
                 expiresIn: 9999999
               });
@@ -68,7 +71,9 @@ exports.signupUser = function (req, res) {
           console.log('There was an error saving user.');
           res.sendStatus(500);
         } else {
-          //user successfully signed up, now login user automatically
+          // if successful, we encrypt the user object and send it out
+          // as a token. This will be decrypted by the middleware and
+          // applied to req
           var token = jwt.sign(user, jwtKey, {
             expiresIn: 9999999
           });
@@ -87,6 +92,7 @@ exports.signupUser = function (req, res) {
                      Package Handlers
 **************************************/
 
+// TODO: refactor this out to a packages controller
 exports.fetchPackages = function (req, res) {
   helpers.findPackageEntries(function (err, packages) {
     if (err) {

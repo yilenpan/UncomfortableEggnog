@@ -4,8 +4,6 @@
   angular.module('app')
     .config(config);
 
-    // user page to set profile pic, contact info, change password
-
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
   function config ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');

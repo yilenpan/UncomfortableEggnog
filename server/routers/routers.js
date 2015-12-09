@@ -1,6 +1,3 @@
-// var express = require('express');
-var db = require('../db/db.js');
-var helpers = require('../helpers/helpers.js');
 var controllers = require('../controllers/controllers.js');
 var verifyUser = require('../middleware/middleware').verifyUser;
 
