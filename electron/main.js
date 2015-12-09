@@ -38,7 +38,6 @@ app.on('ready', function () {
     width: 800,
     height: 600
   });
-  console.log('window:', mainWindow.width);
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
@@ -51,7 +50,6 @@ app.on('ready', function () {
   //start listening when the app starts
   mainWindow.webContents.on('dom-ready', function () {
     //emitted to renderer process
-    console.log('dom ready');
     mainWindow.webContents.send('listening', 'listening');
   });
 

@@ -83,7 +83,6 @@
 
   //receive event emitted from main process (main.js) to start listening
   ipcRenderer.on('listening', function (event) {
-
     console.log("Taser is listening!");
     //start listening
     prefixRecognition.start();
@@ -97,7 +96,6 @@
   var executeShellComand = function (shellCommand) {
     exec(shellCommand, function (error, stdout, stderr) {
       console.log("executed shell command");
-
       //start prefixRecognition again now that the command has been executed
       startListeningForPrefix();
       //if error throw error - this means the command is not a valid shell command
@@ -105,7 +103,6 @@
         throw new Error(error);
       }
 
-      //if no error exit
     });
   };
 
