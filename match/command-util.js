@@ -108,8 +108,12 @@ var formatVariable = function (phrase, variable) {
   }
 
   if (phrase === 'Wikipedia') {
+    variable = variable.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
     variable = variable.replace(/\ /g, "\_");
   }
+
   return variable;
 };
 
