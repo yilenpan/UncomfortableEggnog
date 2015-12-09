@@ -113,6 +113,19 @@
             controller: 'UserPackagesCtrl'
           }
         }
+      })
+      .state('editPackage', {
+        url: '/package/:packageName/edit',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/editPackage/editpackage.main.html',
+            controller: 'EditPackageCtrl'
+          }
+        }
       });
 
   }

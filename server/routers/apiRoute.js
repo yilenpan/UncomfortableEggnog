@@ -8,4 +8,5 @@ module.exports = function (app) {
   app.get('/users/:userName/packages', apiController.getUserPackages);
   app.post('/search', verifyUser, apiController.searchTerm);
   app.post('/package/:packageName/edit', verifyUser, apiController.editPackage);
+  app.get('/package/:packageName/edit', verifyUser, apiController.isUserPackage);
 };

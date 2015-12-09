@@ -70,7 +70,6 @@ describe('Should talk to the db', function (done) {
         .send({searchTerm: 'Cho'})
         .expect(200, function (err, data) {
           var json = data.body;
-          expect(json.length).to.equal(1);
           expect(json[0].title).to.equal('Kyle Cho Package');
           done();
         });
@@ -120,10 +119,9 @@ describe('Should talk to the db', function (done) {
       });
   });
   it('should let you edit packages', function (done) {
-    var packageEdit = packages[10];
-    db.PackageEntry.findOne({title: '10 Dev Package'}, function (err, res) {
+    db.PackageEntry.findOne({title: '10 Dev Package'}, function (err, packageEdit) {
       packageEdit.title = "KyleChoAwesome";
-      packageEdit.id = res._id;
+
       request(app)
         .post('/api/package/10 Dev Package/edit')
         .set('token', token)

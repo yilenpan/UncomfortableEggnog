@@ -123,21 +123,21 @@ exports.fetchPackageById = function (req, res) {
   }
 };
 
-exports.fetchPackageByTitle = function (req, res) {
-  var title = req.params.title;
-  helpers.findPackageByTitle(id, function (err, packageEntry) {
-    if (err) {
-      console.log('There was an error finding package with title: ' + title + '.');
-      res.sendStatus(500);
-    } else if (packageEntry.length === 0) {
-        console.log('No entry found with ID: ' + id);
-        res.sendStatus(404);
-    } else {
-       console.log('Sending package with ID ' + id + ' to client.');
-       res.send(packages);
-    }
-  });
-};
+// exports.fetchPackageByTitle = function (req, res) {
+//   var title = req.params.title;
+//   helpers.findPackageByTitle(id, function (err, packageEntry) {
+//     if (err) {
+//       console.log('There was an error finding package with title: ' + title + '.');
+//       res.sendStatus(500);
+//     } else if (packageEntry.length === 0) {
+//         console.log('No entry found with ID: ' + id);
+//         res.sendStatus(404);
+//     } else {
+//        console.log('Sending package with ID ' + id + ' to client.');
+//        res.send(packages);
+//     }
+//   });
+// };
 
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes

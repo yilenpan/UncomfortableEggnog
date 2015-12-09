@@ -20,16 +20,6 @@ module.exports.searchTerm = function (req, res) {
   });
 };
 
-module.exports.getUserPackages = function (req, res) {
-  var name = req.params.userName;
-  helpers.findPackagesByUsername(name, function (err, packages) {
-    if (err) {
-      res.redirect('/');
-    } else {
-      res.json(packages);
-    }
-  });
-};
 
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
@@ -49,6 +39,30 @@ module.exports.getPackage = function (req, res) {
   });
 };
 
+
+module.exports.getUserPackages = function (req, res) {
+  var name = req.params.userName;
+  helpers.findPackagesByUsername(name, function (err, packages) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json(packages);
+    }
+  });
+};
+
+module.exports.isUserPackage = function (req, res) {
+  var title = req.params.packageName;
+  var userId = req.user._id;
+  console.log(userId);
+  helpers.findPackageByTitle(title, function (err, entry) {
+    if (err || entry[0].userId.toString() !== userId) {
+      res.json({error: true});
+    } else {
+      res.json(entry);
+    }
+  });
+};
 
 module.exports.editPackage = function (req, res) {
   helpers.editPackage(req, function (err, packageEntry) {

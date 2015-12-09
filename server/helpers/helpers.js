@@ -87,9 +87,15 @@ exports.searchPackages = function (term, cb) {
 };
 
 exports.editPackage = function (req, cb) {
-  var id = req.body.id;
+  var id = req.body._id;
   var user = req.user;
   db.PackageEntry.findById(id, function (err, pkg) {
+    if (err) {
+      cb({
+        error: 'oops',
+        err: err
+      });
+    }
     if (pkg.userId.toString() === user._id) {
       _.extend(pkg, req.body);
       pkg.save(cb);
