@@ -20,6 +20,23 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  email: {
+    type: String,
+    required: true
+  },
+  "first name": {
+    type: String,
+    required: true
+  },
+  "last name": {
+    type: String,
+    required: true
+  },
+  website: {
+    type: String,
+    required: false,
+    default: ''
+  },
   packages: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "PackageEntry"

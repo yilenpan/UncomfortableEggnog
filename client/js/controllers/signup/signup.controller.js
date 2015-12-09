@@ -62,14 +62,21 @@
     };
 
     self.post = function () {
-      ApiFactory.post('/signup', {
-        username: self.fields.username.value,
-        password: self.fields.password.value
-      }).then(function (result) {
+      var user = {};
+      for (var key in self.fields) {
+        var field = self.fields[key];
+        if (key !== 'password repeat' && field.value !== '') {
+          user[key] = field.value;
+        }
+      }
+      ApiFactory.post('/signup', user)
+        // username: self.fields.username.value,
+        // password: self.fields.password.value
+      .then(function (result) {
         if (result.error) {
           self.errorList = [result.error];
-          self.fields.username.value = '';
           self.fields.password.value = '';
+          self.fields['password repeat'].value = '';
           console.log('error: ', result.error);
         } else if (result.token) {
           // Should return with a token

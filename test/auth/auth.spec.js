@@ -11,6 +11,10 @@ describe('auth', function (done) {
         .post('/signup')
         .send({
           username: 'Mitchell',
+          "first name": 'M',
+          "last name": 'K',
+          email: 'm@gmail.com',
+          website: 'http://www.mk.com',
           password: '1234'
         })
         .expect(200)
@@ -24,6 +28,10 @@ describe('auth', function (done) {
       .post('/login')
       .send({
         username: 'Mitchell',
+        "first name": 'M',
+        "last name": 'K',
+        email: 'm@gmail.com',
+        website: 'http://www.mk.com',
         password: "1234"
       })
       .expect(200)
