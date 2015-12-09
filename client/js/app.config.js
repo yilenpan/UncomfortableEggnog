@@ -4,12 +4,6 @@
   angular.module('app')
     .config(config);
 
-    // search results
-    // user page to set profile pic, contact info, change password
-    // login
-    // sign up
-    // add package view
-
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
   function config ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -66,19 +60,20 @@
           }
         }
       })
-      .state('user', {
-        url: '/user/:userId',
-        views: {
-          top: {
-            template: "<div nav-bar-directive></div>",
-            controller: "NavCtrl"
-          },
-          main: {
-            templateUrl: 'js/html/user/user.main.html',
-            controller: 'SearchResultsCtrl'
-          }
-        }
-      })
+      // TODO: User page.
+      // .state('user', {
+      //   url: '/user/:userName',
+      //   views: {
+      //     top: {
+      //       template: "<div nav-bar-directive></div>",
+      //       controller: "NavCtrl"
+      //     },
+      //     main: {
+      //       templateUrl: 'js/html/user/user.main.html',
+      //       controller: 'SearchResultsCtrl'
+      //     }
+      //   }
+      // })
       .state('signup', {
         url: '/signup',
         views: {
@@ -104,7 +99,34 @@
             controller: 'LoginCtrl'
           }
         }
+      })
+      .state('userPackages', {
+        url: '/users/:userName/packages',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/userPackages/userPackages.main.html',
+            controller: 'UserPackagesCtrl'
+          }
+        }
+      })
+      .state('editPackage', {
+        url: '/package/:packageName/edit',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/editPackage/editpackage.main.html',
+            controller: 'EditPackageCtrl'
+          }
+        }
       });
+
   }
 
 })();

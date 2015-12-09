@@ -2,6 +2,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 var db = require('../db/db.js');
+var _ = require('underscore');
 
 var SALT_WORK_FACTOR = 10;
 
@@ -48,8 +49,7 @@ exports.saveUser = function (username, password, cb) {
   //assumes server controller checked if username already exists in db
   var user = new db.User({
     username: username,
-    password: password,
-    packages: []
+    password: password
   });
   user.save(cb);
 };
@@ -68,23 +68,47 @@ exports.findPackagesByUserId = function (id, cb) {
 };
 
 exports.findPackageEntries = function (cb) {
+  // finds all packages and sorts the files by like
   db.PackageEntry.find({}).sort({
     "likes": -1
   }).limit(10).exec(cb);
 };
 
+// we text indexed the file as it comes in
+// here we pass it a term and it checks the db for it.
 exports.searchPackages = function (term, cb) {
    db.PackageEntry.find({
      $text: { $search: term }
    }, {
      score: { $meta: "textScore" }
    })
-  //  .limit(10)
    .sort({ score: {$meta: "textScore"}})
    .exec(function (e,d) {
+     // passing cb error or data
      cb(e, d);
    });
+};
 
+exports.editPackage = function (req, cb) {
+  var id = req.body._id;
+  var user = req.user;
+  db.PackageEntry.findById(id, function (err, pkg) {
+    if (err) {
+      // if there is an error, respond back with error obj
+      cb({
+        error: 'oops',
+        err: err
+      });
+    }
+    if (pkg.userId.toString() === user._id) {
+      // takes the new package and extends the old package
+      _.extend(pkg, req.body);
+      // We then save the package
+      pkg.save(cb);
+    } else {
+      cb({error: 'Not Your Package'});
+    }
+  });
 };
 
 exports.savePackage = function (user, entry, cb) {
@@ -114,7 +138,7 @@ exports.findPackagesByUsername = function (username, cb) {
       console.log(err);
       cb(err);
     } else {
-      db.PackageEntry.find({userId: user._id}, cb);
+      exports.findPackagesByUserId(user._id, cb);
     }
   });
 };

@@ -1,9 +1,8 @@
 var bodyParser = require('body-parser');
 var helpers = require('../helpers/helpers.js');
-var session = require('express-session');
-// var sessionSecret = process.env.sessionSecret || require('./authKeys').sessionSecret;
 var sessionSecret = "dasfgg";
 var db = require('../db/db.js');
+var morgan = require('morgan');
 
 module.exports = function (app, express) {
   var userRoute = express.Router();
@@ -11,12 +10,15 @@ module.exports = function (app, express) {
 //==========Core Middleware==============
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-  }));
+  // logging
+  if (process.env.NODE === 'production') {
+    app.use(morgan('production'));
+    var sessionSecret = process.env.sessionSecret;
+  } else {
+    // app.use(morgan('dev'));
+    var sessionSecret = 'tester';
+  }
+
   app.use(express.static(__dirname + '/../../client'));
 
 //=========Custom Routes================
