@@ -35,7 +35,7 @@ var PackageEntrySchema = new mongoose.Schema({
   // lastUpdated or new Date() upon POST?
   description: String,
   //stringified package object {name, content}
-  packageContents: String,
+  packageContents: mongoose.Schema.Types.Mixed,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

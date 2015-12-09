@@ -26,11 +26,11 @@ var addPhrase = function (newPhraseObj) {
   var phrases = JSON.parse(fs.readFileSync(newPhraseObj.phrasesPath, 'utf8'));
 
   //push in new phrase
-  phrases[newPhraseObj.phrase].push(newPhraseObj.inputphrase);
+  phrases[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
 
   // write back to phrases
   fs.writeFileSync(newPhraseObj.phrasesPath, JSON.stringify(phrases), 'utf8');
-  console.log("saving ", newPhraseObj.inputphrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
+  console.log("saving ", newPhraseObj.inputPhrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
 };
 
 //split input phrase into prefix and variable
@@ -70,16 +70,21 @@ var matching = function (commandObj) {
   return commandObj;
 };
 
-var formatVariable = function (prefix, variable) {
+var formatVariable = function (phrase, variable) {
   if (variable[0] === " ") {
     variable = variable.substr(1);
   }
+  console.log(variable);
 
-  if (prefix === 'open') {
+  if (phrase === 'open') {
     variable = variable.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
     variable = variable.replace(/\ /g, "\\ ") + ".app";
+  }
+
+  if (phrase === "check the") {
+    variable = variable.replace(/\ /g, "\+");
   }
   return variable;
 };
@@ -109,7 +114,7 @@ var commandUtil = function (input, fileInfo) {
   commandObj.guessedPhrase = commandObj.phrase + commandObj.variable;
 
   //add bash shell
-  commandObj.variable = formatVariable(commandObj.prefix, commandObj.variable);
+  commandObj.variable = formatVariable(commandObj.phrase, commandObj.variable);
   commandObj.command = fileInfo.commands[phrase] + commandObj.variable;
   console.log(commandObj);
   return commandObj;

@@ -31,7 +31,7 @@
         description: self.description,
         packageContents: self.packageContents
       }).then(function (r) {
-        $state.go('package({packageName:' + self.title + ' })');
+        $state.go('package', {packageName: self.title});
       });
     };
 
