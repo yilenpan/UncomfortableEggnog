@@ -20,9 +20,11 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="signup">Sign Up</a></li>
-        <li><a href="#">login</a></li>
-        <li><a href="#">logout</a></li>
+        <li ng-hide="isLoggedIn()"><a ui-sref="signup">Sign Up</a></li>
+        <li ng-hide="isLoggedIn()"><a ui-sref="login">login</a></li>
+        <li ng-show="isLoggedIn()"><a ng-click="goToAccount()">My Account</a></li>
+
+        <li><a ng-click="destroySession()" ui-sref="main">logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

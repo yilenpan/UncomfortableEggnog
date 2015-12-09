@@ -7,11 +7,7 @@ var jwtKey = 'test';
 /*************************************
                      Login Handlers
 **************************************/
-//
-// exports.isLoggedIn = function (req, res) {
-//   return req.session ? !!req.session.user : false;
-// };
-//
+
 
 exports.loginUser = function (req, res) {
   var username = req.body.username;
@@ -40,7 +36,8 @@ exports.loginUser = function (req, res) {
               });
               res.json({
                 success: true,
-                token: token
+                token: token,
+                username: user.username
               });
             }
           });
@@ -50,7 +47,6 @@ exports.loginUser = function (req, res) {
 
 
 exports.logoutUser = function (req, res) {
-  req.session.destroy();
   res.redirect('/');
 };
 
@@ -78,7 +74,8 @@ exports.signupUser = function (req, res) {
           });
           res.json({
             success: true,
-            token: token
+            token: token,
+            username: user.username
           });
         }
       });
@@ -123,21 +120,7 @@ exports.fetchPackageById = function (req, res) {
   }
 };
 
-// exports.fetchPackageByTitle = function (req, res) {
-//   var title = req.params.title;
-//   helpers.findPackageByTitle(id, function (err, packageEntry) {
-//     if (err) {
-//       console.log('There was an error finding package with title: ' + title + '.');
-//       res.sendStatus(500);
-//     } else if (packageEntry.length === 0) {
-//         console.log('No entry found with ID: ' + id);
-//         res.sendStatus(404);
-//     } else {
-//        console.log('Sending package with ID ' + id + ' to client.');
-//        res.send(packages);
-//     }
-//   });
-// };
+
 
 exports.savePackageEntry = function (req, res) {
   //entry should be object with all relevant PackageEntry attributes
@@ -168,11 +151,3 @@ exports.getUserInfo = function (req, res) {
     res.send(user);
   });
 };
-
-// exports.checkUser = function (req, res, next) {
-//   if (!exports.isLoggedIn(req)) {
-//     res.redirect('/login');
-//   } else {
-//     next();
-//   }
-// };

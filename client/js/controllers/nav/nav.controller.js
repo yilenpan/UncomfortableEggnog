@@ -15,6 +15,19 @@
         searchTerm: term
       });
     };
+    self.destroySession = function () {
+      localStorage.removeItem('token', '');
+      localStorage.removeItem('username', '');
+    };
+    self.isLoggedIn = function () {
+      return localStorage.getItem('token') !== null;
+    };
+    self.getUserName = function () {
+      return localStorage.getItem('username');
+    };
+    self.goToAccount = function () {
+      $state.go('userPackages', {userName: self.getUserName()});
+    };
 
   }
 })();

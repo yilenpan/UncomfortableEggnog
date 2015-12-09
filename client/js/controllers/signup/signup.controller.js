@@ -20,9 +20,10 @@
           self.usernameError = result.error;
           console.log('error: ', result.error);
         } else if (result.token) {
-          console.log("inside controller" + result.token);
+          console.log('Username: ', result.username);
           localStorage.setItem('token', result.token);
-          $state.go('main');
+          localStorage.setItem('username', result.username);
+          $state.go('userPackages', {userName: result.username});
         } else {
           $state.go('login');
         }
