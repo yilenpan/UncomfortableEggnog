@@ -16,8 +16,8 @@
     };
     // Logout
     self.destroySession = function () {
-      localStorage.removeItem('token', '');
-      localStorage.removeItem('username', '');
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
     };
     // pulls token out of localStorage and checks to see if it exists
     self.isLoggedIn = function () {
