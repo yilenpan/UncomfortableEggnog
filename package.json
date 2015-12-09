@@ -2,13 +2,13 @@
   "name": "electron-jarvis",
   "version": "1.0.0",
   "description": "",
-  "main": "./electron/main.js",
+  "main": "main.js",
   "directories": {
-    "test": "test"
+    "test": "./electron/test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ./electron/main.js",
+    "start": "electron .",
     "lint": "jscs ./"
   },
   "pre-commit": "lint",
