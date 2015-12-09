@@ -11,12 +11,13 @@
           <div class="row">
             <div class="col-md-6">
               <label class="control-label" for="firstname">First Name*</label>  
-              <input type="text" placeholder="First Name" name="first name" class="form-control input-md" 
-              ng-model-options="{ updateOn: 'blur' }" ng-model="su.firstname" required> 
+              <input type="text" placeholder="First Name" name="first name" class="form-control input-md required" 
+              ng-model-options="{ updateOn: 'blur' }" ng-model="su.firstname"> 
             </div>
             <div class="col-md-6">
               <label class="control-label" for="lastname">Last Name*</label>  
-              <input type="text" placeholder="Last Name" name="last name" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.lastname" required>
+              <input type="text" placeholder="Last Name" name="last name" class="form-control input-md required" 
+                ng-model-options="{ updateOn: 'blur' }" ng-model="su.lastname">
             </div> 
           </div>
         </div>
@@ -26,16 +27,17 @@
       <div class="form-group">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-8" ng-class='signupForm.URL.$dirty && signupForm.URL.$invalid ? "has-error" : "" '>
+            <!-- Website -->
+            <div class="col-md-8" ng-class="{'has-error' : su.isInputValid(signupForm.URL)}">
               <label class="control-label" for="Website">Website</label>  
               <input type="url" name="URL" placeholder="www.yourwebsite.com" class="form-control input-md" 
                 ng-model-options="{ updateOn: 'blur' }" ng-model="su.website"/>
             </div>
-            <div class="col-md-4" ng-class='signupForm.email.$touched && signupForm.email.$invalid ? "has-error" : "" '>
-            <!-- ng-class='signupForm.email.$dirty && signupForm.email.$valid ? "has-success" : "" '> -->
+            <!-- Email -->
+            <div class="col-md-4" ng-class="{'has-error' : su.isInputValid(signupForm.email)}">
               <label class="control-label" for="lastname">Email*</label>  
-              <input type="email" name="email"  placeholder="Email" class="form-control input-md" 
-                ng-model-options="{ updateOn: 'blur' }" ng-model="su.email" required/>
+              <input type="email" name="email"  placeholder="Email" class="form-control input-md required" 
+                ng-model-options="{ updateOn: 'blur' }" ng-model="su.email" />
             </div> 
           </div>
             <div>  
@@ -48,12 +50,12 @@
       </div>
 
       <!-- Username input-->
-      <div class="form-group" ng-class='signupForm.username.$dirty && signupForm.username.$invalid ? "has-error" : "" '>
+      <div class="form-group" ng-class="{'has-error' : su.isInputValid(signupForm.username)}">
         <div class="col-md-12">
           <label class="control-label" for="textinput">Username*</label>  
           <input id="textinput" name="username" type="text" placeholder="Enter your desired username" 
-            class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.username" 
-            ng-minlength="4" ng-maxlength="12" ng-pattern="/^[A-Za-z0-9_]{1,15}$/" required />
+            class="form-control input-md required" ng-model-options="{ updateOn: 'blur' }" ng-model="su.username" 
+            ng-minlength="4" ng-maxlength="12" ng-pattern="/^[A-Za-z0-9_]+$/" />
           <div>
             <!-- refactor this to warning block directive -->
           <div role="alert">
@@ -82,15 +84,30 @@
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Password*</label>
               <input name="password" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" ng-model="su.password" required>
-              <span class="help-block">{{}}</span>
+                  placeholder="Enter your password" class="form-control input-md required" ng-model="su.password">
+              <div class="progress">
+                <div class="progress-bar"
+                role="progressbar"
+                  ng-class="{'progress-bar-success' : {{su.passwordStrength === 'strong'}}, 
+                    'progress-bar-warning': su.passwordStrength === 'good', 'progress-bar-danger': su.passwordStrength === 'weak' }" 
+                  aria-valuenow="{{su.passwordStrengthNum}}"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="width:{{ su.passwordStrengthNum }}%">
+                </div>
+              </div>
+
+<!--               <div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+    <span class="sr-only">60% Complete</span>
+  </div>
+</div> -->
             </div>
             <div class="col-md-6">
               <label class="control-label" for="passwordinput">Repeat Password</label>
               <input name="password" type="password" 
-                  placeholder="Enter your password" class="form-control input-md" ng-model-options="{ updateOn: 'blur' }" 
-                  ng-model="su.passwordRepeat" />
-              <span class="help-block">{{}}</span>
+                  placeholder="Enter your password" class="form-control input-md" ng-model="su.passwordRepeat" />
+              <!-- <span class="help-block">{{}}</span> -->
             </div>    
           </div>
         </div>

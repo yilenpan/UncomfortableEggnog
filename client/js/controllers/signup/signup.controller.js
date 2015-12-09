@@ -3,12 +3,13 @@
   angular.module('app')
     .controller('SignUpCtrl', SignUpCtrl);
 
-  SignUpCtrl.$inject = ['ApiFactory', "$state", '$scope'];
+  SignUpCtrl.$inject = ['ApiFactory', "$state", '$scope', 'SignUpFactory'];
 
-  function SignUpCtrl (ApiFactory, $state, $scope) {
+  function SignUpCtrl (ApiFactory, $state, $scope, SignUpFactory) {
     var self = this;
     self.user = {};
-    self.validity = '';
+    self.passwordStrengthNumNum = 0;
+    self.passwordColor = 'white';
 
     self.errorMessages = {
       URL: 'Please enter a valid URL (Did you prefix your url with http://?).',
@@ -18,6 +19,13 @@
       pattern: 'Please only use letters, numbers, and/or underscores in your username (no whitespaces allowed).',
       password: 'Your password did not match.'
     };
+
+    self.passStrength = ''
+    // {
+    //   weak: 'red',
+    //   good: 'yellow',
+    //   strong: 'green'
+    // };
 
     self.post = function () {
       console.log(self.user);
@@ -34,22 +42,26 @@
           console.log('result: ', result);
           $state.go('main');
         }
-        // TODO: User page
-        // refactor to jwt
       });
     };
+
+    $scope.$watch('su.password', function (pass) {
+      var strength =SignUpFactory.getPasswordStrength(pass);
+      self.passwordStrengthNum = strength;
+      // console.log(pass);
+      $scope.passwordStrength = SignUpFactory.checkPasswordStrength(strength);
+    });
+
     self.validateAndPost = function () {
       self.errorList = [];
-        $('input:required').each(function (field, elem) {
+        $('.required').each(function (field, elem) {
           if ($scope.signupForm[elem.name].$dirty === false) {
             self.errorList.push('Please enter your ' + elem.name + '.');
             $(this).parent().addClass('has-error');
           } else if ($scope.signupForm[elem.name].$invalid) {
             $(this).parent().addClass('has-error');
-            // self.errorList.push
           } else {
             $(this).parent().addClass('has-success');
-            // console.log(elem);
           }
         });
       //check password match
@@ -60,6 +72,10 @@
         self.errorList.push(self.errorMessages[password]);
         $('input[type=password]').parent().addClass('has-error');
       }
+    };
+
+    self.isInputValid = function (input) {
+      return input.$dirty && input.$invalid;
     };
 
   }
