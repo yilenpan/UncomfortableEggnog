@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^0.4.1"
+    "electron": "^0.4.1",
+    "electron-prebuilt": "^0.35.4"
   }
 }
