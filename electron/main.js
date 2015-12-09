@@ -8,13 +8,16 @@ following in your app's source directory (electron folder):
 -> electron .
 */
 var electron = require('electron');
-var ipcMain = electron.ipcMain;
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 var globalShortcut = electron.globalShortcut;
+var ipcMain = electron.ipcMain;
 
 // Report crashes to our server.
 electron.crashReporter.start();
+
+// var app = require('app');
+// var BrowserWindow = require('browser-window');
 
 
 // Keep a global reference of the window object, if you don't, the window will

@@ -1,15 +1,19 @@
 {
-  "name": "electronApp",
+  "name": "electron-jarvis",
   "version": "1.0.0",
-  "description": "Electron test",
+  "description": "",
   "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^0.4.1",
-    "electron-prebuilt": "^0.35.4"
+    "electron-prebuilt": "^0.35.4",
+    "jquery": "^2.1.4",
+    "natural": "^0.2.1"
   }
 }
