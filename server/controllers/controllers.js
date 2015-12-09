@@ -49,11 +49,6 @@ exports.loginUser = function (req, res) {
 };
 
 
-exports.logoutUser = function (req, res) {
-  res.redirect('/');
-};
-
-
 exports.signupUser = function (req, res) {
   //assumes req.password is a string
   var username = req.body.username;

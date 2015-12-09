@@ -7,9 +7,6 @@ module.exports = function (router) {
                      Login Routes
 **************************************/
   router.post('/login', controllers.loginUser);
-
-  router.get('/logout', controllers.logoutUser);
-
   router.post('/signup', controllers.signupUser);
 
 /*************************************
