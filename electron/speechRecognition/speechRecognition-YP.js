@@ -9,7 +9,10 @@ if (!('webkitSpeechRecognition' in window)) {
 } else {
   //instance that will listen for the prefix
   var prefixRecognition = listener(prefixRec, 'prefix');
+  //instance that will listen for the command
   var commandRecognition = listener(cmdRec, 'cmd');
+  // connect the two so that the prefixRec will stop its process and call
+  // it's swap
   prefixRecognition.link(commandRecognition);
   commandRecognition.link(prefixRecognition);
 }

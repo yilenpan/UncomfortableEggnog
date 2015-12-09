@@ -14,6 +14,7 @@ module.exports = function (event) {
   };
   //get the shell command using the matching algorithm
   var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
+  console.log(matchObj);
   //check if the user command matched exactly with something in phrases.json
   if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
     //if it didn't match, try to guess the command

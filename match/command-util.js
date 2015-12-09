@@ -10,15 +10,18 @@ var metaphone = natural.Metaphone;
 var Trie = natural.Trie;
 
 //making a new trie and adding commands that will contain variables
-var initialize = function () {
+var initialize = function (arr) {
   var trie = new Trie(false);
   trie.addString("open");
   trie.addStrings(["check the", "what is the", "look up the", "how is the"]);
   trie.addString("google");
   trie.addString("youtube");
   trie.addString("Wikipedia");
+  // trie.addStrings(arr);
   return trie;
 };
+
+// initialize(Object.keys(commands.withArgs));
 
 //match phrases regardless of case, 'Google' = 'google'
 var regMatch = function (arr, term) {
