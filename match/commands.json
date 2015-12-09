@@ -9,7 +9,8 @@
  "Shut up": "osascript -e 'set volume with output muted'",
  "Play": "osascript -e 'display notification \"Playing song...\" with title \"spotify\"'",
  "Youtube": "open https://www.youtube.com/results?search_query=",
- "shutdown": "osascript -e 'display notification \"Volume Up\" with title \"Volume\"'",
- "google": "open https://www.google.com/?q=",
+ "shutdown": "osascript -e 'display notification \"Shutting down\" with title \"Shutdown\"'",
+ "google": "open https://www.google.com/?gws_rd=ssl#q=",
+ "Wikipedia": "open https://en.wikipedia.org/wiki/",
  "null": ""
 }
