@@ -62,7 +62,7 @@
           }
         }
       })
-      // TODO: Not ready
+      // TODO: User page.
       // .state('user', {
       //   url: '/user/:userName',
       //   views: {

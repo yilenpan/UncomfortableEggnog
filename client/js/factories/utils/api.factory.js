@@ -17,6 +17,8 @@
     }
 
     function checkToken () {
+      // checks to see if we have a token, if we do, we set $http to have header
+      // token and set it to our jwt
       if (localStorage.getItem('token')) {
         $http.defaults.headers.common.token = localStorage.getItem('token');
       }
