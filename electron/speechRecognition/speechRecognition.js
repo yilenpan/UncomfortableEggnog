@@ -29,7 +29,7 @@
       var confidence = event.results[0][0].confidence;
       console.log(transcript);
 
-      if (transcript === 'hello world') {
+      if (transcript === 'Jarvis') {
         //end loop that is listening for prefix
         startCmd.play();
         prefixOrCommandListening('stop', 'start');
