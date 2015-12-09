@@ -34,11 +34,9 @@
         //end loop that is listening for prefix
         startCmd.play();
         prefixOrCommandListening('stop', 'start');
+      } else {
+        failedCmd.play();
       }
-      // Removed failedCmd 
-      // else {
-      //   failedCmd.play();
-      // }
     };
 
     commandRecognition.onresult = function (event) {
@@ -70,10 +68,13 @@
           console.log("guess incorrect");
           failedCmd.play();
           //if guess was incorrect, start listening for prefix again
+          commandRecognition.stop();
           startListeningForPrefix();
         }
       } else if (matchObj.guessedPhrase !== 'null') {
         console.log("match exact");
+        commandRecognition.stop();
+
         executeShellComand(matchObj.command);
 
       } else {
@@ -99,6 +100,8 @@
   var executeShellComand = function (shellCommand) {
     exec(shellCommand, function (error, stdout, stderr) {
       console.log("executed shell command");
+      console.log('Stoping commandRecognition');
+      commandRecognition.stop();
       //start prefixRecognition again now that the command has been executed
       startListeningForPrefix();
       //if error throw error - this means the command is not a valid shell command
@@ -124,8 +127,9 @@
     prefixRecognition.onend = function (event) {
       prefixRecognition[prefixFunc]();
     };
-
+    console.log('called commandRecognition.' + cmdFunc + '()');
     commandRecognition[cmdFunc]();
+    console.log('called prefixRecognition.' + prefixFunc + '()');    
     prefixRecognition[prefixFunc]();
   };
 

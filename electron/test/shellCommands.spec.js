@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 var electron = require('electron');
 var ipcMain = electron.ipcMain;
 
-describe('Shell Commands', function () {
+xdescribe('Shell Commands', function () {
 
   it('should execute the command in the terminal', function () {
     exec("echo hello world", function (error, stdout, stderr) {
@@ -18,7 +18,7 @@ describe('Shell Commands', function () {
 
 });
 
-describe('Spawn renderer process', function () {
+xdescribe('Spawn renderer process', function () {
   it('should be able to create a browser window', function (done) {
     var BrowserWindow = electron.BrowserWindow;
     var mainWindow = new BrowserWindow({
