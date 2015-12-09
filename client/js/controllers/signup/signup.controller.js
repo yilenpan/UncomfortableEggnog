@@ -8,8 +8,8 @@
   function SignUpCtrl (ApiFactory, $state, $scope, SignUpFactory) {
     var self = this;
     self.user = {};
-    self.passwordStrengthNumNum = 0;
-    self.passwordColor = 'white';
+    self.passwordStrengthNum = 0;
+    // self.passwordColor = 'white';
 
     self.errorMessages = {
       URL: 'Please enter a valid URL (Did you prefix your url with http://?).',
@@ -20,13 +20,20 @@
       password: 'Your password did not match.'
     };
 
-    self.passStrength = ''
+    self.isPassStrengthStrong = function () {
+      return self.passwordStrengthNum > 70;
+    };
+    self.isPassStrengthGood = function () {
+      return self.passwordStrengthNum > 30 && self.passwordStrengthNum <= 70;
+    };
+    self.isPassStrengthWeak = function () {
+      return self.passwordStrengthNum <= 30;
+    };
     // {
     //   weak: 'red',
     //   good: 'yellow',
     //   strong: 'green'
     // };
-
     self.post = function () {
       console.log(self.user);
       ApiFactory.post('/signup', {
@@ -46,11 +53,12 @@
     };
 
     $scope.$watch('su.password', function (pass) {
-      var strength =SignUpFactory.getPasswordStrength(pass);
+      var strength = SignUpFactory.getPasswordStrength(pass);
       self.passwordStrengthNum = strength;
       // console.log(pass);
-      $scope.passwordStrength = SignUpFactory.checkPasswordStrength(strength);
+      // self.passStrength = SignUpFactory.checkPasswordStrength(strength);
     });
+
 
     self.validateAndPost = function () {
       self.errorList = [];
