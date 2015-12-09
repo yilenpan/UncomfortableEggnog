@@ -118,11 +118,10 @@
         self.fields.password.value = '';
         self.fields['password repeat'].value = '';
         self.errorList.push(self.errorMessages.password);
-       $scope.signupForm['password'].$dirty = true;
-       $scope.signupForm['password'].$pristine = false;
-       $scope.signupForm['password repeat'].$dirty = true;
-       $scope.signupForm['password repeat'].$pristine = false;
-
+        $scope.signupForm['password'].$dirty = true;
+        $scope.signupForm['password'].$pristine = false;
+        $scope.signupForm['password repeat'].$dirty = true;
+        $scope.signupForm['password repeat'].$pristine = false;
 
         validated = false;
       }
