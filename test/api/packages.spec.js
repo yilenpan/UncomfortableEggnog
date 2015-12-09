@@ -55,7 +55,7 @@ xdescribe('Should talk to the db', function (done) {
     });
   });
 
-  xit('should add create a package and we should be able to find it', function (done) {
+  it('should add create a package and we should be able to find it', function (done) {
     helpers.savePackage('Fred', {
       title: 'Kyle Cho Package',
       description: 'kyle cho\'s personal commands',
@@ -91,7 +91,7 @@ xdescribe('Should talk to the db', function (done) {
         done();
       });
   });
-  xit('should return search results for search', function (done) {
+  it('should return search results for search', function (done) {
     request(app)
       .post('/api/search')
       .set('token', token)
@@ -121,7 +121,6 @@ xdescribe('Should talk to the db', function (done) {
   it('should let you edit packages', function (done) {
     db.PackageEntry.findOne({title: '10 Dev Package'}, function (err, packageEdit) {
       packageEdit.title = "KyleChoAwesome";
-
       request(app)
         .post('/api/package/10 Dev Package/edit')
         .set('token', token)
