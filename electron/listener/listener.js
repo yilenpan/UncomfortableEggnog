@@ -31,6 +31,6 @@ module.exports = function (cb, name) {
     listener.abort();
     console.log('starting');
     switchListener.start();
-  }
+  };
   return listener;
-}
+};

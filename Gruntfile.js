@@ -7,12 +7,12 @@ module.exports = function (grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['electron/test/**/*.js']
       }
     },
     docco: {
       debug: {
-        src: ['client/*.js', 'server/**/*.js'],
+        src: ['electron/**/*.js'],
         options: {
           output: 'docs/'
         }

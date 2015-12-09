@@ -35,7 +35,7 @@
         startCmd.play();
         prefixOrCommandListening('stop', 'start');
       }
-      // Removed failedCmd 
+      // Removed failedCmd
       // else {
       //   failedCmd.play();
       // }
