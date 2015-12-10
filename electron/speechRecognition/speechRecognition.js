@@ -6,6 +6,7 @@
   var matchingFunctions = require('./matchAlgorithm/matchingAlgorithm.js');
   var fileInfo = matchingFunctions.readFile();
   var listening = true;
+
   //load audio file only once
   var startCmd = new Audio('./assets/audio/startCmd.wav');
   var failedCmd = new Audio('./assets/audio/failedCmd.wav');
@@ -33,9 +34,11 @@
         //end loop that is listening for prefix
         startCmd.play();
         prefixOrCommandListening('stop', 'start');
-      } else {
-        failedCmd.play();
       }
+      // Removed failedCmd
+      // else {
+      //   failedCmd.play();
+      // }
     };
 
     commandRecognition.onresult = function (event) {

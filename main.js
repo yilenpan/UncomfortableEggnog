@@ -8,10 +8,10 @@ following in your app's source directory (electron folder):
 -> electron .
 */
 var electron = require('electron');
-var ipcMain = electron.ipcMain;
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 var globalShortcut = electron.globalShortcut;
+var ipcMain = electron.ipcMain;
 
 // Report crashes to our server.
 electron.crashReporter.start();
@@ -39,7 +39,7 @@ app.on('ready', function () {
     height: 600
   });
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/electron/index.html');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
