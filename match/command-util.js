@@ -21,7 +21,7 @@ var commandUtil = function (input, fileInfo) {
   };
 
   // TODO: get this list of argCommands from somewhere
-  var argCommands = ["open", ["check the", "what is the", "look up the", "how is the"], "google", "youtube", "Wikipedia"];
+  var argCommands = ["open", "check the", "what is the", "look up the", "how is the", "google", "youtube", "Wikipedia"];
   var trie = prefixTrie.build(argCommands);
   //break inputPhrase down to prefix and variable
   var prefixArray = trie.findPrefix(commandObj.inputPhrase);
@@ -42,7 +42,6 @@ var commandUtil = function (input, fileInfo) {
   //add bash shell command
   commandObj.variable = formatVariable(commandObj.phrase, commandObj.variable);
   commandObj.command = fileInfo.commands[phrase] + commandObj.variable;
-  console.log(commandObj);
   return commandObj;
 };
 

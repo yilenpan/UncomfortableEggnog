@@ -22,6 +22,7 @@ module.exports = function (event) {
       console.log("guess correctly");
       //if guess was correct, add the phrase to the json file and execute
       matchingFunctions.addPhrase(matchObj);
+      startCmd.play();
       executeShellComand(matchObj.command);
     } else {
       console.log("guess incorrect");
@@ -29,6 +30,7 @@ module.exports = function (event) {
       this.switch();
     }
   } else if (matchObj.guessedPhrase !== 'null') {
+    startCmd.play();
     executeShellComand(matchObj.command);
     this.switch();
   } else {
