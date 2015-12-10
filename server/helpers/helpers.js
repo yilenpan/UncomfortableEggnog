@@ -145,11 +145,21 @@ exports.findPackagesByUsername = function (username, cb) {
 
 exports.addLike = function (id, cb) {
   console.log("ID: " + id);
-  db.PackageEntry.update({ _id: id }, {$inc: {likes: 1}}, function (err, pckge) {
+  db.PackageEntry.update({ _id: id }, {$inc: {likes: 1}}, function (err, packageEntry) {
     if (err) {
       cb(err);
     } else {
-      cb(pckge);
+      cb(packageEntry);
+    }
+  });
+};
+
+exports.findPackageById = function (id, cb) {
+  db.PackageEntry.find({_id: id}, function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(packageEntry);
     }
   });
 };

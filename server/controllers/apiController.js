@@ -1,4 +1,7 @@
 var helpers = require('../helpers/helpers');
+var rootFolder = require('../../rootPath');
+var Promise = require('bluebird');
+var utils = require('../lib/utils');
 
 module.exports.topTen = function (req, res) {
   helpers.findPackageEntries(function (err, entries) {
@@ -84,12 +87,36 @@ module.exports.editPackage = function (req, res) {
 };
 
 module.exports.addLike = function (req, res) {
+  console.log('addlike');
   var id = req.params.id;
   helpers.addLike(req.params.id, function (err, pckge) {
     if (err) {
       res.redirect('/');
     } else {
       res.json(pckge);
+    }
+  });
+};
+
+module.exports.downloadPackage = function (req, res) {
+  var id = req.params.id;
+  var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
+  helpers.findPackageById(id, function (packageEntry, err) {
+    if (err) {
+      console.log(err);
+      res.redirect('/');
+    } else {
+      console.log(packageEntry);
+      utils.writeSnippetFile(packageEntry[0], folder).then(function (file) {
+        res.download(file.filePath, file.fileName, function (err) {
+          if (err) {
+            console.log(err);
+          }
+
+          utils.cleanFolder(folder);
+        });
+      });
+
     }
   });
 };

@@ -4,6 +4,7 @@ var jwtKey = 'test';
 
 module.exports = {
   verifyUser: function (req, res, next) {
+    console.log('verify user');
     // Pull token out of header
     var token = req.headers.token;
     if (token) {
