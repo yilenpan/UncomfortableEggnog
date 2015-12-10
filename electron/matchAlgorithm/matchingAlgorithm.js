@@ -20,8 +20,17 @@ var readFile = function () {
 
 };
 
+var addCommand = function () {};
+
+var delCommand = function () {};
+
+var updateCommand = function () {};
+
 module.exports = {
   readFile: readFile,
   cmdUtil: commandUtil.commandUtil,
-  addPhrase: commandUtil.addPhrase
+  addPhrase: commandUtil.addPhrase,
+  addCommand: addCommand,
+  delCommand: delCommand,
+  updateCommand: updateCommand
 };
