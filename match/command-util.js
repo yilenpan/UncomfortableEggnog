@@ -136,10 +136,12 @@ var commandUtil = function (input, fileInfo) {
 
   //break inputPhrase down to prefix and variable
   var prefixArray = findPrefix(commandObj.inputPhrase);
+
   if (prefixArray[0] !== null) {
     commandObj.prefix = prefixArray[0];
     commandObj.variable = prefixArray[1];
   } else {
+    // This is the phrase that needs to be matched
     commandObj.prefix = prefixArray[1];
   }
 
@@ -156,22 +158,6 @@ var commandUtil = function (input, fileInfo) {
 };
 
 var trie = initialize();
-
-//for testing
-// var commands = JSON.parse(fs.readFileSync('./commands.json', 'utf8'));
-// var testObject = JSON.parse(fs.readFileSync('/Users/tpduong/src/hack-reactor/UncomfortableEggnog/test/assets/parse-test.json', 'utf8'));
-
-// for (var i = 0; i < testObject.length; i++) {
-//   var command = commandUtil(testObject[i], {commands: commands, phrasesPath: './phrases.json'});
-//   // var command = commandUtil({
-  //           "score": 0.9855742454528809,
-  //           "term": "open sublime text 2"
-  //       }, {commands: commands, phrasesPath: './phrases.json'});
-
-  // open https://www.google.com/?gws_rd=ssl#q=weather+san+francisco
-  // console.log(command);
-//  addPhrase(command);
-// }
 
 module.exports.commandUtil = commandUtil;
 module.exports.matching = matching;
