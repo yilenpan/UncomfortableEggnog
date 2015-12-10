@@ -92,6 +92,7 @@ var matching = function (commandObj) {
 //for commands with variable, need to format the variable in a certain way so that it can be executed in bash
 var formatVariable = function (phrase, variable) {
   //remove the first character if it's a space
+  //--> mitchell note: use trim?
   if (variable[0] === " ") {
     variable = variable.substr(1);
   }
@@ -99,6 +100,7 @@ var formatVariable = function (phrase, variable) {
   //when openning a application, first letter of every word must be capitalized.
   //spaces must be escapped with "\\
   if (phrase === 'open') {
+  //capitalize first word of every letter
     variable = variable.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
