@@ -57,9 +57,8 @@ exports.loginUser = function (req, res) {
 
 exports.signupUser = function (req, res) {
   //assumes req.password is a string
-  var username = req.body.username;
-  var password = req.body.password;
-  helpers.findUserByUsername(username, function (err, user) {
+  var newUser = req.body;
+  helpers.findUserByUsername(newUser.username, function (err, user) {
     if (user) {
       console.log('That username already exists.');
       res.status(200).json({
@@ -67,7 +66,7 @@ exports.signupUser = function (req, res) {
         error: 'That username already exists.'
       });
     } else {
-      helpers.saveUser(username, password, function (err, user) {
+      helpers.saveUser(newUser, function (err, user) {
         if (err) {
           console.log('There was an error saving user.');
           res.status(500).json({
@@ -78,6 +77,7 @@ exports.signupUser = function (req, res) {
           // if successful, we encrypt the user object and send it out
           // as a token. This will be decrypted by the middleware and
           // applied to req
+          console.log('user saved!: ', user);
           var token = jwt.sign(user, jwtKey, {
             expiresIn: 9999999
           });

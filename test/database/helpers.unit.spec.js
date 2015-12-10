@@ -43,7 +43,11 @@ describe('Database helpers', function (done) {
   beforeEach(function (done) {
     var fred = new db.User({
       username: 'Fred',
-      password: '1234'
+      password: '1234',
+      "first name": 'fred',
+      "last name": 'dee',
+      email: 'fred@apple.com',
+      website: 'http://www.freddee.com'
     });
     // add user to db
     fred.save(function (err, data) {
