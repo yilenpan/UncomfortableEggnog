@@ -1,4 +1,4 @@
-var commandUtil = require('../../match/command-util');
+var commandUtil = require('../../match/command-util-yp');
 var fs = require('fs');
 
 var readFile = function () {
@@ -18,4 +18,3 @@ module.exports = {
   cmdUtil: commandUtil.commandUtil,
   addPhrase: commandUtil.addPhrase
 };
-

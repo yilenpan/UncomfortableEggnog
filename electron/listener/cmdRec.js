@@ -12,9 +12,7 @@ module.exports = function (event) {
     score: confidence,
     term: transcript
   };
-  //get the shell command using the matching algorithm
   var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
-  console.log(matchObj);
   //check if the user command matched exactly with something in phrases.json
   if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
     //if it didn't match, try to guess the command
@@ -23,7 +21,6 @@ module.exports = function (event) {
     if (guessCorrectly) {
       console.log("guess correctly");
       //if guess was correct, add the phrase to the json file and execute
-      //shell command
       matchingFunctions.addPhrase(matchObj);
       executeShellComand(matchObj.command);
     } else {

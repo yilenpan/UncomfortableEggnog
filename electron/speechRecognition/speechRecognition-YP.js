@@ -1,8 +1,8 @@
 var ipcRenderer = require('electron').ipcRenderer;
 var listener = require('./listener/listener');
 var prefixRec = require('./listener/prefixRec');
-// var listening = true;
 var cmdRec = require('./listener/cmdRec');
+// var listening = true;
 
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
