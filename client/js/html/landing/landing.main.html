@@ -15,11 +15,11 @@
             <td class="col-md-2">
               <i class="glyphicon glyphicon-cloud-download"></i>
               <span>{{package.downloads}}</span>
-            </td 
+            </td> 
             <td class="col-md-2">
-              <i class="glyphicon glyphicon-thumbs-up"></i>
+              <i ng-click="landing.likePackage(package)" class="glyphicon glyphicon-thumbs-up"></i>
               <span>{{package.likes}}</span>
-            </td 
+            </td>
             <td class="col-md-2">
               <i class="glyphicon glyphicon-thumbs-down"></i>
               <span>{{package.dislikes}}</span>

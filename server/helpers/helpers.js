@@ -142,3 +142,14 @@ exports.findPackagesByUsername = function (username, cb) {
     }
   });
 };
+
+exports.addLike = function (id, cb) {
+  console.log("ID: " + id);
+  db.PackageEntry.update({ _id: id }, {$inc: {likes: 1}}, function (err, pckge) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(pckge);
+    }
+  });
+};

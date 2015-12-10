@@ -14,5 +14,16 @@
       self.packages = data;
     });
 
+    self.likePackage = function (pckge) {
+      var id = pckge._id;
+      console.log(pckge);
+      post('/api/package/' + id)
+        .then(function (res) {
+          console.log("RESPONSE");
+          pckge.likes = pckge.likes + 1;
+        });
+    };
   }
+
+
 })();

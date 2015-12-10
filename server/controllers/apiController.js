@@ -82,3 +82,14 @@ module.exports.editPackage = function (req, res) {
     }
   });
 };
+
+module.exports.addLike = function (req, res) {
+  var id = req.params.id;
+  helpers.addLike(req.params.id, function (err, pckge) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json(pckge);
+    }
+  });
+};
