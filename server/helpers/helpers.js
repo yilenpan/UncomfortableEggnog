@@ -145,7 +145,7 @@ exports.addReview = function (id, stars, review, cb) {
     {
       $inc: {
         countReviews: 1,
-        stars: stars || 0
+        stars: stars
       },
       $push: {
         reviews: review
