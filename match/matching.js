@@ -21,12 +21,14 @@ var matching = function (commandObj) {
   for (var key in phrases) {
     //compare distance between the input phrase and one of our accepted phrase
     if (JaroWinklerDistance(commandObj.prefix, key) > threshold) {
+      console.log('word distance match found');
       commandObj.exact = false;
       commandObj.phrase = key;
       return commandObj;
     }
     //first converts the input phrases to the phonetics sound, then compare how far they are apart.
     if (JaroWinklerDistance(Metaphone.process(commandObj.prefix), Metaphone.process(key)) > threshold) {
+      console.log('phonetic match found');
       commandObj.exact = false;
       commandObj.phrase = key;
       return commandObj;

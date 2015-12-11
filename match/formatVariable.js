@@ -1,4 +1,12 @@
-module.exports = function (phrase, variable) {
+
+
+module.exports = function (voiceCommand, variable) {
+
+  voiceCommand = 'google';
+  variable = 'the weather';
+
+  console.log('Inside formatVariable with voiceCommand ', voiceCommand);
+  console.log('Inside formatVariable with variable ', variable);
   //remove the first character if it's a space
   if (variable[0] === " ") {
     variable = variable.substr(1);
@@ -6,7 +14,7 @@ module.exports = function (phrase, variable) {
 
   //when openning a application, first letter of every word must be capitalized.
   //spaces must be escapped with "\\
-  if (phrase === 'open') {
+  if (voiceCommand === 'open') {
     variable = variable.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -14,11 +22,11 @@ module.exports = function (phrase, variable) {
   }
 
   //replacing spaces with '+'
-  if (phrase === "check the" || phrase === "Youtube" || phrase === "google") {
+  if (voiceCommand === "check the" || voiceCommand === "Youtube" || voiceCommand === "google") {
     variable = variable.replace(/\ /g, "\+");
   }
 
-  if (phrase === 'Wikipedia') {
+  if (voiceCommand === 'Wikipedia') {
     variable = variable.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
