@@ -18,6 +18,7 @@
             </td> 
             <td class="col-md-2">
               <i ng-click="landing.likePackage(package)" class="glyphicon glyphicon-thumbs-up"></i>
+              <div rating score="package.likes" max="5"></div>
               <span>{{package.likes}}</span>
             </td>
             <td class="col-md-2">
