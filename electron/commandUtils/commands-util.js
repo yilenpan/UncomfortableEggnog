@@ -27,7 +27,7 @@ var getCommands = function () {
     phrasesPath: phrasesPath,
     commands: commands
   };
-}
+};
 
 var addCommand = function (filePath, command) {
   write(filePath, _.defaults(commands, command));
@@ -41,7 +41,7 @@ var delCommand = function (filePath, command) {
 };
 
 var updateCommand = function (filePath, command) {
-  write(filePath, _.extend(commands, command))
+  write(filePath, _.extend(commands, command));
   loadCommands();
 };
 
