@@ -6,7 +6,8 @@ var Metaphone = natural.Metaphone;
 
 
 var matching = function (commandObj) {
-  var threshold = 0.8;
+  var exactMatchThreshold = 0.8;
+  var closeMatchThreshold = 0.6;
   // load phrases
   var phrases = JSON.parse(fs.readFileSync(commandObj.phrasesPath, 'utf8'));
 
@@ -20,14 +21,14 @@ var matching = function (commandObj) {
 
   for (var key in phrases) {
     //compare distance between the input phrase and one of our accepted phrase
-    if (JaroWinklerDistance(commandObj.prefix, key) > threshold) {
+    if (JaroWinklerDistance(commandObj.prefix, key) > exactMatchThreshold) {
       console.log('word distance match found');
       commandObj.exact = false;
       commandObj.phrase = key;
       return commandObj;
     }
     //first converts the input phrases to the phonetics sound, then compare how far they are apart.
-    if (JaroWinklerDistance(Metaphone.process(commandObj.prefix), Metaphone.process(key)) > threshold) {
+    if (JaroWinklerDistance(Metaphone.process(commandObj.prefix), Metaphone.process(key)) > closeMatchThreshold) {
       console.log('phonetic match found');
       commandObj.exact = false;
       commandObj.phrase = key;

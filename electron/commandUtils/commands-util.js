@@ -4,6 +4,7 @@ var fs = require('fs');
 var _ = require('underscore');
 var loadPhrases = require('../utils/loaders').loadPhrases;
 var commands, phrases, phrasesPath;
+var prefixTrie = require('../match/prefixTrie');
 
 var write = function (filePath, data) {
   if (typeof data === 'object') {
@@ -23,6 +24,8 @@ var loadCommands = function (commandsPath) {
   } catch (e) {
     write(phrasesPath, loadPhrases(tmpPhrases, commands));
   }
+  var argCommands = ["open", "check the", "what is the", "look up the", "how is the", "google", "youtube", "Wikipedia"];
+  prefixTrie.build(argCommands);
 };
 
 

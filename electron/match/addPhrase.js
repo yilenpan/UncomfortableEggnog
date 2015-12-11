@@ -1,11 +1,18 @@
-module.exports = function (newPhraseObj) {
-  //read from phrasesPath
-  var phrases = JSON.parse(fs.readFileSync(newPhraseObj.phrasesPath, 'utf8'));
+var fs = require('fs');
 
-  //push in new phrase
-  phrases[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
-
-  // write back to phrases
-  fs.writeFileSync(newPhraseObj.phrasesPath, JSON.stringify(phrases), 'utf8');
-  console.log("saving ", newPhraseObj.inputPhrase, "as acceptable phrase for \'", newPhraseObj.phrase, "\'");
+module.exports = function (newPhraseObj, cb) {
+  fs.readFile(newPhraseObj.phrasesPath, 'utf8', function (err, data) {
+    if (err) {
+      cb(err);
+    } else {
+      var phrases = JSON.parse(data);
+      phrases[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
+      fs.writeFile(newPhraseObj.phrasesPath,
+        JSON.stringify(phrases),
+        'utf8',
+        function (err, data) {
+        cb(null, data);
+      });
+    }
+  });
 };
