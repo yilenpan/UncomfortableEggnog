@@ -1,10 +1,6 @@
 
 
 module.exports = function (voiceCommand, variable) {
-
-  voiceCommand = 'google';
-  variable = 'the weather';
-
   console.log('Inside formatVariable with voiceCommand ', voiceCommand);
   console.log('Inside formatVariable with variable ', variable);
   //remove the first character if it's a space

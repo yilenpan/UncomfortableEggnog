@@ -1,8 +1,9 @@
-var matchingFunctions = require('../matchAlgorithm/matchingAlgorithm.js');
-var fileInfo = matchingFunctions.readFile();
+var matchingFunctions = require('../commandUtils/commands-util.js');
+matchingFunctions.loadCommands();
 var executeShellComand = require('../cmd/execShellCommand');
 var startCmd = require('../audio/audio').startCmd;
 var failedCmd = require('../audio/audio').failedCmd;
+
 
 module.exports = function (event) {
   console.log("command listening");
@@ -12,6 +13,7 @@ module.exports = function (event) {
     score: confidence,
     term: transcript
   };
+  var fileInfo = matchingFunctions.getCommands();
   var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
   //check if the user command matched exactly with something in phrases.json
   if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
