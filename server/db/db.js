@@ -37,6 +37,7 @@ var PackageEntrySchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  reviews: [String],
   downloads: {
     type: Number,
     default: 0

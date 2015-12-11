@@ -11,7 +11,8 @@
       scope: {
         score: '@score',
         max: '@max',
-        packageEntry: '=package'
+        packageEntry: '=package',
+        review: '=review'
       }
     };
 
@@ -47,7 +48,14 @@
       scope.setRating = function (index) {
         var id = scope.packageEntry._id;
         scope.score = index + 1;
-        post('/api/package/' + id, {data: scope.score})
+      };
+
+      scope.submitReview = function () {
+        console.log("submit rating: ", scope.review);
+        post('/api/package/' + id, {
+          stars: scope.score,
+          review: scope.review
+        })
           .then(function (res) {
             //console.log(res);
           });
