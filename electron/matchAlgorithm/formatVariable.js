@@ -19,7 +19,7 @@ var _argSyntax = /<ARG.*\/>/;
 var commands = {
   exactCommands: {},
   argCommands: {
-      "google": "open https//www.google.com/?gws_rd=ssl#q=<ARG del='+' />"
+      "google": "open https//www.google.com/?gws_rd=ssl#q=<ARG del='+' capitalize=true/>"
       }
   };
 
@@ -40,19 +40,33 @@ module.exports = function (phrase, variable) {
     var arg = phrase.split('=');
     var key = arg[0];
     var value;
-    console.log(arg);
   //if value is wrapped in single quotation marks, remove extraneous quotes.
     if (arg[1][0] === '\'' && arg[1][arg[1].length - 1] === '\'') {
-      console.log('wat');
       value = arg[1].slice(1, -1);
   //assign key/value to argument.
       argParams[key] = value;
     } else {
       argParams[key] = JSON.parse(arg[1]);
     }
-    console.log(argParams);
   });
-  console.log(argParams);
+
+  //==translate phrase using argument parameters (assumes delimiter)=======
+  var varArr = variable.split(' ');
+  if (argParams['capitalize']) {
+    varArr = varArr.map(function (word) {
+      return word[0].toUpperCase() + word.slice(1);
+    });
+  }
+  variable = varArr.join(argParams['del']);
+
+  // if (argParams['capitalize']) {
+  //   variable = variable.replace(/\w\S* /g, function (txt) {
+  //     return  txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() + argParams['del'];
+  //   });
+  // } else {
+  //   variable = variable.replace(' ', argParams['del']);
+  // }
+  return variable;
 };
 
 //   var args = bash.match(_argSyntax);
