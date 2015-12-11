@@ -98,24 +98,32 @@ module.exports.addStars = function (req, res) {
   });
 };
 
-module.exports.downloadPackage = function (req, res) {
+module.exports.downloadPackage = function (req, res, next) {
+  console.log("download");
   var id = req.params.id;
   var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
   helpers.findPackageById(id, function (packageEntry, err) {
     if (err) {
-      console.log(err);
       res.redirect('/');
     } else {
-      console.log(packageEntry);
       utils.writeSnippetFile(packageEntry[0], folder).then(function (file) {
         res.download(file.filePath, file.fileName, function (err) {
-          if (err) {
-            console.log(err);
-          }
           utils.cleanFolder(folder);
+          if (err) {
+            res.redirect('/');
+          } else {
+            incrementDownloads(id);
+          }
         });
       });
+    }
+  });
+};
 
+function incrementDownloads (id) {
+  helpers.incrementPackageDownloads(id, function (packageEntry, err) {
+    if (err) {
+      console.log(err);
     }
   });
 };

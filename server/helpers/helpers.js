@@ -175,3 +175,13 @@ exports.findPackageById = function (id, cb) {
     }
   });
 };
+
+exports.incrementPackageDownloads = function (id, cb) {
+  db.PackageEntry.update({_id: id}, {$inc: {downloads: 1}}, function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(packageEntry);
+    }
+  });
+};
