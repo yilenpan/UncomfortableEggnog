@@ -10,19 +10,7 @@
  *    "open": "open <ARG del='\\ ' capitalize=true/>.app",
  *    "kyle cho pro tip": "say kyle cho pro tip"
  *   }
- *  current output: {
- *    exactCommands:
- *     {
- *       "kyle cho pro tip": "say kyle cho pro tip"
- *     },
- *    argCommands: {
- *      "check the": "open https//www.google.com/?gws_rd=ssl#q=<ARG del='+' />",
- *      "open": "open <ARG del='\\ ' capitalize=true/>.app"
- *    }
- *   }
- *
- *
- * potential future output (for multiple argument positions):
+ *  output:
  *   {
  *    "exactCommands":
  *     {
@@ -32,33 +20,33 @@
  *    "argCommands":
  *     {
  *      "check the": {
- *        "command": ["open https//www.google.com/?gws_rd=ssl#q="],
+ *        "commands": ["open https//www.google.com/?gws_rd=ssl#q="],
  *        "args": [{
  *          "del": "+"
  *        }]
  *      },
  *      "open": {
- *        "command": ["open ", ".app"],
+ *        "commands": ["open ", ".app"],
  *        "args": [{
  *          "del": "\\ ",
  *          "capitalize": true
  *        }]
  *      }
  *     }
+ *
+ *  For argCommands, the hardcoded bash strings are listed as an array
+ *  under the "commands" property.  Upon execution, arguments in the
+ *  args array are injected in between each string (bash commands will
+ *  always start with the hardcoded string, never an argument).
+ *
  */
-// var _argSyntax = /<ARG.*\/>/;
 var _argSyntax = /<ARG\s*[a-zA-Z+='"\s\\\/]*\/>/;
-
-//TODO: parse delimiter
 var _delSyntax = /del="\s*([^\n\r"]*)"\s* | del='\s*([^\n\r']*)'\s*/;
+var _htmlSyntax = /(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/g;
 
 var buildArgParams = function (argStr) {
   var argPhraseStr = argStr.slice(4, -2).trim();
-  //TODO: refactor parseCommands code to
-  // handle removing trailing whitespace in between parameters
-  // var argPhrases = argPhraseStr.split(' ');
-
-  var argPhrases = argPhraseStr.match(/(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/g);
+  var argPhrases = argPhraseStr.match(_htmlSyntax);
 
 
   var argParams = {};
@@ -103,9 +91,8 @@ module.exports = {
           return el !== "";
         });
 
-
         argCommands[phrase] = {};
-        argCommands[phrase]["command"] = bashStrs;
+        argCommands[phrase]["commands"] = bashStrs;
         argCommands[phrase]["args"] = argArr;
         // addArgCommand(args, )
         // var command = bash.split(/<ARG.*>/);
