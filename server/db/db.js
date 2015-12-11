@@ -29,11 +29,11 @@ var UserSchema = new mongoose.Schema({
 
 var PackageEntrySchema = new mongoose.Schema({
   title: String,
-  likes: {
+  stars: {
     type: Number,
     default: 0
   },
-  dislikes: {
+  countReviews: {
     type: Number,
     default: 0
   },

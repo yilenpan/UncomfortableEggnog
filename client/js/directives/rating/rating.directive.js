@@ -3,16 +3,19 @@
   angular.module('app')
     .directive('rating', RatingDirective);
 
-  function RatingDirective () {
+  function RatingDirective (ApiFactory) {
     var directive = {
       restrict: 'AE',
       templateUrl: 'js/html/rating/rating.main.html',
       link: link,
       scope: {
-        score: '=score',
-        max: '=max'
+        score: '@score',
+        max: '@max',
+        packageEntry: '=package'
       }
     };
+
+    var post = ApiFactory.post;
 
     return directive;
 
@@ -42,7 +45,12 @@
       });
 
       scope.setRating = function (index) {
+        var id = scope.packageEntry._id;
         scope.score = index + 1;
+        post('/api/package/' + id, {data: scope.score})
+          .then(function (res) {
+            //console.log(res);
+          });
       };
 
       scope.hover = function (index) {
@@ -51,6 +59,15 @@
 
       scope.stopHover = function () {
         scope.hoverIndex = -1;
+      };
+
+      scope.starColor = function (index) {
+        console.log(index);
+        var starClass = 'rating-normal';
+        if (star.full || index <= scope.hoverIndex) {
+         starClass = 'rating-highlight';
+        }
+        return starClass;
       };
     }
   }

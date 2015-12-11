@@ -13,7 +13,7 @@
     return services;
 
   function parse (results) {
-    console.log(results);
+    console.log("results: ", results);
     return results.data;
   }
 
@@ -53,12 +53,13 @@
      * @return {object}
      */
 
-    function post (url, data) {
+    function post (url, reqData) {
+      console.log("DATA: ", reqData);
       checkToken();
       return $http({
         method: 'POST',
         url: url,
-        data: data
+        data: reqData
       }).then(parse, errorHandler);
     }
   }

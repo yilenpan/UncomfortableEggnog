@@ -143,13 +143,25 @@ exports.findPackagesByUsername = function (username, cb) {
   });
 };
 
-exports.addLike = function (id, cb) {
-  console.log("ID: " + id);
-  db.PackageEntry.update({ _id: id }, {$inc: {likes: 1}}, function (err, packageEntry) {
+exports.addStars = function (id, stars, cb) {
+  db.PackageEntry.update({ _id: id },
+    {$inc: {
+        countReviews: 1,
+        stars: stars
+      }
+    },
+    function (err, packageEntry) {
     if (err) {
+      console.log("error add stars");
       cb(err);
     } else {
-      cb(packageEntry);
+      exports.findPackageById(id, function (packageEntry, error) {
+        if (error) {
+          cb(error);
+        } else {
+          cb(null, packageEntry[0]);
+        }
+      });
     }
   });
 };

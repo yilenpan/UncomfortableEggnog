@@ -86,14 +86,15 @@ module.exports.editPackage = function (req, res) {
   });
 };
 
-module.exports.addLike = function (req, res) {
-  console.log('addlike');
+module.exports.addStars = function (req, res) {
   var id = req.params.id;
-  helpers.addLike(req.params.id, function (err, pckge) {
+  var stars = req.body.data;
+  helpers.addStars(req.params.id, stars, function (err, packageEntry) {
     if (err) {
       res.redirect('/');
     } else {
-      res.json(pckge);
+      console.log('package entry: ', packageEntry);
+      res.json(packageEntry);
     }
   });
 };
@@ -112,7 +113,6 @@ module.exports.downloadPackage = function (req, res) {
           if (err) {
             console.log(err);
           }
-
           utils.cleanFolder(folder);
         });
       });

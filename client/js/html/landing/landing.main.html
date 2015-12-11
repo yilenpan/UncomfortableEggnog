@@ -1,7 +1,7 @@
 <div class="row" ng-controller='LandingPageCtrl as landing'>
   <div class="col-md-12">
     <h1>Favorites</h1>
-    <div class="col-xs-4" ng-repeat='package in landing.packages track by $index'>
+    <div class="col-xs-4" ng-repeat="package in landing.packages | orderBy:'-likes' track by $index">
       <div class="package-widget">
         <div class="packageDetails">
           <h3>
@@ -18,8 +18,8 @@
             </td> 
             <td class="col-md-2">
               <i ng-click="landing.likePackage(package)" class="glyphicon glyphicon-thumbs-up"></i>
-              <div rating score="package.likes" max="5"></div>
-              <span>{{package.likes}}</span>
+              <div rating score="package.stars" max="5" package="package"></div>
+              <span>Rating: {{package.average}}%</span>
             </td>
             <td class="col-md-2">
               <i class="glyphicon glyphicon-thumbs-down"></i>
