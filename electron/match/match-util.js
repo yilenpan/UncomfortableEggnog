@@ -18,7 +18,6 @@ var matchUtil = function (input, fileInfo) {
     inputPhrase: input.term,
     phrasesPath: fileInfo.phrasesPath,
     guessedPhrase: "",
-    // NOTE: Phrases now in matchUtil
     phrases: fileInfo.phraseObj
   };
 
