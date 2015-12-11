@@ -1,8 +1,6 @@
 var fs = require('fs');
-var commandsUtil = require('../commandsUtil/commandsUtil.js');
 
 module.exports = function (newPhraseObj, cb) {
-  commandsUtil.updatePhrases(newPhraseObj);
   fs.readFile(newPhraseObj.phrasesPath, 'utf8', function (err, data) {
     if (err) {
       cb(err);

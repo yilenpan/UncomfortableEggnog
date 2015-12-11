@@ -41,7 +41,7 @@ var matchUtil = function (input, fileInfo) {
 };
 
 
-module.exports.commandUtil = matchUtil;
+module.exports.matchUtil = matchUtil;
 module.exports.matching = matching;
 module.exports.regMatch = regMatch;
 module.exports.addPhrase = addPhrase;

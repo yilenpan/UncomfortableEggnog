@@ -16,7 +16,6 @@ var loadPhrases = function (phrasesPath, commands) {
     }, {}));
 
   updatePhrases(phrasesPath, phrases);
-  console.log('loaded phrases ', phrases);
   return phrases;
 };
 
