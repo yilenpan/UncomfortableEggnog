@@ -34,20 +34,20 @@
  *      "check the": {
  *        "command": ["open https//www.google.com/?gws_rd=ssl#q="],
  *        "args": [{
- *          "delimiter": "+"
+ *          "del": "+"
  *        }]
  *      },
  *      "open": {
  *        "command": ["open ", ".app"],
  *        "args": [{
- *          "delimiter": "\\ ",
+ *          "del": "\\ ",
  *          "capitalize": true
  *        }]
  *      }
  *     }
  */
 // var _argSyntax = /<ARG.*\/>/;
-var _argSyntax = /<ARG\s*[a-zA-Z+='"\s\\]*\/>/;
+var _argSyntax = /<ARG\s*[a-zA-Z+='"\s\\\/]*\/>/;
 
 //TODO: parse delimiter
 var _delSyntax = /del="\s*([^\n\r"]*)"\s* | del='\s*([^\n\r']*)'\s*/;
