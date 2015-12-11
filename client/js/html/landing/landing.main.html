@@ -17,14 +17,10 @@
               <span>{{package.downloads}}</span>
             </td> 
             <td class="col-md-2">
-              <i ng-click="landing.likePackage(package)" class="glyphicon glyphicon-thumbs-up"></i>
-              <div rating score="package.stars" max="5" package="package"></div>
-              <span>Rating: {{package.average}}%</span>
+              <i ng-click="landing.likePackage(package)" class="glyphicon glyphicon-heart-empty"></i>
+              <!--<div rating score="package.stars" max="5" package="package"></div>-->
+              <span>{{package.average}}%</span>
             </td>
-            <td class="col-md-2">
-              <i class="glyphicon glyphicon-thumbs-down"></i>
-              <span>{{package.dislikes}}</span>
-            </td 
           <div>
         </div>
       </div>

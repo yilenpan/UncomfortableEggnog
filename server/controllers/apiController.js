@@ -93,7 +93,6 @@ module.exports.addStars = function (req, res) {
     if (err) {
       res.redirect('/');
     } else {
-      console.log('package entry: ', packageEntry);
       res.json(packageEntry);
     }
   });

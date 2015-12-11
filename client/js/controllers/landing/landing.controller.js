@@ -6,12 +6,10 @@
   LandingPageCtrl.$inject = ['ApiFactory'];
 
   function LandingPageCtrl (ApiFactory) {
-    console.log("contrller");
     var self = this;
     var get = ApiFactory.get;
     var post = ApiFactory.post;
     self.packages = [];
-    self.averages = [];
     get('/api/top10').then(function (data) {
       self.packages = data;
       calculateAvg();

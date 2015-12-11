@@ -53,13 +53,12 @@
      * @return {object}
      */
 
-    function post (url, reqData) {
-      console.log("DATA: ", reqData);
+    function post (url, data) {
       checkToken();
       return $http({
         method: 'POST',
         url: url,
-        data: reqData
+        data: data
       }).then(parse, errorHandler);
     }
   }
