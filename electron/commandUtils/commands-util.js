@@ -3,16 +3,19 @@ var config = require('../config/config');
 var fs = require('fs');
 var _ = require('underscore');
 var loadPhrases = require('../utils/loaders').loadPhrases;
-var phrasesPath = config.corePhrasesJSON;
-// var commandsPath = config.coreCommandsJSON;
-var commands, phrases;
+var commands, phrases, phrasesPath;
 
 var write = function (filePath, data) {
+  if (typeof data === 'object') {
+    data = JSON.stringify(data);
+  }
   fs.writeFileSync(filePath, data);
 };
 
+
 var loadCommands = function (commandsPath) {
   var tmpPhrases = {};
+  phrasesPath = commandsPath.replace('commands.', 'phrases.');
   commands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
   try {
     tmpPhrases = JSON.parse(fs.readFileSync(phrasesPath));
@@ -22,6 +25,7 @@ var loadCommands = function (commandsPath) {
   }
 };
 
+
 var getCommands = function () {
   return {
     phrasesPath: phrasesPath,
@@ -29,20 +33,23 @@ var getCommands = function () {
   };
 };
 
+
 var addCommand = function (filePath, command) {
   write(filePath, _.defaults(commands, command));
-  loadCommands();
+  loadCommands(filePath);
 };
+
 
 var delCommand = function (filePath, command) {
   delete commands[command];
   write(filePath, commands);
-  loadCommands();
+  loadCommands(filePath);
 };
+
 
 var updateCommand = function (filePath, command) {
   write(filePath, _.extend(commands, command));
-  loadCommands();
+  loadCommands(filePath);
 };
 
 module.exports = {

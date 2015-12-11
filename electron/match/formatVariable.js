@@ -1,5 +1,3 @@
-
-
 module.exports = function (voiceCommand, variable) {
   console.log('Inside formatVariable with voiceCommand ', voiceCommand);
   console.log('Inside formatVariable with variable ', variable);

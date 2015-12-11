@@ -6,7 +6,7 @@ var addPhrase = require('./addPhrase');
 var regMatch = require('./regMatch');
 
 
-var commandUtil = function (input, fileInfo) {
+var matchUtil = function (input, fileInfo) {
   //create a new object to be returned
   var commandObj = {
     command: "",
@@ -46,7 +46,7 @@ var commandUtil = function (input, fileInfo) {
 };
 
 
-module.exports.commandUtil = commandUtil;
+module.exports.commandUtil = matchUtil;
 module.exports.matching = matching;
 module.exports.regMatch = regMatch;
 module.exports.addPhrase = addPhrase;

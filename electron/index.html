@@ -19,10 +19,13 @@
     $('#add').on('click', function () {
       var extraCommands = {
         "enhance": "osascript -e 'tell application \"System Events\"" +
-                   "to repeat 5 times' -e 'key code 24 using {command down}'" +
+                   "to repeat 2 times' -e 'key code 24 using {command down}'" +
                    " -e 'delay 0.1' -e 'end repeat'",
-        "dehance": "osascript -e 'tell application \"System Events\"" +
-                   " to repeat 5 times' -e 'key code 27 using {command down}'" +
+        "enhance": "osascript -e 'tell application \"System Events\"" +
+                   "to repeat 2 times' -e 'key code 24 using {command down}'" +
+                   " -e 'delay 0.1' -e 'end repeat'",
+        "zoom out": "osascript -e 'tell application \"System Events\"" +
+                   " to repeat 2 times' -e 'key code 27 using {command down}'" +
                    " -e 'delay 0.1' -e 'end repeat'"
       };
       console.log(extraCommands);
