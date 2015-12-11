@@ -3,6 +3,8 @@ var helpers = require('../helpers/helpers.js');
 var sessionSecret = "dasfgg";
 var db = require('../db/db.js');
 var morgan = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
 
 module.exports = function (app, express) {
   var userRoute = express.Router();
@@ -18,7 +20,7 @@ module.exports = function (app, express) {
     // app.use(morgan('dev'));
     var sessionSecret = 'tester';
   }
-
+  app.use(session({secret: sessionSecret}));
   app.use(express.static(__dirname + '/../../client'));
 
 //=========Custom Routes================

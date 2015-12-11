@@ -1,0 +1,58 @@
+//load the strategies we need
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+//load the user model
+var User = require('../db/db').User;
+
+//load the auth variables - fb only for $.now();
+var configAuth = require('./auth');
+
+module.exports = function (passport) {
+  //serialize the user for the session
+  passport.serializeUser(function (user, done) {
+    done(null, user.id);
+  });
+
+  //deserialize the user
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
+
+  passport.use(new FacebookStrategy({
+
+    //get app id and secret from auth.js
+    clientID: configAuth.facebookAuth.clientID,
+    clientSecret: configAuth.facebookAuth.clientSecret,
+    callbackURL: configAuth.facebookAuth.callbackURL
+  },
+
+  function (token, refreshToken, profile, done) {
+    User.findOne({ 'facebook.id': profile.id}, function (err, user) {
+      //if there is an error, stop everything and return the error
+      if (err) {
+        return done(err);
+      }
+
+      //if the user is found, then log them in
+      if (user) {
+        return done(null, user);
+      } else {
+        //if there is no user then create one
+        var newUser = new User();
+        newUser.facebook.id = profile.id;
+        newUser.facebook.token = token;
+        newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+
+        newUser.save(function (err) {
+          if (err) {
+            throw err;
+          }
+          return done(null, newUser);
+        });
+      }
+    });
+  }));
+};
