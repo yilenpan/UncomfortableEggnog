@@ -77,7 +77,6 @@ module.exports = {
     for (var phrase in commandObj) {
       var bash = commandObj[phrase];
       var args = bash.match(_argSyntax);
-      // console.log(args);
 
       //arguments case: add to argCommands object
       if (args) {
@@ -94,9 +93,7 @@ module.exports = {
         argCommands[phrase] = {};
         argCommands[phrase]["commands"] = bashStrs;
         argCommands[phrase]["args"] = argArr;
-        // addArgCommand(args, )
-        // var command = bash.split(/<ARG.*>/);
-        // var delimiter = command.match(_delSyntax). ;
+
       } else {
         exactCommands[phrase] = bash;
       }
