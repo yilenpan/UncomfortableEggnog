@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var commandsUtil = require('../commandUtils/commands-util');
+var commandsUtil = require('../commandsUtil/commandsUtil');
 var config = require('../config/config');
 var fs = require('fs');
 var del = require('del');

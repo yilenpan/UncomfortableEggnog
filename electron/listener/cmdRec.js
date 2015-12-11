@@ -1,4 +1,4 @@
-var matchingFunctions = require('../commandUtils/commands-util.js');
+var matchingFunctions = require('../commandsUtil/commandsUtil');
 var config = require('../config/config');
 matchingFunctions.loadCommands(config.coreCommandsJSON);
 var executeShellComand = require('../cmd/execShellCommand');

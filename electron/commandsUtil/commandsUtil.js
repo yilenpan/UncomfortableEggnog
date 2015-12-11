@@ -2,8 +2,9 @@ var commandUtil = require('../match/match-util');
 var config = require('../config/config');
 var fs = require('fs');
 var _ = require('underscore');
+// Returns string
 var loadPhrases = require('../utils/loaders').loadPhrases;
-var commands, phrases, phrasesPath;
+var commandObj = {};
 var prefixTrie = require('../match/prefixTrie');
 
 var write = function (filePath, data) {
@@ -18,22 +19,16 @@ var loadCommands = function (commandsPath) {
   var tmpPhrases = {};
   phrasesPath = commandsPath.replace('commands.', 'phrases.');
   commands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
-  try {
-    tmpPhrases = JSON.parse(fs.readFileSync(phrasesPath));
-    write(phrasesPath, loadPhrases(tmpPhrases, commands));
-  } catch (e) {
-    write(phrasesPath, loadPhrases(tmpPhrases, commands));
-  }
+  commandObj.phraseObj = loadPhrases(phrasesPath, commands);
   var argCommands = ["open", "check the", "what is the", "look up the", "how is the", "google", "youtube", "Wikipedia"];
   prefixTrie.build(argCommands);
 };
 
 
 var getCommands = function () {
-  return {
-    phrasesPath: phrasesPath,
-    commands: commands
-  };
+  commandObj.phrasesPath = phrasesPath;
+  commandObj.commands = commands;
+  return commandObj;
 };
 
 
@@ -55,6 +50,11 @@ var updateCommand = function (filePath, command) {
   loadCommands(filePath);
 };
 
+var updatePhrases = function (newPhraseObj) {
+  console.log('updatePhrases');
+  commandObj.phraseObj[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
+};
+
 module.exports = {
   loadCommands: loadCommands,
   cmdUtil: commandUtil.commandUtil,
@@ -62,5 +62,6 @@ module.exports = {
   addPhrase: commandUtil.addPhrase,
   addCommand: addCommand,
   delCommand: delCommand,
-  updateCommand: updateCommand
+  updateCommand: updateCommand,
+  updatePhrases: updatePhrases
 };

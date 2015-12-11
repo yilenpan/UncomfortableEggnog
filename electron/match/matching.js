@@ -8,9 +8,7 @@ var Metaphone = natural.Metaphone;
 var matching = function (commandObj) {
   var exactMatchThreshold = 0.8;
   var closeMatchThreshold = 0.6;
-  // load phrases
-  var phrases = JSON.parse(fs.readFileSync(commandObj.phrasesPath, 'utf8'));
-
+  var phrases = commandObj.phrases;
   for (var key in phrases) {
     if (regMatch(phrases[key], commandObj.prefix)) {
       console.log("term is: ", commandObj.inputPhrase, " exact match found");

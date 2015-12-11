@@ -17,14 +17,12 @@ var matchUtil = function (input, fileInfo) {
     variable: "",
     inputPhrase: input.term,
     phrasesPath: fileInfo.phrasesPath,
-    guessedPhrase: ""
+    guessedPhrase: "",
+    // NOTE: Phrases now in matchUtil
+    phrases: fileInfo.phraseObj
   };
 
-  // TODO: get this list of argCommands from somewhere
-
-  // Builds up command from voice command
   var prefixArray = prefixTrie.findPrefix(commandObj.inputPhrase);
-
   if (prefixArray[0] !== null) {
     commandObj.prefix = prefixArray[0];
     commandObj.variable = prefixArray[1];
@@ -32,9 +30,6 @@ var matchUtil = function (input, fileInfo) {
     // If no prefix is found in the trie, assume it is a command
     commandObj.prefix = prefixArray[1];
   }
-
-  //call the matching function to find either an exact match or a close match
-  // commandObj = matching(commandObj);
   matching(commandObj);
   var phrase = commandObj.phrase;
   commandObj.guessedPhrase = commandObj.phrase + commandObj.variable;
