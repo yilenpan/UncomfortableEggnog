@@ -139,3 +139,43 @@ exports.findPackagesByUsername = function (username, cb) {
     }
   });
 };
+
+exports.addReview = function (id, stars, review, cb) {
+  db.PackageEntry.update({ _id: id },
+    {
+      $inc: {
+        countReviews: 1,
+        stars: stars
+      },
+      $push: {
+        reviews: review
+      }
+    },
+    function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(packageEntry);
+    }
+  });
+};
+
+exports.findPackageById = function (id, cb) {
+  db.PackageEntry.find({_id: id}, function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(packageEntry);
+    }
+  });
+};
+
+exports.incrementPackageDownloads = function (id, cb) {
+  db.PackageEntry.update({_id: id}, {$inc: {downloads: 1}}, function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(packageEntry);
+    }
+  });
+};
