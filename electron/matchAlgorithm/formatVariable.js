@@ -33,7 +33,7 @@ module.exports = function (phrase, variable) {
   var argPhraseStr = bash.match(_argSyntax)[0].slice(4, -2).trim();
   //TODO: refactor parseCommands code to
   // handle removing trailing whitespace in between parameters
-  var argPhrases = argPhraseStr.split(' ');
+  var argPhrases = argPhraseStr.split(/(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/);
   var argParams = {};
   argPhrases.forEach(function (phrase) {
   //Split the phrase into key/value pairs

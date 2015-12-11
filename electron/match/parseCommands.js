@@ -47,7 +47,7 @@
  *     }
  */
 // var _argSyntax = /<ARG.*\/>/;
-var _argSyntax =/<ARG\s*[a-zA-Z+='"\s\\]*\/>/;
+var _argSyntax = /<ARG\s*[a-zA-Z+='"\s\\]*\/>/;
 
 //TODO: parse delimiter
 var _delSyntax = /del="\s*([^\n\r"]*)"\s* | del='\s*([^\n\r']*)'\s*/;
@@ -56,7 +56,11 @@ var buildArgParams = function (argStr) {
   var argPhraseStr = argStr.slice(4, -2).trim();
   //TODO: refactor parseCommands code to
   // handle removing trailing whitespace in between parameters
-  var argPhrases = argPhraseStr.split(' ');
+  // var argPhrases = argPhraseStr.split(' ');
+
+  var argPhrases = argPhraseStr.match(/(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/g);
+
+
   var argParams = {};
   argPhrases.forEach(function (phrase) {
   //Split the phrase into key/value pairs
@@ -90,7 +94,7 @@ module.exports = {
       //arguments case: add to argCommands object
       if (args) {
         var argArr = [];
-        args.forEach(function(argStr) {
+        args.forEach(function (argStr) {
           var a = buildArgParams(argStr);
           argArr.push(a);
         });
