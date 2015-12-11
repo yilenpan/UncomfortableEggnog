@@ -1,5 +1,6 @@
 var matchingFunctions = require('../commandUtils/commands-util.js');
-matchingFunctions.loadCommands();
+var config = require('../config/config');
+matchingFunctions.loadCommands(config.coreCommandsJSON);
 var executeShellComand = require('../cmd/execShellCommand');
 var startCmd = require('../audio/audio').startCmd;
 var failedCmd = require('../audio/audio').failedCmd;

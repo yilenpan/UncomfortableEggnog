@@ -2,5 +2,7 @@
 
 module.exports = {
   corePhrasesJSON: __dirname + '/../match/phrases.json',
-  coreCommandsJSON: __dirname + '/../match/commands.json'
+  coreCommandsJSON: __dirname + '/../match/commands.json',
+  testCorePhrasesJSON: __dirname + '/../match/phrases.test.json',
+  testCoreCommandsJSON: __dirname + '/../match/commands.test.json'
 };

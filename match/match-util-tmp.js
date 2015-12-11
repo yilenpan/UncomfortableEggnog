@@ -30,7 +30,6 @@ var commandUtil = function (input, fileInfo) {
     commandObj.prefix = prefixArray[0];
     commandObj.variable = prefixArray[1];
   } else {
-    // This is the phrase that needs to be matched
     commandObj.prefix = prefixArray[1];
   }
 
