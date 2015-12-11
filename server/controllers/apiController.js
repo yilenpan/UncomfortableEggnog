@@ -86,10 +86,14 @@ module.exports.editPackage = function (req, res) {
   });
 };
 
-module.exports.addStars = function (req, res) {
+module.exports.addReview = function (req, res) {
   var id = req.params.id;
-  var stars = req.body.data;
-  helpers.addStars(req.params.id, stars, function (err, packageEntry) {
+  var stars = req.body.stars;
+  var review = req.body.review;
+  console.log("stars: ", stars);
+  console.log("review: ", review);
+  console.log("ID: ", id);
+  helpers.addReview(id, stars, review, function (err, packageEntry) {
     if (err) {
       res.redirect('/');
     } else {

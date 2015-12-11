@@ -20,10 +20,6 @@
         });
     };
 
-    self.submitReview = function () {
-      console.log("submit review: ", self.review);
-    };
-
     init();
   }
 })();

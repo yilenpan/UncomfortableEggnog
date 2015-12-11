@@ -10,6 +10,12 @@
     <p>{{package.user.github}}</p>
   </div>
   <div>
-    <div rating score="package.stars" max="5" package="package"></div>
-  </div>
+    <div rating score="package.stars" max="5" package="package.info"></div>
+    <div ng-repeat="review in package.info.reviews track by $index">
+      <p>{{review}}</p>
+    </div>
+    </div>
+    <a href="/api/download/{{package.info._id}}">
+      <button type="button" class="btn btn-default">Download</button>
+    </a>
 </div>

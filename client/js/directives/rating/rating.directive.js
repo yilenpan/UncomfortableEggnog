@@ -11,8 +11,8 @@
       scope: {
         score: '@score',
         max: '@max',
-        packageEntry: '=package',
-        review: '=review'
+        review: '=review',
+        packageEntry: '=package'
       }
     };
 
@@ -46,18 +46,17 @@
       });
 
       scope.setRating = function (index) {
-        var id = scope.packageEntry._id;
         scope.score = index + 1;
       };
 
       scope.submitReview = function () {
-        console.log("submit rating: ", scope.review);
+        var id = scope.packageEntry._id;
         post('/api/package/' + id, {
           stars: scope.score,
           review: scope.review
         })
           .then(function (res) {
-            //console.log(res);
+            scope.review = "";
           });
       };
 

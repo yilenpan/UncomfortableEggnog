@@ -140,25 +140,22 @@ exports.findPackagesByUsername = function (username, cb) {
   });
 };
 
-exports.addStars = function (id, stars, cb) {
+exports.addReview = function (id, stars, review, cb) {
   db.PackageEntry.update({ _id: id },
-    {$inc: {
+    {
+      $inc: {
         countReviews: 1,
-        stars: stars
+        stars: stars || 0
+      },
+      $push: {
+        reviews: review
       }
     },
     function (err, packageEntry) {
     if (err) {
-      console.log("error add stars");
       cb(err);
     } else {
-      exports.findPackageById(id, function (packageEntry, error) {
-        if (error) {
-          cb(error);
-        } else {
-          cb(null, packageEntry[0]);
-        }
-      });
+      cb(packageEntry);
     }
   });
 };
