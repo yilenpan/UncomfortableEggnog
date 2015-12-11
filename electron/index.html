@@ -10,6 +10,9 @@
   <p id="print">Print to screen</p>
   <p id="json"></p>
   <button id="add">Add enhance/dehance</button>
+  <input type="text" id="command" placeholder="command"/>
+  <input type="text" id="action" placeholder="action"/>
+  <button id="button">Click</button>
 
   <script>window.$ = window.jQuery = require('jquery');</script>
   <script src="speechRecognition/speechRecognition.js"></script>
@@ -30,6 +33,13 @@
       };
       console.log(extraCommands);
       commandUtil.addCommand(config.coreCommandsJSON, extraCommands);
+    });
+    $('#button').on('click', function (e) {
+      e.preventDefault();
+      var commandObj = {};
+      commandObj[$('#command').val()] = $('#action').val();
+      console.log(commandObj);
+      commandUtil.addCommand(config.coreCommandsJSON, commandObj);
     });
   </script>
 
