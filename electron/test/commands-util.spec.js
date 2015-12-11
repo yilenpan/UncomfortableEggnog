@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var commandsUtil = require('../commandUtils/commands-util');
 var config = require('../config/config');
 var fs = require('fs');
-var del = require('del')
+var del = require('del');
 var extraCommands = {
   "enhance": "osascript -e 'tell application \"System Events\"" +
              "to repeat 2 times' -e 'key code 24 using {command down}'" +
