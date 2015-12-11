@@ -45,13 +45,10 @@ exports.findUserByUsername = function (username, cb) {
   }).exec(cb);
 };
 
-exports.saveUser = function (username, password, cb) {
+exports.saveUser = function (user, cb) {
   //assumes server controller checked if username already exists in db
-  var user = new db.User({
-    username: username,
-    password: password
-  });
-  user.save(cb);
+  var newUser = new db.User(user);
+  newUser.save(cb);
 };
 
 /********************************************

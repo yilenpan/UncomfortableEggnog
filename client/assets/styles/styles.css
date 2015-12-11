@@ -61,3 +61,18 @@ i {
 .rating .rating-normal, .rating.rating-normal:hover {
   color: #3C3C3C;
 }
+
+/*===============PACKAGES==================*/
+
+/*.packages {
+  background-color: #082735;
+  color: #56B7DA;
+}*/
+
+.commands {
+  overflow: auto;
+  height: 100px;
+  border: 1px black solid;
+  border-radius: 5px;
+}
+

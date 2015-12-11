@@ -62,18 +62,21 @@
     };
 
     self.post = function () {
-      ApiFactory.post('/signup', {
-        username: self.fields.username.value,
-        password: self.fields.password.value
-      }).then(function (result) {
+      var user = {};
+      for (var key in self.fields) {
+        var field = self.fields[key];
+        if (key !== 'password repeat' && field.value !== '') {
+          user[key] = field.value;
+        }
+      }
+      ApiFactory.post('/signup', user)
+        // username: self.fields.username.value,
+        // password: self.fields.password.value
+      .then(function (result) {
         if (result.error) {
           self.errorList = [result.error];
-// =======
-          self.fields.username.value = '';
           self.fields.password.value = '';
-        // if (result.errorType === 'username') {
-          // console.log(result.error);
-          // self.usernameError = result.error;
+          self.fields['password repeat'].value = '';
           console.log('error: ', result.error);
         } else if (result.token) {
           // Should return with a token
@@ -103,15 +106,26 @@
           for (var key in self.fields) {
             var field = self.fields[key];
             if (field.required) {
-              console.log(field.value);
               if (!field.value) {
-            $scope.signupForm[key].$dirty = true;
+                $scope.signupForm[key].$dirty = true;
                 self.errorList.push('Please enter your ' + key + '.');
-                // self.field[]
                 validated = false;
               }
             }
           }
+      //check password validation
+      if (self.fields.password.value !== self.fields['password repeat'].value) {
+        self.fields.password.value = '';
+        self.fields['password repeat'].value = '';
+        self.errorList.push(self.errorMessages.password);
+        $scope.signupForm['password'].$dirty = true;
+        $scope.signupForm['password'].$pristine = false;
+        $scope.signupForm['password repeat'].$dirty = true;
+        $scope.signupForm['password repeat'].$pristine = false;
+
+        validated = false;
+      }
+
       if (validated) {
         self.post();
       }
