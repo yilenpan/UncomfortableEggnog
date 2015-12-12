@@ -1,4 +1,7 @@
 var helpers = require('../helpers/helpers');
+var rootFolder = require('../../rootPath');
+var Promise = require('bluebird');
+var utils = require('../lib/utils');
 
 module.exports.topTen = function (req, res) {
   helpers.findPackageEntries(function (err, entries) {
@@ -79,6 +82,50 @@ module.exports.editPackage = function (req, res) {
       res.redirect('/');
     } else {
       res.json(packageEntry);
+    }
+  });
+};
+
+module.exports.addReview = function (req, res) {
+  var id = req.params.id;
+  var stars = req.body.stars;
+  var review = req.body.review;
+  stars = typeof stars !== 'number' ? 0 : stars;
+  helpers.addReview(id, stars, review, function (err, packageEntry) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json(packageEntry);
+    }
+  });
+};
+
+module.exports.downloadPackage = function (req, res, next) {
+  console.log("download");
+  var id = req.params.id;
+  var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
+  helpers.findPackageById(id, function (packageEntry, err) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      utils.writeSnippetFile(packageEntry[0], folder).then(function (file) {
+        res.download(file.filePath, file.fileName, function (err) {
+          utils.cleanFolder(folder);
+          if (err) {
+            res.redirect('/');
+          } else {
+            incrementDownloads(id);
+          }
+        });
+      });
+    }
+  });
+};
+
+function incrementDownloads (id) {
+  helpers.incrementPackageDownloads(id, function (packageEntry, err) {
+    if (err) {
+      console.log(err);
     }
   });
 };
