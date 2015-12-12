@@ -1,6 +1,4 @@
 var commandsUtil = require('../commandsUtil/commandsUtil');
-var config = require('../config/config');
-commandsUtil.loadCommands(config.coreCommandsJSON);
 var executeShellComand = require('../cmd/execShellCommand');
 var startCmd = require('../audio/audio').startCmd;
 var failedCmd = require('../audio/audio').failedCmd;
