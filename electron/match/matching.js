@@ -1,15 +1,12 @@
 var fs = require('fs');
 var natural = require('natural');
 var regMatch = require('./regMatch');
-// var getCommands = require('../commandsUtil/commandsUtil').getCommands;
-// var getCommands = require('../utils/loaders').getCommands;
 var JaroWinklerDistance = natural.JaroWinklerDistance;
 var Metaphone = natural.Metaphone;
 var formatVariable = require('./formatVariable');
 
 
 var matching = function (actionPrefix, variable, commandsObj) {
-  // var commandsObj = getCommands();
   var actionObj = {};
   actionObj.exact = false;
   actionObj.userCommand = actionPrefix;
@@ -24,6 +21,8 @@ var matching = function (actionPrefix, variable, commandsObj) {
 
   if (actions[actionPrefix] !== undefined) {
     actionObj.exact = true;
+    // if variable
+      // formatVariable with actions[actionPrefix] obj
     actionObj.action = variable ? actions[actionPrefix] + formatVariable(variable) : actions[actionPrefix];
     return actionObj;
   }

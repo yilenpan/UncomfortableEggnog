@@ -1,18 +1,19 @@
 var expect = require('chai').expect;
 var commandsUtil = require('../commandsUtil/commandsUtil');
 var config = require('../config/config');
+
 var fs = require('fs');
 var del = require('del');
 var extraCommands = {
-  "enhance": "osascript -e 'tell application \"System Events\"" +
+  "blah blah": "osascript -e 'tell application \"System Events\"" +
              "to repeat 2 times' -e 'key code 24 using {command down}'" +
              " -e 'delay 0.1' -e 'end repeat'",
-  "dehance": "osascript -e 'tell application \"System Events\"" +
+  "dah dah": "osascript -e 'tell application \"System Events\"" +
              " to repeat 2 times' -e 'key code 27 using {command down}'" +
              " -e 'delay 0.1' -e 'end repeat'"
 };
 
-xdescribe('commands Parser', function (done) {
+describe('commands Parser', function (done) {
   before(function (done) {
     fs.readFile(config.coreCommandsJSON, 'utf8', function (err, data) {
       fs.writeFile(config.testCoreCommandsJSON, data, function (err, data) {
@@ -37,8 +38,8 @@ xdescribe('commands Parser', function (done) {
   it('should add command', function (done) {
     commandsUtil.addCommand(config.testCoreCommandsJSON, extraCommands);
     var commands = commandsUtil.getCommands();
-    expect(commands.commands).to.have.property('enhance');
-    expect(commands.commands).to.have.property('dehance');
+    expect(commands.commands).to.have.property("blah blah");
+    expect(commands.commands).to.have.property("dah dah");
     done();
   });
   it('should delete command', function (done) {
