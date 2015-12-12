@@ -21,16 +21,16 @@
  *     {
  *      "check the": {
  *        "commands": ["open https//www.google.com/?gws_rd=ssl#q="],
- *        "args": [{
+ *        "args": {
  *          "del": "+"
- *        }]
+ *        }
  *      },
  *      "open": {
  *        "commands": ["open ", ".app"],
- *        "args": [{
+ *        "args": {
  *          "del": "\\ ",
  *          "capitalize": true
- *        }]
+ *        }
  *      }
  *     }
  *
@@ -40,7 +40,7 @@
  *  always start with the hardcoded string, never an argument).
  *
  */
-var _argSyntax = /<ARG\s*[a-zA-Z+='"\s\\\/]*\/>/;
+var _argSyntax = /<ARG\s*[a-zA-Z+='"_\s\\\/]*\/>/;
 var _delSyntax = /del="\s*([^\n\r"]*)"\s* | del='\s*([^\n\r']*)'\s*/;
 var _htmlSyntax = /(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/g;
 
@@ -52,7 +52,7 @@ var buildArgParams = function (argStr) {
   var argParams = {};
   argPhrases.forEach(function (phrase) {
   //Split the phrase into key/value pairs
-    var arg = phrase.split('=');
+    var arg = phrase.split("=");
     var key = arg[0];
     var value;
   //if value is wrapped in single quotation marks, remove extraneous quotes.
@@ -77,6 +77,7 @@ module.exports = {
     for (var phrase in commandObj) {
       var bash = commandObj[phrase];
       var args = bash.match(_argSyntax);
+      phrase = phrase.toLowerCase();
 
       //arguments case: add to argCommands object
       if (args) {
@@ -86,13 +87,14 @@ module.exports = {
           argArr.push(a);
         });
 
+
         var bashStrs = bash.split(_argSyntax).filter(function (el) {
           return el !== "";
         });
 
         argCommands[phrase] = {};
         argCommands[phrase]["commands"] = bashStrs;
-        argCommands[phrase]["args"] = argArr;
+        argCommands[phrase]["args"] = argArr[0];
 
       } else {
         exactCommands[phrase] = bash;
