@@ -3,7 +3,7 @@ var natural = require('natural');
 var regMatch = require('./regMatch');
 var JaroWinklerDistance = natural.JaroWinklerDistance;
 var Metaphone = natural.Metaphone;
-var formatVariable = require('./formatVariable-mw');
+var formatVariable = require('./formatVariable');
 
 
 var matching = function (actionPrefix, variable, commandsObj) {
