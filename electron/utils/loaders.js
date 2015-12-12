@@ -26,5 +26,8 @@ var updatePhrases = function (phrasesPath, phrases) {
 
 module.exports = {
   loadPhrases: loadPhrases,
-  updatePhrases: updatePhrases
+  updatePhrases: updatePhrases,
+  getCommands: function () {
+    return JSON.parse(localStorage.getItem('Commands'));
+  }
 };

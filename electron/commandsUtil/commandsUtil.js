@@ -3,7 +3,6 @@ var config = require('../config/config');
 var fs = require('fs');
 var _ = require('underscore');
 var loadPhrases = require('../utils/loaders').loadPhrases;
-var commandObj = {};
 var prefixTrie = require('../match/prefixTrie');
 
 var write = function (filePath, data) {
@@ -13,57 +12,58 @@ var write = function (filePath, data) {
   fs.writeFileSync(filePath, data);
 };
 
+module.exports.saveCommands = function (obj) {
+  if (typeof obj === 'object') {
+    obj = JSON.stringify(obj);
+  }
+  save('Commands', obj);
+};
 
-var loadCommands = function (commandsPath) {
-  var tmpPhrases = {};
+var save = function (name, obj) {
+  localStorage.setItem('Commands', obj);
+};
+
+var get = function (name) {
+  return JSON.parse(localStorage.getItem(name));
+};
+
+module.exports.loadCommands = function (commandsPath) {
+  var commandObj = {};
+  var rawCommands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
+  commandObj.commands = rawCommands; // TODO: parse into pure and arg
+  commandObj.commandsPath = commandsPath;
   commandObj.phrasesPath = commandsPath.replace('commands.', 'phrases.');
-  commandObj.commands = JSON.parse(fs.readFileSync(commandsPath, 'utf8'));
-  commandObj.phraseObj = loadPhrases(commandObj.phrasesPath, commandObj.commands);
+  commandObj.phrases = loadPhrases(commandObj.phrasesPath, commandObj.commands);
   var argCommands = ["open", "check the", "what is the", "look up the", "how is the", "google", "youtube", "Wikipedia"];
   prefixTrie.build(argCommands);
+  module.exports.saveCommands(commandObj);
 };
 
 
-var getCommands = function () {
-  return commandObj;
+module.exports.getCommands = function () {
+  return get('Commands');
 };
 
 
-var addCommand = function (filePath, command) {
-  _.defaults(commandObj.phraseObj, command);
-  write(filePath, _.defaults(commandObj.commands, command));
-  loadCommands(filePath);
+module.exports.addCommand = function () {
+
 };
 
 
-var delCommand = function (filePath, command) {
-  delete commandObj.commands[command];
-  write(filePath, commandObj.commands);
-  loadCommands(filePath);
+module.exports.delCommand = function () {
+
 };
 
 
-var updateCommand = function (filePath, command) {
-  write(filePath, _.extend(commandObj.commands, command));
-  loadCommands(filePath);
+module.exports.updateCommand = function () {
+
 };
 
-var updatePhrases = function (newPhraseObj) {
-  commandObj.phraseObj[newPhraseObj.phrase].push(newPhraseObj.inputPhrase);
-};
-
-var addPhrase = function (newPhraseObj, cb) {
-  updatePhrases(newPhraseObj);
-  matchUtil.addPhrase(newPhraseObj, cb);
-};
-
-module.exports = {
-  loadCommands: loadCommands,
-  cmdUtil: matchUtil.matchUtil,
-  getCommands: getCommands,
-  addPhrase: addPhrase,
-  addCommand: addCommand,
-  delCommand: delCommand,
-  updateCommand: updateCommand,
-  updatePhrases: updatePhrases
+module.exports.addPhrase = function (correctCommand, userCommand) {
+  var commandsObj = this.getCommands();
+  console.log(commandsObj);
+  commandsObj.phrases[correctCommand].push(userCommand);
+  module.exports.saveCommands(commandsObj);
+  write(commandsObj.commandsPath, commandsObj.commands);
+  write(commandsObj.phrasesPath, commandsObj.phrases);
 };

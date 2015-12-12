@@ -1,9 +1,10 @@
-var matchingFunctions = require('../commandsUtil/commandsUtil');
+var commandsUtil = require('../commandsUtil/commandsUtil');
 var config = require('../config/config');
-matchingFunctions.loadCommands(config.coreCommandsJSON);
+commandsUtil.loadCommands(config.coreCommandsJSON);
 var executeShellComand = require('../cmd/execShellCommand');
 var startCmd = require('../audio/audio').startCmd;
 var failedCmd = require('../audio/audio').failedCmd;
+var match = require('../match/match-util').matchUtil;
 
 
 module.exports = function (event) {
@@ -15,32 +16,22 @@ module.exports = function (event) {
   };
 
   console.log('command is ', transcript);
-  var fileInfo = matchingFunctions.getCommands();
-  var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
-  if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
+  var matchObj = match(userCommand);
 
-    var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedPhrase + "\"?");
-
+  if (matchObj.guessedCommand) {
+    var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedCommand + "\"?");
     if (guessCorrectly) {
-      matchingFunctions.addPhrase(matchObj, function (err, data) {
-        if (err) {
-          failedCmd.play();
-          this.switch();
-        } else {
-          startCmd.play();
-          executeShellComand(matchObj.command);
-          this.switch();
-        }
-      }.bind(this));
-
+      startCmd.play();
+      executeShellComand(matchObj.action);
+      this.switch();
+      commandsUtil.addPhrase(matchObj.guessedCommand, matchObj.userCommand);
     } else {
       failedCmd.play();
       this.switch();
     }
-
-  } else if (matchObj.guessedPhrase !== 'null') {
+  } else if (matchObj.action) {
     startCmd.play();
-    executeShellComand(matchObj.command);
+    executeShellComand(matchObj.action);
     this.switch();
   } else {
     failedCmd.play();
