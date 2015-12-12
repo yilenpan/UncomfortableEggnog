@@ -57,8 +57,18 @@ module.exports.delCommand = function (command) {
 };
 
 
-module.exports.updateCommand = function () {
-
+module.exports.updateCommand = function (command, action, oldCommand) {
+  var commandsObj = this.getCommands();
+  if (oldCommand === command) {
+    commandsObj.commands[command] = action;
+  } else {
+    delete commandsObj.commands[oldCommand];
+    delete commandsObj.phrases[oldCommand];
+    module.exports.addPhrase(command, command);
+    commandsObj.commands[command] = action;
+  }
+  module.exports.saveCommands(commandsObj);
+  write(newCommandsObj.commandsPath, newCommandsObj.commands);
 };
 
 module.exports.addPhrase = function (correctCommand, userCommand) {
