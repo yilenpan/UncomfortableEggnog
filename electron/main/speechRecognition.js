@@ -12,7 +12,7 @@ if (!('webkitSpeechRecognition' in window)) {
   var prefixRecognition = listener(prefixRec, 'prefix');
   //instance that will listen for the command
   var commandRecognition = listener(cmdRec, 'cmd');
-  // connect the two so that the prefixRec will stop its process and kick off
+  // connect the two so that tdhe prefixRec will stop its process and kick off
   // it's link
   prefixRecognition.link(commandRecognition);
   commandRecognition.link(prefixRecognition);
@@ -24,6 +24,7 @@ ipcRenderer.on('listening', function (event) {
   var commandsUtil = require('./commandsUtil/commandsUtil');
   var config = require('./config/config');
   commandsUtil.loadPackage(config.coreCommandsJSON);
+  console.log(ipcRenderer);
   prefixRecognition.start();
 });
 

@@ -71,6 +71,11 @@ app.on('ready', function () {
     mainWindow.webContents.send('listening', 'listening');
   });
 
+  ipcMain.on('async message', function (event, arg) {
+    console.log('Got something from packages');
+    mainWindow.webContents.send('async reply', 'pong');
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     //unregister shortcut when window is closed - best practice
