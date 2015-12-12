@@ -1,6 +1,6 @@
 var controllers = require('../controllers/controllers.js');
 var verifyUser = require('../middleware/middleware').verifyUser;
-var isLoggedIn = require('../middleware/middleware').isLoggedIn;
+var sendUserData = require('../middleware/middleware').sendUserData;
 
 module.exports = function (router, passport) {
 
@@ -9,6 +9,7 @@ module.exports = function (router, passport) {
 **************************************/
   router.post('/login', controllers.loginUser);
   router.post('/signup', controllers.signupUser);
+  router.get('/logout', controllers.logoutUser);
 
 /**************************************
                 Facebook Routes
@@ -40,30 +41,18 @@ router.get('/auth/google/callback',
        failureRedirect : '/'
    }));
 
-router.get('/api/userData', function (req, res) {
-
-    if (req.user === undefined) {
-        // The user is not logged in
-        res.json({});
-    } else {
-        res.json({
-            username: req.user
-        });
-    }
-});
-
 /*************************************
                      User Routes
 **************************************/
-
+  router.get('/api/userData', sendUserData);
   router.get('/users/:id', controllers.getUserInfo);
 
 
   /*************************************
                        Package Routes
   **************************************/
-  router.get('/packages', isLoggedIn, controllers.fetchPackages);
-  router.post('/packages', isLoggedIn, controllers.savePackageEntry);
+  router.get('/packages', verifyUser, controllers.fetchPackages);
+  router.post('/packages', verifyUser, controllers.savePackageEntry);
 
 
   //======Default Route=========

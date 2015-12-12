@@ -32,8 +32,8 @@ var facebookStrategy = (new FacebookStrategy({
           console.log(JSON.stringify(profile));
           newUser.username = profile.displayName;
           newUser.email = profile.emails[0].value;
-          newUser["first name"] = profile.name.displayName;
-          //newUser["last name"] = profile.name.familyName;
+          newUser["first name"] = profile.name.givenName;
+          newUser["last name"] = profile.name.familyName;
           newUser.facebook.id = profile.id;
           newUser.facebook.token = token;
           //newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
