@@ -37,8 +37,13 @@ module.exports.getCommands = function () {
 };
 
 
-module.exports.addCommand = function () {
-
+module.exports.addCommand = function (command) {
+  var newCommandsObj = _.extend({}, this.getCommands());
+  newCommandsObj.commands = _.extend(this.getCommands().commands, command);
+  console.log(newCommandsObj);
+  module.exports.saveCommands(newCommandsObj);
+  write(newCommandsObj.commandsPath, newCommandsObj.commands);
+  module.exports.addPhrase(Object.keys(command)[0], Object.keys(command)[0]);
 };
 
 
@@ -54,8 +59,8 @@ module.exports.updateCommand = function () {
 module.exports.addPhrase = function (correctCommand, userCommand) {
   var commandsObj = this.getCommands();
   console.log(commandsObj);
+  commandsObj.phrases[correctCommand] = commandsObj.phrases[correctCommand] || [];
   commandsObj.phrases[correctCommand].push(userCommand);
   module.exports.saveCommands(commandsObj);
-  write(commandsObj.commandsPath, commandsObj.commands);
   write(commandsObj.phrasesPath, commandsObj.phrases);
 };

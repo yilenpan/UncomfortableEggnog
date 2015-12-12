@@ -14,8 +14,8 @@ module.exports = function (event) {
   };
 
   console.log('command is ', transcript);
-  var matchObj = match(userCommand);
-
+  var matchObj = match(userCommand, commandsUtil.getCommands());
+  console.log('going to exec, ', matchObj.action);
   if (matchObj.guessedCommand) {
     var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedCommand + "\"?");
     if (guessCorrectly) {

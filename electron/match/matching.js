@@ -2,14 +2,14 @@ var fs = require('fs');
 var natural = require('natural');
 var regMatch = require('./regMatch');
 // var getCommands = require('../commandsUtil/commandsUtil').getCommands;
-var getCommands = require('../utils/loaders').getCommands;
+// var getCommands = require('../utils/loaders').getCommands;
 var JaroWinklerDistance = natural.JaroWinklerDistance;
 var Metaphone = natural.Metaphone;
 var formatVariable = require('./formatVariable');
 
 
-var matching = function (actionPrefix, variable) {
-  var commandsObj = getCommands();
+var matching = function (actionPrefix, variable, commandsObj) {
+  // var commandsObj = getCommands();
   var actionObj = {};
   actionObj.exact = false;
   actionObj.userCommand = actionPrefix;
@@ -22,15 +22,20 @@ var matching = function (actionPrefix, variable) {
   var phrases = commandsObj.phrases;
   var actions = commandsObj.commands;
 
+  if (actions[actionPrefix] !== undefined) {
+    actionObj.exact = true;
+    actionObj.action = variable ? actions[actionPrefix] + formatVariable(variable) : actions[actionPrefix];
+    return actionObj;
+  }
+
   for (var key in phrases) {
+    // match within the phrases array
     if (regMatch(phrases[key], actionPrefix)) {
+      console.log('added phrase found');
       actionObj.exact = true;
       actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
       return actionObj;
     }
-  }
-
-  for (var key in phrases) {
     //compare distance between the input phrase and one of our accepted phrase
     if (JaroWinklerDistance(actionPrefix, key) > exactMatchThreshold) {
       console.log('word distance match found');

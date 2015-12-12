@@ -18,7 +18,6 @@
   <script src="speechRecognition/speechRecognition.js"></script>
   <script>
     var commandUtil = require('./commandsUtil/commandsUtil');
-    var config = require('./config/config');
     $('#add').on('click', function () {
       var extraCommands = {
         "enhance": "osascript -e 'tell application \"System Events\"" +
@@ -32,14 +31,14 @@
                    " -e 'delay 0.1' -e 'end repeat'"
       };
       console.log(extraCommands);
-      commandUtil.addCommand(config.coreCommandsJSON, extraCommands);
+      commandUtil.addCommand(extraCommands);
     });
     $('#button').on('click', function (e) {
       e.preventDefault();
       var commandObj = {};
       commandObj[$('#command').val()] = $('#action').val();
       console.log(commandObj);
-      commandUtil.addCommand(config.coreCommandsJSON, commandObj);
+      commandUtil.addCommand(commandObj);
     });
   </script>
 
