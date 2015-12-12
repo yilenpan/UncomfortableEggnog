@@ -51,7 +51,7 @@ router.get('/auth/google/callback',
   /*************************************
                        Package Routes
   **************************************/
-  router.get('/packages', verifyUser, controllers.fetchPackages);
+  router.get('/packages', controllers.fetchPackages);
   router.post('/packages', verifyUser, controllers.savePackageEntry);
 
 

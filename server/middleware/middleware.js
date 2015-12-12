@@ -11,9 +11,11 @@ module.exports = {
       console.log('is authenticated');
       return next();
     } else if (token) {
+      console.log("TOKEN!");
       // pass token to jwt.verify to decrypt token
       jwt.verify(token, jwtKey, function (err, decoded) {
         if (err) {
+          console.log("ERR!", err);
           res.redirect('/');
         } else {
           // when decoded, attach to req
