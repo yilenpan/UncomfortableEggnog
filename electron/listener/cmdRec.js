@@ -1,40 +1,37 @@
-var matchingFunctions = require('../matchAlgorithm/matchingAlgorithm.js');
-var fileInfo = matchingFunctions.readFile();
+var commandsUtil = require('../commandsUtil/commandsUtil');
 var executeShellComand = require('../cmd/execShellCommand');
 var startCmd = require('../audio/audio').startCmd;
 var failedCmd = require('../audio/audio').failedCmd;
+var match = require('../match/match-util').matchUtil;
+
 
 module.exports = function (event) {
-  console.log("command listening");
   var transcript = event.results[0][0].transcript;
   var confidence = event.results[0][0].confidence;
   var userCommand = {
     score: confidence,
     term: transcript
   };
-  var matchObj = matchingFunctions.cmdUtil(userCommand, fileInfo);
-  //check if the user command matched exactly with something in phrases.json
-  if (matchObj.guessedPhrase !== 'null' && !matchObj.exact) {
-    //if it didn't match, try to guess the command
-    var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedPhrase + "\"?");
-    //make sure the command is not empty and if the guess was correct
+
+  console.log('command is ', transcript);
+  var matchObj = match(userCommand, commandsUtil.getCommands());
+  console.log('going to exec, ', matchObj.action);
+  if (matchObj.guessedCommand) {
+    var guessCorrectly = confirm("Did you mean \"" + matchObj.guessedCommand + "\"?");
     if (guessCorrectly) {
-      console.log("guess correctly");
-      //if guess was correct, add the phrase to the json file and execute
-      matchingFunctions.addPhrase(matchObj);
       startCmd.play();
-      executeShellComand(matchObj.command);
+      executeShellComand(matchObj.action);
+      this.switch();
+      commandsUtil.addPhrase(matchObj.guessedCommand, matchObj.userCommand);
     } else {
-      console.log("guess incorrect");
       failedCmd.play();
       this.switch();
     }
-  } else if (matchObj.guessedPhrase !== 'null') {
+  } else if (matchObj.action) {
     startCmd.play();
-    executeShellComand(matchObj.command);
+    executeShellComand(matchObj.action);
     this.switch();
   } else {
-    console.log("guess phrase null");
     failedCmd.play();
     this.switch();
   }

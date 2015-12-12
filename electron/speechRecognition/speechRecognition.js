@@ -2,6 +2,7 @@ var ipcRenderer = require('electron').ipcRenderer;
 var listener = require('./listener/listener');
 var prefixRec = require('./listener/prefixRec');
 var cmdRec = require('./listener/cmdRec');
+
 // var listening = true;
 
 if (!('webkitSpeechRecognition' in window)) {
@@ -20,6 +21,9 @@ if (!('webkitSpeechRecognition' in window)) {
 //receive event emitted from main process (main.js) to start listening
 ipcRenderer.on('listening', function (event) {
   console.log("Jarvis is listening!");
+  var commandsUtil = require('./commandsUtil/commandsUtil');
+  var config = require('./config/config');
+  commandsUtil.loadPackage(config.coreCommandsJSON);
   prefixRecognition.start();
 });
 
