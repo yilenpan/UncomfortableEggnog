@@ -40,6 +40,17 @@ router.get('/auth/google/callback',
        failureRedirect : '/'
    }));
 
+router.get('/api/userData', function (req, res) {
+
+    if (req.user === undefined) {
+        // The user is not logged in
+        res.json({});
+    } else {
+        res.json({
+            username: req.user
+        });
+    }
+});
 
 /*************************************
                      User Routes
@@ -52,7 +63,7 @@ router.get('/auth/google/callback',
                        Package Routes
   **************************************/
   router.get('/packages', isLoggedIn, controllers.fetchPackages);
-  router.post('/packages', verifyUser, controllers.savePackageEntry);
+  router.post('/packages', isLoggedIn, controllers.savePackageEntry);
 
 
   //======Default Route=========
