@@ -35,11 +35,5 @@
       });
     };
 
-    self.fbAuthentication = function () {
-      ApiFactory.get('/auth/facebook').then(function (result) {
-        console.log("RESULT: ", result);
-      });
-    };
-
   }
 })();
