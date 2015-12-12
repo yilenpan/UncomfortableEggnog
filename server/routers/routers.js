@@ -19,6 +19,17 @@ module.exports = function (router, passport) {
          successRedirect : '/',
          failureRedirect : '/'
      }));
+
+/*************************************
+                Github Routes
+*************************************/
+router.get('/auth/github', passport.authenticate('github'));
+router.get('/auth/github/callback',
+   passport.authenticate('github', {
+       successRedirect : '/',
+       failureRedirect : '/'
+   }));
+
 /*************************************
                      User Routes
 **************************************/

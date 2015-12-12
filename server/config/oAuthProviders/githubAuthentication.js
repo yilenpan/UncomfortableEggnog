@@ -1,22 +1,19 @@
 //load the strateg we need
-var FacebookStrategy = require('passport-facebook').Strategy;
+var GithubStrategy = require('passport-github').Strategy;
 
 //load the user model
-var User = require('../db/db').User;
-var configAuth = require('./auth');
+var User = require('../../db/db').User;
+var configAuth = require('../auth');
 
-var facebookStrategy = (new FacebookStrategy({
+var githubStrategy = (new GithubStrategy({
 
-    //get app id and secret from auth.js
-    clientID: configAuth.facebookAuth.clientID,
-    clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL,
-    profileFields: ['email', 'displayName', 'name']
-  },
-
+  clientID: configAuth.githubAuth.clientID,
+  clientSecret: configAuth.githubAuth.clientSecret,
+  callbackURL: configAuth.githubAuth.callbackURL
+},
   function (token, refreshToken, profile, done) {
     process.nextTick(function () {
-      User.findOne({ 'facebook.id': profile.id}, function (err, user) {
+      User.findOne({ 'github.id': profile.id}, function (err, user) {
         //if there is an error, stop everything and return the error
         if (err) {
           return done(err);
@@ -29,13 +26,12 @@ var facebookStrategy = (new FacebookStrategy({
         } else {
           //if there is no user then create one
           var newUser = new User();
-          console.log(JSON.stringify(profile));
-          newUser.username = profile.displayName;
+          newUser.username = profile.username;
           newUser.email = profile.emails[0].value;
-          //newUser["first name"] = profile.name.givenName;
+          newUser["first name"] = profile.displayName;
           //newUser["last name"] = profile.name.familyName;
-          newUser.facebook.id = profile.id;
-          newUser.facebook.token = token;
+          newUser.github.id = profile.id;
+          newUser.github.name = profile.displayName;
           //newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
 
           newUser.save(function (err) {
@@ -48,6 +44,7 @@ var facebookStrategy = (new FacebookStrategy({
         }
       });
     });
-  }));
+  }
+));
 
-module.exports = facebookStrategy;
+module.exports = githubStrategy;

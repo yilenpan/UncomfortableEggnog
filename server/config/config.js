@@ -5,6 +5,7 @@ var db = require('../db/db.js');
 var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
+var cors = require('cors');
 
 module.exports = function (app, express) {
   var userRoute = express.Router();
@@ -15,6 +16,7 @@ require('./passport.js')(passport);
 //==========Core Middleware==============
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+  app.use(cors());
   // logging
   if (process.env.NODE === 'production') {
     app.use(morgan('production'));
