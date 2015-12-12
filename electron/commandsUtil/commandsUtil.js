@@ -47,8 +47,13 @@ module.exports.addCommand = function (command) {
 };
 
 
-module.exports.delCommand = function () {
-
+module.exports.delCommand = function (command) {
+  var commandsObj = this.getCommands();
+  delete commandsObj.commands[command];
+  delete commandsObj.phrases[command];
+  this.saveCommands(commandsObj);
+  write(commandsObj.commandsPath, commandsObj.commands);
+  write(commandsObj.phrasesPath, commandsObj.phrases);
 };
 
 

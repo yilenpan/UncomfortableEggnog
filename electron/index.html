@@ -13,6 +13,7 @@
   <input type="text" id="command" placeholder="command"/>
   <input type="text" id="action" placeholder="action"/>
   <button id="button">Click</button>
+  <button id="delete">delete</button>
 
   <script>window.$ = window.jQuery = require('jquery');</script>
   <script src="speechRecognition/speechRecognition.js"></script>
@@ -23,7 +24,7 @@
         "enhance": "osascript -e 'tell application \"System Events\"" +
                    "to repeat 2 times' -e 'key code 24 using {command down}'" +
                    " -e 'delay 0.1' -e 'end repeat'",
-        "enhance": "osascript -e 'tell application \"System Events\"" +
+        "dehance": "osascript -e 'tell application \"System Events\"" +
                    "to repeat 2 times' -e 'key code 24 using {command down}'" +
                    " -e 'delay 0.1' -e 'end repeat'",
         "zoom out": "osascript -e 'tell application \"System Events\"" +
@@ -39,6 +40,10 @@
       commandObj[$('#command').val()] = $('#action').val();
       console.log(commandObj);
       commandUtil.addCommand(commandObj);
+    });
+    $('#delete').on('click', function (e) {
+      e.preventDefault();
+      commandUtil.delCommand('dehance');
     });
   </script>
 
