@@ -46,6 +46,11 @@ var UserSchema = new mongoose.Schema({
     id: String,
     name: String
   },
+  google: {
+    id: String,
+    token: String,
+    name: String
+  },
   packages: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "PackageEntry"

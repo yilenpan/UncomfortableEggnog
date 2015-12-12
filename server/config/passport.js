@@ -15,4 +15,5 @@ module.exports = function (passport) {
 
   passport.use(require('./oAuthProviders/fbAuthentication'));
   passport.use(require('./oAuthProviders/githubAuthentication'));
+  passport.use(require('./oAuthProviders/googleAuthentication'));
 };

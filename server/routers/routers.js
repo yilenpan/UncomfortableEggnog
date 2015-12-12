@@ -30,6 +30,17 @@ router.get('/auth/github/callback',
        failureRedirect : '/'
    }));
 
+/************************************
+              Google Routes
+*************************************/
+router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+router.get('/auth/google/callback',
+   passport.authenticate('google', {
+       successRedirect : '/',
+       failureRedirect : '/'
+   }));
+
+
 /*************************************
                      User Routes
 **************************************/
