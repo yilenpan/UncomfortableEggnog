@@ -21,5 +21,17 @@ module.exports = {
     } else {
       res.redirect('/');
     }
-  }
+  },
+
+  isLoggedIn: function (req, res, next) {
+    console.log("is logged in");
+   // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) {
+      console.log('is authenticated');
+      return next();
+    }
+
+   // if they aren't redirect them to the home page
+   res.redirect('/');
+ }
 };

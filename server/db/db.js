@@ -18,7 +18,7 @@ var UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
   email: {
     type: String,
@@ -26,16 +26,21 @@ var UserSchema = new mongoose.Schema({
   },
   "first name": {
     type: String,
-    required: true
+    required: false
   },
   "last name": {
     type: String,
-    required: true
+    required: false
   },
   website: {
     type: String,
     required: false,
     default: ''
+  },
+  facebook: {
+    id: String,
+    token: String,
+    name: String
   },
   packages: [{
     type: mongoose.Schema.Types.ObjectId,
