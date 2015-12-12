@@ -92,6 +92,15 @@ exports.signupUser = function (req, res) {
   });
 };
 
+exports.logoutUser = function (req, res) {
+  console.log('logout');
+  if (req.user) {
+    req.logout();
+    res.redirect('/');
+  }
+};
+
+
 /*************************************
                      Package Handlers
 **************************************/

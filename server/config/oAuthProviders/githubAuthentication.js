@@ -12,6 +12,7 @@ var githubStrategy = (new GithubStrategy({
   callbackURL: configAuth.githubAuth.callbackURL
 },
   function (token, refreshToken, profile, done) {
+    console.log("github: ", profile);
     process.nextTick(function () {
       User.findOne({ 'github.id': profile.id}, function (err, user) {
         //if there is an error, stop everything and return the error

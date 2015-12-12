@@ -12,6 +12,7 @@ var googleStrategy = (new GoogleStrategy({
   },
 
   function (token, refreshToken, profile, done) {
+    console.log("google: ", profile);
     process.nextTick(function () {
       User.findOne({ 'google.id': profile.id}, function (err, user) {
         //if there is an error, stop everything and return the error
@@ -29,8 +30,8 @@ var googleStrategy = (new GoogleStrategy({
           console.log(JSON.stringify(profile));
           newUser.username = profile.displayName;
           newUser.email = profile.emails[0].value;
-          //newUser["first name"] = profile.name.givenName;
-          //newUser["last name"] = profile.name.familyName;
+          newUser["first name"] = profile.name.givenName;
+          newUser["last name"] = profile.name.familyName;
           newUser.google.id = profile.id;
           newUser.google.token = token;
 

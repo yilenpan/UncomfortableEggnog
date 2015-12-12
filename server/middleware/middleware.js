@@ -7,7 +7,10 @@ module.exports = {
     console.log('verify user');
     // Pull token out of header
     var token = req.headers.token;
-    if (token) {
+    if (req.isAuthenticated()) {
+      console.log('is authenticated');
+      return next();
+    } else if (token) {
       // pass token to jwt.verify to decrypt token
       jwt.verify(token, jwtKey, function (err, decoded) {
         if (err) {
@@ -33,5 +36,15 @@ module.exports = {
 
    // if they aren't redirect them to the home page
    res.redirect('/');
- }
+ },
+
+  sendUserData: function (req, res) {
+    if (req.user === undefined) {
+        res.json({});
+    } else {
+        res.json({
+            username: req.user
+        });
+    }
+  }
 };
