@@ -13,5 +13,6 @@ module.exports = function (passport) {
     });
   });
 
-  passport.use(require('./fbAuthentication'));
+  passport.use(require('./oAuthProviders/fbAuthentication'));
+  passport.use(require('./oAuthProviders/githubAuthentication'));
 };
