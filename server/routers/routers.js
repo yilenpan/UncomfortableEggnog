@@ -19,13 +19,6 @@ module.exports = function (router, passport) {
          successRedirect : '/',
          failureRedirect : '/'
      }));
-  router.get('/auth/facebook/callback',
-   passport.authenticate('facebook', { failureRedirect: '/' }),
-   function (req, res) {
-     res.redirect('/packages');
-   });
-
-
 /*************************************
                      User Routes
 **************************************/
