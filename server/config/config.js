@@ -9,6 +9,9 @@ var session = require('express-session');
 module.exports = function (app, express) {
   var userRoute = express.Router();
   var apiRoute = express.Router();
+//==========Passport====================
+require('./passport.js')(passport);
+
 //==========Core Middleware==============
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
@@ -21,6 +24,8 @@ module.exports = function (app, express) {
     var sessionSecret = 'tester';
   }
   app.use(session({secret: sessionSecret}));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(express.static(__dirname + '/../../client'));
 
 //=========Custom Routes================
@@ -30,5 +35,5 @@ module.exports = function (app, express) {
 
   // User login, logout, Add/View packages
   app.use('/', userRoute);
-  require('../routers/routers.js')(userRoute);
+  require('../routers/routers.js')(userRoute, passport);
 };
