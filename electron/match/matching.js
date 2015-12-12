@@ -13,41 +13,67 @@ var matching = function (actionPrefix, variable, commandsObj) {
   actionObj.guessedCommand = null;
   actionObj.action = '';
 
+  var _actionPrefix = actionPrefix.toLowerCase();
+  // var _upperCaseAction = actionPrefix.toUpperCase();
+  // var _properCaseAction = actionPrefix[0].toUpperCase() + actionPrefix.slice(1);
+
   var exactMatchThreshold = 0.8;
   var closeMatchThreshold = 0.6;
 
   var phrases = commandsObj.phrases;
-  var actions = commandsObj.commands;
+  var actions = commandsObj.rawCommands; // TODO: change to rawCommands
+  var argCommands = commandsObj.parsedCommands.argCommands;
+  console.log("INSIDE MATCHING WITH actionPrefix: ", actionPrefix);
+  var exactCommands = commandsObj.parsedCommands.exactCommands;
 
-  if (actions[actionPrefix] !== undefined) {
+  if (actions[_actionPrefix] !== undefined) {
+    console.log('Action exists');
     actionObj.exact = true;
-    // if variable
-      // formatVariable with actions[actionPrefix] obj
-    actionObj.action = variable ? actions[actionPrefix] + formatVariable(variable) : actions[actionPrefix];
+    if (variable && argCommands[_actionPrefix]) {
+      console.log("EXACT MATCH FOUND FOR ", _actionPrefix);
+      actionObj.action = formatVariable(_actionPrefix, argCommands[_actionPrefix], variable, commandsObj);
+    } else {
+      actionObj.action = exactCommands[_actionPrefix];
+    }
     return actionObj;
   }
 
   for (var key in phrases) {
     // match within the phrases array
-    if (regMatch(phrases[key], actionPrefix)) {
+    if (regMatch(phrases[key], _actionPrefix)) {
       console.log('added phrase found');
       actionObj.exact = true;
-      actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      // actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      if (variable && argCommands[_actionPrefix]) {
+        actionObj.action = formatVariable(argCommands[_actionPrefix], variable, commandsObj);
+      } else {
+        actionObj.action = exactCommands[_actionPrefix];
+      }
       return actionObj;
     }
     //compare distance between the input phrase and one of our accepted phrase
-    if (JaroWinklerDistance(actionPrefix, key) > exactMatchThreshold) {
+    if (JaroWinklerDistance(_actionPrefix, key) > exactMatchThreshold) {
       console.log('word distance match found');
       actionObj.exact = false;
-      actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      // actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      if (variable && argCommands[_actionPrefix]) {
+        actionObj.action = formatVariable(argCommands[_actionPrefix], variable, commandsObj);
+      } else {
+        actionObj.action = exactCommands[_actionPrefix];
+      }
       return actionObj;
     }
     //first converts the input phrases to the phonetics sound, then compare how far they are apart.
-    if (JaroWinklerDistance(Metaphone.process(actionPrefix), Metaphone.process(key)) > closeMatchThreshold) {
+    if (JaroWinklerDistance(Metaphone.process(_actionPrefix), Metaphone.process(key)) > closeMatchThreshold) {
       console.log('phonetic match found');
       actionObj.exact = false;
       actionObj.guessedCommand = key;
-      actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      // actionObj.action = variable ? actions[key] + formatVariable(variable) : actions[key];
+      if (variable && argCommands[_actionPrefix]) {
+        actionObj.action = formatVariable(argCommands[_actionPrefix], variable, commandsObj);
+      } else {
+        actionObj.action = exactCommands[_actionPrefix];
+      }
       return actionObj;
     }
   }
