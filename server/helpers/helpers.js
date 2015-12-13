@@ -130,6 +130,7 @@ exports.savePackage = function (user, entry, cb) {
 
 exports.findPackagesByUsername = function (username, cb) {
   // finds user, then finds the packages associated to user
+  console.log(username);
   exports.findUserByUsername(username, function (err, user) {
     if (err) {
       console.log(err);
