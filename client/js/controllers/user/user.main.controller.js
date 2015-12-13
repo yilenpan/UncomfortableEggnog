@@ -9,18 +9,26 @@
     var self = this;
 
     self.fields = {
-      userName: $state.params.userName,
+      username: $state.params.userName,
       fullName: '',
       email: '',
       website: '',
       packages: []
     };
 
-    ApiFactory.get();
+// console.log(self.fields.username);
+    ApiFactory.get('/user/' + self.fields.username)
+      .then(function (user) {
+          //do something here
+          console.log(user);
+          self.fields.email = user.email;
 
-    ApiFactory.get('/api/users/' + self.fields.userName + '/packages')
+      });
+
+    ApiFactory.get('/api/users/' + self.fields.username + '/packages')
       .then(function (data) {
-        self.packages = data;
+        console.log(data);
+        self.fields.packages = data;
       });
   }
 })();
