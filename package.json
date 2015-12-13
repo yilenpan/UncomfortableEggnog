@@ -21,7 +21,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "electron-prebuilt": "^0.35.4",
-    "history": "^1.16.0",
+    "history": "^1.13.1",
     "jquery": "^2.1.4",
     "natural": "^0.2.1",
     "pre-commit": "^1.1.2",
