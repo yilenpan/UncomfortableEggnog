@@ -69,11 +69,39 @@
             controller: "NavCtrl"
           },
           main: {
-            templateUrl: 'js/html/user/user.main.html'
-            // controller: 'SearchResultsCtrl'
+            templateUrl: 'js/html/user/user.main.html',
+            controller: 'UserMainCtrl'
           }
         }
       })
+      // .state('userAccount', {
+      //   url: '/user/:userAccount',
+      //   views: {
+      //     top: {
+      //       template: "<div nav-bar-directive></div>",
+      //       controller: "NavCtrl"
+      //     },
+      //     main: {
+      //       templateUrl: 'js/html/user/user.main.html'
+      //       // controller: 'SearchResultsCtrl'
+      //     }
+      //   }
+      // })
+
+      // .state('editUser', {
+      //   url: '/user/:userName',
+      //   views: {
+      //     top: {
+      //       template: "<div nav-bar-directive></div>",
+      //       controller: "NavCtrl"
+      //     },
+      //     main: {
+      //       templateUrl: 'js/html/user/user.main.html'
+      //       // controller: 'SearchResultsCtrl'
+      //     }
+      //   }
+      // })
+
       .state('signup', {
         url: '/signup',
         views: {
