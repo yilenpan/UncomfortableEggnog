@@ -13,22 +13,21 @@
       fullName: '',
       email: '',
       website: '',
-      packages: []
+      packages: [],
+      userLink: window.location.href
     };
 
-// console.log(self.fields.username);
     ApiFactory.get('/user/' + self.fields.username)
       .then(function (user) {
-          //do something here
-          console.log(user);
           self.fields.email = user.email;
-
+          self.fields.website = user.website;
       });
 
     ApiFactory.get('/api/users/' + self.fields.username + '/packages')
       .then(function (data) {
-        console.log(data);
         self.fields.packages = data;
       });
   }
 })();
+
+

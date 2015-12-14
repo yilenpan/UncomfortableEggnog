@@ -1,31 +1,35 @@
 <div class="row" ng-controller="UserMainCtrl as uc">
-  <h3>{{uc.fields.username}}</h3>
+  <h3><a ng-href="{{uc.fields.userLink}}">{{uc.fields.username}}</a></h3>
 
   <div>
-    <div>{{uc.fields.email}}</div>
-    <div>{{uc.fields.website}}</div>
+    <div><a ng-href="mailto:{{uc.fields.email}}">{{uc.fields.email}}</a></div>
+    <div><a ng-href="{{uc.fields.website}}">{{uc.fields.website}}</a></div>
   </div>
 
   <hr>
 
-  <!-- <form>
-    <p>
-      <input ng-model="edit.package.title" type="text" placeholder="Title">
-    </p>
-    <p>
-      <textarea ng-model="edit.package.description" name="Description" id="desc" cols="30" rows="10"></textarea>
-    </p>
-    <p>
-      <button ng-click="edit.addCommand()" class="btn btn-primary">
-        Add Command
-      </button>
-      <form>
-        <p ng-repeat="command in edit.commands track by $index">
-          <input ng-model="command.command" type="text" name="command{{$index}}" placeholder="Command">
-          <input ng-model="command.action" type="text" name="command{{$index}}" placeholder="Action">
-        </p>
-        <input ng-click="edit.postEdit()" type="submit" value="submit" class="btn btn-success">
-      </form>
-    </p>
-  </form> -->
+  <div class="col-xs-4" ng-repeat="package in uc.fields.packages">
+    <div class="package-widget">
+      <div class="packageDetails">
+        <h3>
+          <a class="package-logo" href="">
+            <img class="logo" style="float:left" src="http://placecho.herokuapp.com/50/50">
+          </a>
+          <a class="name" ui-sref="package({packageName: package.title})">{{package.title}}</a>
+          <div class="desc">{{package.description}}</div>
+        </h3>
+        <div class="icons">
+          <td class="col-md-2">
+            <i class="glyphicon glyphicon-cloud-download"></i>
+            <span>{{package.downloads}}</span>
+          </td>
+          <td class="col-md-2">
+            <i class="glyphicon glyphicon-heart-empty"></i>
+            <span>{{package.average}}%</span>
+          </td>
+        <div>
+      </div>
+    </div>
+  </div>
 </div>
+
