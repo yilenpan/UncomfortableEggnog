@@ -53,7 +53,8 @@ module.exports.getCommands = function () {
 
 module.exports.addCommand = function (command) {
   var newCommandsObj = _.extend({}, this.getCommands());
-  newCommandsObj.rawCommands = _.extend(this.getCommands().rawCommands, command);
+  newCommandsObj.rawCommands = lowerCaseProps(_.extend(this.getCommands().rawCommands, command));
+  newCommandsObj.parsedCommands = parseCommands(newCommandsObj.rawCommands);
   console.log(newCommandsObj);
   module.exports.saveCommands(newCommandsObj);
   write(newCommandsObj.commandsPath, newCommandsObj.rawCommands);

@@ -17,11 +17,20 @@ module.exports = function (grunt) {
           output: 'docs/'
         }
       }
+    },
+    shell: {
+      options: {
+        stderr: false
+      },
+      target: {
+        command: 'webpack .; electron .'
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-docco');
+  grunt.loadNpmTasks('grunt-shell');
 
   grunt.registerTask('test', [
     'mochaTest'
@@ -29,5 +38,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('docs', [
     'docco'
+  ]);
+
+  grunt.registerTask('default', [
+    'shell'
   ]);
 };
