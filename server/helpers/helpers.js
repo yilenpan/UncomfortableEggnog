@@ -134,9 +134,12 @@ exports.findPackagesByUsername = function (username, cb) {
     if (err) {
       console.log(err);
       cb(err);
+    } else if (user === null) {
+      console.error("No user by that name");
     } else {
       exports.findPackagesByUserId(user._id, cb);
     }
+
   });
 };
 
