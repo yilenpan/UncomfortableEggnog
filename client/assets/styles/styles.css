@@ -1,10 +1,42 @@
 div .landing-jumbotron {
   height:100vh;
-  background-image: url("https://static.pexels.com/photos/20053/pexels-photo.jpg");
+  background-image: url("https://overheadproductions.files.wordpress.com/2013/05/lens-flare-2.jpg");
+  background-repeat: no-repeat;
+  /*margin-top: 0;*/
 }
+
+body {
+  background-color: black;
+}
+
+.package-container {
+  background-color: #ECF0F1;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+}
+
+.btn-primary {
+  background-color: #264348;
+  border-color: white;
+}
+
+.btn-primary:hover {
+  background-color: white;
+  color: black;
+}
+
+h1.title {
+  font: normal normal 800 30px/40px Arial, Helvetica, sans-serif;
+}
+
+
 
 i {
   padding-left: 5px;
+  padding-right: 8px;
 }
 
 .no-margin {
@@ -12,7 +44,7 @@ i {
 }
 
 .navigation {
-  padding: 10px;
+  /*padding: 10px;*/
 }
 
 .search {
