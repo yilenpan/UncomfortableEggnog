@@ -12,7 +12,7 @@
       "currentUsername": localStorage.username,
       "email": {
         required: true,
-        value: 'example@email.com'
+        value: ''
       },
       "website": {
         required: false,

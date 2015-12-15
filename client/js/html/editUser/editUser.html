@@ -83,53 +83,45 @@
       </div>
 
     <!-- Password input-->
-      <div class="form-group">
-
-
-        <div class="col-md-12">
+      <div>
+        <div class="col-md-12 form-group">
           <div class="row">
-
             <div class="col-md-6" ng-class="{'has-error': eu.isInputInvalid(signupForm.password),
                 'has-success': eu.isInputValid(signupForm.password)}">
               <label class="control-label" for="passwordinput">Create New Password</label>
               <input name="password" type="password"
                   placeholder="Enter your password" class="form-control input-md required"
-                  ng-model="eu.fields.password.value" required ng-blur='eu.setPristine(signupForm.password)'>
-              <div class="progress">
-                <div class="progress-bar"
-                role="progressbar"
-                  ng-class="{'progress-bar-success': eu.isPassStrengthStrong(),
-                    'progress-bar-warning': eu.isPassStrengthGood(), 'progress-bar-danger': eu.isPassStrengthWeak() }"
-                  aria-valuenow="{{eu.fields.password.strength}}"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  style="width:{{ eu.fields.password.strength }}%">
-                </div>
-              </div>
+                  ng-model="eu.fields.newpassword.value" ng-blur='eu.setPristine(signupForm.password)'>
             </div>
             <div class="col-md-6" ng-class="{'has-error': eu.isInputInvalid(signupForm['password repeat']),
                 'has-success': eu.isInputValid(signupForm['password repeat'])}">
-              <label class="control-label" for="passwordinput">Repeat Password</label>
+              <label class="control-label" for="passwordinput">Repeat New Password</label>
               <input name="password repeat" type="password"
-                  placeholder="Enter your password" class="form-control input-md"
+                  placeholder="Repeat New Password" class="form-control input-md"
                   ng-model="eu.fields['password repeat'].value" required ng-blur='eu.setPristine(signupForm["password repeat"])'/>
             </div>
           </div>
         </div>
       </div>
 
-        <div class="col-md-12">
-          <div class="row">
+      <!--current password -->
 
+      <div>
+        <div class="col-md-12 form-group">
+          <div class="row">
             <div class="col-md-6" ng-class="{'has-error': eu.isInputInvalid(signupForm.password),
                 'has-success': eu.isInputValid(signupForm.password)}">
-              <label class="control-label" for="passwordinput">Current Password*</label>
+              <label class="control-label" for="passwordinput">Your Current Password</label>
               <input name="password" type="password"
                   placeholder="Enter your password" class="form-control input-md required"
-                  ng-model="eu.fields.password.value" required ng-blur='eu.setPristine(signupForm.password)'>
+                  ng-model="eu.fields.newpassword.value" required ng-blur='eu.setPristine(signupForm.password)'>
+
             </div>
+
           </div>
         </div>
+      </div>
+
 
       <div class="col-md-12">
         <div class="row">
