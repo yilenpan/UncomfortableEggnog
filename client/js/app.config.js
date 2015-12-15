@@ -60,7 +60,6 @@
           }
         }
       })
-      // TODO: User page.
       .state('user', {
         url: '/user/:userName',
         views: {
@@ -74,34 +73,19 @@
           }
         }
       })
-      // .state('userAccount', {
-      //   url: '/user/:userAccount',
-      //   views: {
-      //     top: {
-      //       template: "<div nav-bar-directive></div>",
-      //       controller: "NavCtrl"
-      //     },
-      //     main: {
-      //       templateUrl: 'js/html/user/user.main.html'
-      //       // controller: 'SearchResultsCtrl'
-      //     }
-      //   }
-      // })
-
-      // .state('editUser', {
-      //   url: '/user/:userName',
-      //   views: {
-      //     top: {
-      //       template: "<div nav-bar-directive></div>",
-      //       controller: "NavCtrl"
-      //     },
-      //     main: {
-      //       templateUrl: 'js/html/user/user.main.html'
-      //       // controller: 'SearchResultsCtrl'
-      //     }
-      //   }
-      // })
-
+      .state('editUser', {
+        url: '/user/:userName/edit',
+        views: {
+          top: {
+            template: "<div nav-bar-directive></div>",
+            controller: "NavCtrl"
+          },
+          main: {
+            templateUrl: 'js/html/editUser/editUser.html',
+            controller: 'EditUserCtrl'
+          }
+        }
+      })
       .state('signup', {
         url: '/signup',
         views: {
