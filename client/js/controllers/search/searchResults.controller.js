@@ -10,9 +10,11 @@
     var post = ApiFactory.post;
     self.term = $state.params.searchTerm;
     self.results = [];
+
     post('/api/search', $state.params).then(function (data) {
       self.results = data;
     });
+
     post();
   }
 })();
