@@ -6,7 +6,7 @@ var User = require('../../server/db/db').User;
 var PackageEntry = require('../../server/db/db').PackageEntry;
 var searchPackages = require('../../server/helpers/helpers').searchPackages;
 
-describe('search', function (done) {
+xdescribe('search', function (done) {
   before(function (done) {
     var packages = [
       {
