@@ -166,7 +166,18 @@ exports.getUserInfo = function (req, res) {
       console.log(err);
       res.sendStatus(500);
     }
-    console.log(user);
     res.send(user);
   });
 };
+
+exports.getUserByUsername = function (req, res) {
+  helpers.findUserByUsername(req.params.username, function (err, user) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    res.send(user);
+  });
+};
+
+
