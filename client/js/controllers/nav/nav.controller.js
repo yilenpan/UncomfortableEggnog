@@ -33,7 +33,7 @@
     };
     // redirects user to their packages page
     self.goToAccount = function () {
-      $state.go('userPackages', {userName: self.getUserName()});
+      $state.go('user', {userName: self.getUserName()});
     };
 
   }

@@ -26,11 +26,12 @@
         if (result.error) {
           self.errorMessage = result.error;
           console.log('error: ', result.error);
+          $state.go('login');
         } else if (result.token) {
           // result has the token and the userName and stores it in localstorage
           localStorage.setItem('token', result.token);
           localStorage.setItem('username', result.username);
-          $state.go('userPackages', {userName: result.username});
+          $state.go('user', {userName: result.username});
         }
       });
     };
