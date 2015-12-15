@@ -16,14 +16,6 @@ if (!('webkitSpeechRecognition' in window)) {
     console.log('audio ended, restarting');
     this.stop();
   };
-  // prefixRecognition.onsoundend = function () {
-  //   console.log('sound ended, restarting');
-  //   this.stop();
-  // };
-  // prefixRecognition.onspeechend = function () {
-  //   console.log('speech ended, restarting');
-  //   this.stop();
-  // };
   //instance that will listen for the command
   var commandRecognition = listener(cmdRec, 'cmd', 5000);
   // connect the two so that tdhe prefixRec will stop its process and kick off
