@@ -87,7 +87,7 @@ describe('search', function (done) {
     User.remove({}, function () {
       PackageEntry.remove({}, function () {
         done();
-      })
+      });
     });
   });
 
