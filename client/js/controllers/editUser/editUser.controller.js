@@ -9,7 +9,6 @@
 //     var self = this;
 //     var get = ApiFactory.get;
 //     var post = ApiFactory.post;
-//     self.commands = [];
 
 //     self.addCommand = function () {
 //       self.commands.push({

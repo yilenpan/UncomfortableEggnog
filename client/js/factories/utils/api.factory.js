@@ -13,7 +13,6 @@
     return services;
 
   function parse (results) {
-    console.log("results: ", results);
     return results.data;
   }
 

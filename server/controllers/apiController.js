@@ -28,18 +28,22 @@ module.exports.searchTerm = function (req, res) {
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
   helpers.findPackageByTitle(title, function (err, entry) {
-    helpers.findUserById(entry[0].userId, function (err, user) {
-      if (err) {
-        res.redirect('/');
-      } else {
-        var sendObj = {};
-        sendObj.package = entry[0];
-        sendObj.user = {
-          username: user.username
-        };
-        res.json(sendObj);
-      }
-    });
+    if (err) {
+      res.send(404);
+    } else {
+      helpers.findUserById(entry[0].userId, function (err, user) {
+        if (err) {
+          res.redirect('/');
+        } else {
+          var sendObj = {};
+          sendObj.package = entry[0];
+          sendObj.user = {
+            username: user.username
+          };
+          res.json(sendObj);
+        }
+      });
+    }
   });
 };
 

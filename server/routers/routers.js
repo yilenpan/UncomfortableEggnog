@@ -46,6 +46,7 @@ router.get('/auth/google/callback',
 **************************************/
   router.get('/api/userData', sendUserData);
   router.get('/users/:id', controllers.getUserInfo);
+  router.get('/user/:username', controllers.getUserByUsername);
 
 
   /*************************************
