@@ -15,7 +15,7 @@ describe('search', function (done) {
           "One of the best packages ever",
           "I love this package!"
         ],
-        description: "The essential nest package",
+        description: "The best home control system that money can buy",
         packageContents: {
           "hello": "world"
         }
@@ -26,7 +26,7 @@ describe('search', function (done) {
           "One of the best packages ever",
           "I love this package!"
         ],
-        description: "The essential nest package",
+        description: "Be more like the korean super star that is kyle cho",
         packageContents: {
           "hello": "world"
         }
@@ -93,14 +93,75 @@ describe('search', function (done) {
 
   it('before should add our packages', function (done) {
     PackageEntry.find({}, function (err, data) {
-      console.log(data);
       done();
     });
   });
+
   it('should return the nest package when we search for it', function (done) {
     searchPackages('Nest', function (err, data) {
-      expect(data.length).to.equal(1);
+      expect(data[0].title).to.equal('Nest Package');
       done();
     });
   });
+  it('should return the kyle cho package when we search for it', function (done) {
+    searchPackages('Kyle', function (err, data) {
+      expect(data[0].title).to.equal('Kyle Cho Package');
+      done();
+    });
+  });
+  it('should return the coffee package when we search for it', function (done) {
+    searchPackages('coffee', function (err, data) {
+      expect(data[0].title).to.equal('Coffee Package');
+      done();
+    });
+  });
+  it('should return the ninja package when we search for it', function (done) {
+    searchPackages('ninja', function (err, data) {
+      expect(data[0].title).to.equal('Ninja security package');
+      done();
+    });
+  });
+  it('should return the nest package when we search for it in description', function (done) {
+    searchPackages('home control system', function (err, data) {
+      expect(data[0].title).to.equal('Nest Package');
+      done();
+    });
+  });
+  it('should return the kyle cho package when we search for it in description', function (done) {
+    searchPackages('korean super star', function (err, data) {
+      expect(data[0].title).to.equal('Kyle Cho Package');
+      done();
+    });
+  });
+
+  it('should return kyle cho package when we search for it', function (done) {
+    request(app)
+      .post('/api/search')
+      .send({
+        searchTerm: 'kyle'
+      })
+      .expect(200)
+      .end(function (err, data) {
+        var json = data.body;
+        expect(json).to.be.an('array');
+        expect(json[0].title).to.equal('Kyle Cho Package');
+        done();
+      });
+  });
+  it('should return nest package when we search for it', function (done) {
+    request(app)
+      .post('/api/search')
+      .send({
+        searchTerm: 'nest'
+      })
+      .expect(200)
+      .end(function (err, data) {
+        var json = data.body;
+        expect(json).to.be.an('array');
+        expect(json[0].title).to.equal('Nest Package');
+        done();
+      });
+  });
+
+
 });

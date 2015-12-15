@@ -81,7 +81,6 @@ exports.searchPackages = function (term, cb) {
    })
    .sort({ score: {$meta: "textScore"}})
    .exec(function (e,d) {
-     // passing cb error or data
      cb(e, d);
    });
 };
