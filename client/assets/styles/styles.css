@@ -60,12 +60,6 @@ i {
   padding-top: 10px;
 }
 
-.desc {
-  text-align: center;
-  font-size: 10pt;
-  margin-left: 10px;
-  margin-right: 50px;
-}
 
 .icons {
   /*margin-left: 40px;*/
@@ -98,35 +92,54 @@ i {
 
 .package-widget {
   position: relative;
-  background-color: #264348;
-
+  background-color: #06202a;
+  border: none;
 }
 
+.package-container {
+  background-color: #424242;
+  border: 1px solid #ECF0F1;
+}
+.package-container-title {
+  color: white;
+}
 .packageDetails{
-  /*position: absolute;*/
-  top: 10px;
-  left: 10px;
+  border: 1px solid black;
+  /*top: 10px;*/
+  /*left: 10px;*/
   /*transform: translate(50%, 50%);*/
-  background-color: #082735;
+  background-color: #264348;
   color: #56B7DA;
 }
-.package-container {
-  background-color: #ECF0F1;
+
+.starrating {
+  float: right;
+}
+
+.star-container {
+  padding: 0;
+  margin: 0;
 }
 
 .name {
-  text-align: center;
+  /*text-align: center;*/
   position: relative;
   font-size: 30px;
 }
 .name > a {
   display: inline-block;
   color: white;
-  margin: 0 50px 0 auto;
+  margin: 0 50px 0 15px;
   /*transform: translate(50%, 50%);*/
   text-decoration: none;
 }
 
+.desc {
+  /*text-align: center;*/
+  font-size: 10pt;
+  margin-left: 65px;
+  margin-right: 50px;
+}
 .commands {
   overflow: auto;
   height: 100px;
