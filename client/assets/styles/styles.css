@@ -2,7 +2,6 @@ div .landing-jumbotron {
   height:100vh;
   background-image: url("../img/lens-flare-vignette.jpg");
   background-repeat: no-repeat;
-  /*margin-top: 0;*/
 }
 
 body {
@@ -122,9 +121,6 @@ i {
   .thumbnail a > img {
   margin-right: 10px;
 }
-/*a.download {
-  text-decoration: none;
-}*/
 
 .starrating {
   float: right;
@@ -153,9 +149,7 @@ i {
 }
 
 .desc {
-  /*text-align: center;*/
   font-size: 10pt;
-  /*margin: auto 0;*/
   margin: 0 10px 15px 10px;
 }
 .commands {
