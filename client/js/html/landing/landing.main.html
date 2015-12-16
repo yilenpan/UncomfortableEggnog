@@ -1,30 +1,50 @@
 <div class="row package-container" ng-controller='LandingPageCtrl as landing'>
-  <!-- <div class="container col-md-12 package-container"> -->
-    <div class="col-md-12">
-      <h1>Favorites</h1>
+  <div class="col-md-12 package-container-title">
+    <h1>Favorites</h1>
+    <div class="card-group">
       <div class="col-xs-4" ng-repeat="package in landing.packages | orderBy:'-average' track by $index">
-        <div class="package-widget thumbnail">
-          <div class="packageDetails">
+        <div class="packageDetails thumbnail">
+            <a class="package-logo" href="">
+              <img class="logo" style="float:left" src="http://placecho.herokuapp.com/50/50">
+            </a>
+            <div class="starrating">
+              <span class="star-container" ng-repeat="i in landing.makeStars(package) track by $index"><i ng-class="i"></i></span>
+            </div>
+          <div class="name center-block">
+              <a ui-sref="package({packageName: package.title})">{{package.title}}</a>
+          </div>
+            <div class="desc">{{package.description}}</div>
+          <div class="icons">
+            <td class="col-md-2">
+              <i class="glyphicon glyphicon-cloud-download"></i>
+              <span>({{package.downloads}})</span>
+            </td>
+            <td class="col-md-2">
+              <i class="glyphicon glyphicon-heart-empty"></i>
+              <span>{{package.average}}%</span>
+            </td>
+          </div>
+          <p class="card-text"><small class="text-muted">Last updated: {{package.dateCreated}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-- <div class="package-widget thumbnail"> -->
+<!--         <div class="packageDetails thumbnail">
+          <div class="card">
+            <div class="card-block">
               <a class="package-logo" href="">
                 <img class="logo" style="float:left" src="http://placecho.herokuapp.com/50/50">
               </a>
+              <h4 class="card-title">
             <div class="name center-block">
-                <a ui-sref="package({packageName: package.title})">{{package.title}}</a>
+                <a ui-sref="package({packageName: package.title})">{{package.title}}
+                </a>
             </div>
-              <div class="desc">{{package.description}}</div>
-            <div class="icons">
-              <td class="col-md-2">
-                <i class="glyphicon glyphicon-cloud-download"></i>
-                <span>({{package.downloads}})</span>
-              </td>
-              <td class="col-md-2">
-                <i class="glyphicon glyphicon-heart-empty"></i>
-                <span>{{package.average}}%</span>
-              </td>
+                </h4>
+              <p class="card-text desc">{{package.description}}</p>
+              <p class="card-text"><small class="text-muted">Last updated: {{package.dateCreated}}</small></p>
             </div>
           </div>
-        </div>
-      </div>
-    <!-- </div> -->
-  </div>
-</div>
+        </div> -->

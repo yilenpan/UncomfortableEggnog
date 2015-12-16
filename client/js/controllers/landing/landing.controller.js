@@ -3,9 +3,9 @@
   angular.module('app')
     .controller('LandingPageCtrl', LandingPageCtrl);
 
-  LandingPageCtrl.$inject = ['ApiFactory'];
+  LandingPageCtrl.$inject = ['ApiFactory', 'PackageFactory'];
 
-  function LandingPageCtrl (ApiFactory) {
+  function LandingPageCtrl (ApiFactory, PackageFactory) {
     var self = this;
     var get = ApiFactory.get;
     var post = ApiFactory.post;
@@ -16,6 +16,7 @@
       calculateAvg();
       getUserData();
     });
+    self.makeStars = PackageFactory.makeStars;
 
     function calculateAvg () {
       var avg;
