@@ -1,6 +1,6 @@
 div .landing-jumbotron {
   height:100vh;
-  background-image: url("https://overheadproductions.files.wordpress.com/2013/05/lens-flare-2.jpg");
+  background-image: url("../img/lens-flare-vignette.jpg");
   background-repeat: no-repeat;
   /*margin-top: 0;*/
 }
@@ -67,7 +67,9 @@ i {
   float:right;
 }
 
+#top-ten-title {
 
+}
 .rating {
   font-size: 175%;
   padding: 0 0.5em;
@@ -103,7 +105,7 @@ i {
 }
 
 .thumbnail {
-  height: 140px;
+  height: 120px;
 }
 
 .package-container {
@@ -114,14 +116,15 @@ i {
   color: white;
 }
 .packageDetails{
-  border: 1px solid black;
-  /*display: inline-block;*/
-  background-color: #264348;
-  color: #56B7DA;
+  border: 1px solid #2e2e2e;
+  background-color: #0f1a1c;
 }
-.thumbnail a > img {
+  .thumbnail a > img {
   margin-right: 10px;
 }
+/*a.download {
+  text-decoration: none;
+}*/
 
 .starrating {
   float: right;
@@ -142,7 +145,7 @@ i {
   color: white;
   font-size: 20px;
 }
-.name > a {
+.name > a, a.download {
   display: inline-block;
   color: white;
   margin: 0;
@@ -152,8 +155,8 @@ i {
 .desc {
   /*text-align: center;*/
   font-size: 10pt;
-  margin-left: 0;
-  margin-right: 0;
+  /*margin: auto 0;*/
+  margin: 0 10px 15px 10px;
 }
 .commands {
   overflow: auto;
@@ -162,3 +165,7 @@ i {
   border-radius: 5px;
 }
 
+.date {
+  position: absolute;
+  bottom: 15px;
+}

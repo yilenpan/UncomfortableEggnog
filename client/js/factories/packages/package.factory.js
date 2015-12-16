@@ -8,7 +8,8 @@
 
   function PackageFactory () {
     var services = {
-      makeStars: makeStars
+      makeStars: makeStars,
+      formatDate: formatDate
     };
 
     return services;
@@ -28,6 +29,9 @@
         starClasses.push("fa fa-star-o");
       }
       return starClasses;
+    }
+    function formatDate (pkg) {
+      return moment(pkg.dateCreated).fromNow();
     }
   }
 })();
