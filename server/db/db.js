@@ -92,8 +92,8 @@ PackageEntrySchema.index({
 }, {
   name: "TextIndex",
   weights: {
-    title: 10,
-    description: 3
+    title: 1,
+    description: 1
   }
 });
 

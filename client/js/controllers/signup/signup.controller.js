@@ -85,7 +85,7 @@
           localStorage.setItem('token', result.token);
           localStorage.setItem('username', result.username);
           // Redirect to userPackages page
-          $state.go('userPackages', {userName: result.username});
+          $state.go('user', {userName: result.username});
         } else {
           $state.go('login');
           // if for some reason no token, redirect to login
