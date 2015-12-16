@@ -9,9 +9,6 @@ body {
   background-color: black;
 }
 
-.package-container {
-  background-color: #ECF0F1;
-}
 
 .title {
   color: white;
@@ -64,12 +61,14 @@ i {
 }
 
 .desc {
+  text-align: center;
   font-size: 10pt;
   margin-left: 10px;
+  margin-right: 50px;
 }
 
 .icons {
-  margin-left: 40px;
+  /*margin-left: 40px;*/
   margin-top: -5px;
 }
 
@@ -81,6 +80,7 @@ i {
   font-size: 175%;
   padding: 0 0.5em;
 }
+
 
 .rating > a {
   text-decoration: none;
@@ -96,10 +96,36 @@ i {
 
 /*===============PACKAGES==================*/
 
-/*.packages {
+.package-widget {
+  position: relative;
+  background-color: #264348;
+
+}
+
+.packageDetails{
+  /*position: absolute;*/
+  top: 10px;
+  left: 10px;
+  /*transform: translate(50%, 50%);*/
   background-color: #082735;
   color: #56B7DA;
-}*/
+}
+.package-container {
+  background-color: #ECF0F1;
+}
+
+.name {
+  text-align: center;
+  position: relative;
+  font-size: 30px;
+}
+.name > a {
+  display: inline-block;
+  color: white;
+  margin: 0 50px 0 auto;
+  /*transform: translate(50%, 50%);*/
+  text-decoration: none;
+}
 
 .commands {
   overflow: auto;
