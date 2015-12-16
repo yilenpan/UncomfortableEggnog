@@ -12,6 +12,7 @@
     self.packages = [];
     get('/api/top10').then(function (data) {
       self.packages = data;
+      console.log(self.packages);
       calculateAvg();
       getUserData();
     });
