@@ -58,7 +58,7 @@
         method: 'POST',
         url: url,
         data: data
-      }).then(parse, errorHandler);
+      }).then(parse).catch(errorHandler);
     }
   }
 
