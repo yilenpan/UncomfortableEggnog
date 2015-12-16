@@ -64,6 +64,7 @@ i {
 .icons {
   /*margin-left: 40px;*/
   margin-top: -5px;
+  float:right;
 }
 
 .logo {
@@ -94,6 +95,7 @@ i {
   position: relative;
   background-color: #06202a;
   border: none;
+  display: inline-block;
 }
 
 .package-container {
@@ -105,11 +107,13 @@ i {
 }
 .packageDetails{
   border: 1px solid black;
-  /*top: 10px;*/
-  /*left: 10px;*/
-  /*transform: translate(50%, 50%);*/
+  /*display: inline-block;*/
   background-color: #264348;
   color: #56B7DA;
+}
+
+.top-half {
+  /*border: 2px solid black;*/
 }
 
 .starrating {
@@ -121,16 +125,20 @@ i {
   margin: 0;
 }
 
+.star-container > i {
+  padding: 0 2px;
+  margin: 0;
+}
+
 .name {
-  /*text-align: center;*/
   position: relative;
-  font-size: 30px;
+  color: white;
+  font-size: 20px;
 }
 .name > a {
   display: inline-block;
   color: white;
-  margin: 0 50px 0 15px;
-  /*transform: translate(50%, 50%);*/
+  margin: 0 0 0 15px;
   text-decoration: none;
 }
 
