@@ -29,9 +29,11 @@
 
     ApiFactory.get('/user/' + self.fields.username)
       .then(function (user) {
+        if (!user) {
+           $state.go('main');
+        }
           self.fields.email = user.email;
           self.fields.website = user.website;
-          console.log(window.location.hash, ('#/user/' + localStorage.username));
           if (window.location.hash === ('#/user/' + localStorage.username)) {
             self.fields.canEdit = true;
           }
@@ -39,6 +41,9 @@
 
     ApiFactory.get('/api/users/' + self.fields.username + '/packages')
       .then(function (data) {
+        if (!data) {
+           $state.go('main');
+        }
         self.fields.packages = data;
         self.fields.numPackages = self.countPackages(data.length);
       });
