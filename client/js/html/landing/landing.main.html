@@ -12,11 +12,11 @@
             <div class="starrating">
               <span class="star-container" ng-repeat="i in landing.makeStars(package) track by $index">
                 <i ng-class="i"></i>
-              </span>
+              </span>({{package.countReviews}})
             </div>
           <div class="name">
-              <a ui-sref="package({packageName: package.title})">{{package.title.slice(0, 20)}}</a>
-              <span ng-if="package.title.length > 20" class="name">...</span>
+              <a ui-sref="package({packageName: package.title})">{{package.title.slice(0, 12)}}</a>
+              <span ng-if="package.title.length > 12" class="name">...</span>
           </div>
         </div>
           <div class="icons">
