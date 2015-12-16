@@ -31,7 +31,8 @@
 
     ApiFactory.get('/user/' + self.fields.username)
       .then(function (user) {
-        if (!user) {
+        console.log(window.location.hash);
+        if (!user || (window.location.hash === "#/user/")) {
            $state.go('main');
         }
           self.fields.email = user.email;
