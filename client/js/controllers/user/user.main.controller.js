@@ -10,12 +10,14 @@
 
     self.fields = {
       username: $state.params.userName,
+      fullname : '',
       email: '',
       website: '',
       packages: [],
       userLink: window.location.href,
       numPackages: 0,
-      canEdit: false
+      canEditProfile: false,
+      canEditPackages: false
       };
 
     self.countPackages = function (count) {
@@ -31,9 +33,18 @@
       .then(function (user) {
           self.fields.email = user.email;
           self.fields.website = user.website;
-          console.log(window.location.hash, ('#/user/' + localStorage.username));
-          if (window.location.hash === ('#/user/' + localStorage.username)) {
-            self.fields.canEdit = true;
+          if (user["first name"]) {
+            self.fields.fullname = user["first name"];
+          }
+          if (user["last name"]) {
+            self.fields.fullname += ' ' + user["last name"];
+          }
+          if ((window.location.hash === ('#/user/' + localStorage.username)) && (!user.github) && (!user.facebook) && (!user.google)) {
+            self.fields.canEditProfile = true;
+          }
+          var formatedUsername = encodeURIComponent(localStorage.username.trim());
+          if (window.location.hash === ('#/user/' + formatedUsername)) {
+            self.fields.canEditPackages = true;
           }
       });
 
