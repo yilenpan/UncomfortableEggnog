@@ -92,6 +92,56 @@ exports.signupUser = function (req, res) {
   });
 };
 
+exports.editUser = function (req, res) {
+  helpers.findUserByUsername(req.body.currentUsername, function (err, user) {
+    if (user) {
+      console.log(req.body);
+      helpers.comparePassword(req.body["current password"], user.password, function (err, isMatch) {
+        if (err) {
+          console.log('There was an error editing user.');
+          res.sendStatus(500);
+        } else if (!isMatch) {
+            console.log('User password did not match.');
+            res.status(401).json({
+              errorType: 'password',
+              error: 'Incorrect Password.'
+          });
+        } else {
+          var userToUpdate = req.body;
+          helpers.findUserByUsername(userToUpdate.username, function (err, user) {
+            if (user && user.username !== userToUpdate.username) {
+              res.status(200).json({
+                errorType: 'username',
+                error: 'That username already exists.'
+              });
+            } else {
+                helpers.updateUser(userToUpdate, function (err, user) {
+                if (err) {
+                  console.log('There was an error saving user.');
+                  res.status(500).json({
+                    errorType: 'userSave',
+                    error: 'There was an error saving user.'
+                  });
+                } else {
+                  console.log('user saved!: ', user);
+                  var token = jwt.sign(user, jwtKey, {
+                    expiresIn: 9999999
+                  });
+                  res.json({
+                    success: true,
+                    token: token,
+                    username: user.username
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
 exports.logoutUser = function (req, res) {
   console.log('logout');
   if (req.user) {
