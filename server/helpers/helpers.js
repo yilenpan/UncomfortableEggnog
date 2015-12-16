@@ -61,7 +61,7 @@ exports.updateUser = function (userToUpdate, cb) {
       userInDB.website = userToUpdate.website;
       userInDB["first name"] = userToUpdate["first name"];
       userInDB["last name"] = userToUpdate["last name"];
-      userInDB.password = userToUpdate.password || userInDB.password;
+      userInDB.password = userToUpdate.password || userToUpdate["current password"];
     }
     userInDB.save(cb);
   });
