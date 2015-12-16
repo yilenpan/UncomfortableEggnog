@@ -1,10 +1,38 @@
 div .landing-jumbotron {
   height:100vh;
-  background-image: url("https://static.pexels.com/photos/20053/pexels-photo.jpg");
+  background-image: url("../img/lens-flare-vignette.jpg");
+  background-repeat: no-repeat;
 }
+
+body {
+  background-color: black;
+}
+
+
+.title {
+  color: white;
+  font-size: 20px;
+}
+
+.btn-primary {
+  background-color: #264348;
+  border-color: white;
+}
+
+.btn-primary:hover {
+  background-color: white;
+  color: black;
+}
+
+h1.title {
+  font: normal normal 800 30px/40px Arial, Helvetica, sans-serif;
+}
+
+
 
 i {
   padding-left: 5px;
+  padding-right: 8px;
 }
 
 .no-margin {
@@ -12,7 +40,7 @@ i {
 }
 
 .navigation {
-  padding: 10px;
+  /*padding: 10px;*/
 }
 
 .search {
@@ -31,18 +59,11 @@ i {
   padding-top: 10px;
 }
 
-.desc {
-  font-size: 10pt;
-  margin-left: 10px;
-}
 
 .icons {
-  margin-left: 40px;
+  /*margin-left: 40px;*/
   margin-top: -5px;
-}
-
-.logo {
-  margin-right: 10px;
+  float:right;
 }
 
 .rating {
@@ -63,12 +84,70 @@ i {
 }
 
 /*===============PACKAGES==================*/
+.logo {
+  margin-right: 10px;
+}
 
-/*.packages {
-  background-color: #082735;
-  color: #56B7DA;
-}*/
+.package-widget {
+  position: relative;
+  background-color: #06202a;
+  border: none;
+  display: inline-block;
+}
 
+.col-xs-4 {
+  padding: 0 5px;
+}
+
+.thumbnail {
+  height: 120px;
+}
+
+.package-container {
+  background-color: #424242;
+  border: 1px solid #ECF0F1;
+}
+.package-container-title {
+  color: white;
+}
+.packageDetails{
+  border: 1px solid #2e2e2e;
+  background-color: #0f1a1c;
+}
+  .thumbnail a > img {
+  margin-right: 10px;
+}
+
+.starrating {
+  float: right;
+}
+
+.star-container {
+  padding: 0;
+  margin: 0;
+}
+
+.star-container > i {
+  padding: 0 2px;
+  margin: 0;
+}
+
+.name {
+  position: relative;
+  color: white;
+  font-size: 20px;
+}
+.name > a, a.download {
+  display: inline-block;
+  color: white;
+  margin: 0;
+  text-decoration: none;
+}
+
+.desc {
+  font-size: 10pt;
+  margin: 0 10px 15px 10px;
+}
 .commands {
   overflow: auto;
   height: 100px;
@@ -76,3 +155,7 @@ i {
   border-radius: 5px;
 }
 
+.date {
+  position: absolute;
+  bottom: 15px;
+}
