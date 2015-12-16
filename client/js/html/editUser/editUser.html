@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="assets/styles/signup/signup.styles.css">
 <div ng-controller="EditUserCtrl as eu">
   <form class="form-horizontal form-signup" name="signupForm" ng-submit="eu.validateAndPost()" role="form" novalidate>
     <fieldset style="width: 50%">
@@ -91,7 +90,7 @@
               <label class="control-label" for="passwordinput">Create New Password</label>
               <input name="password" type="password"
                   placeholder="Enter your password" class="form-control input-md required"
-                  ng-model="eu.fields.newpassword.value" ng-blur='eu.setPristine(signupForm.password)'>
+                  ng-model="eu.fields.password.value" ng-blur='eu.setPristine(signupForm.password)'>
             </div>
             <div class="col-md-6" ng-class="{'has-error': eu.isInputInvalid(signupForm['password repeat']),
                 'has-success': eu.isInputValid(signupForm['password repeat'])}">
@@ -105,23 +104,18 @@
       </div>
 
       <!--current password -->
-
       <div>
         <div class="col-md-12 form-group">
           <div class="row">
-            <div class="col-md-6" ng-class="{'has-error': eu.isInputInvalid(signupForm.password),
-                'has-success': eu.isInputValid(signupForm.password)}">
+            <div class="col-md-6">
               <label class="control-label" for="passwordinput">Your Current Password</label>
               <input name="password" type="password"
                   placeholder="Enter your password" class="form-control input-md required"
-                  ng-model="eu.fields.newpassword.value" required ng-blur='eu.setPristine(signupForm.password)'>
-
+                  ng-model="eu.fields['current password'].value" required ng-blur='eu.setPristine(signupForm.password)'>
             </div>
-
           </div>
         </div>
       </div>
-
 
       <div class="col-md-12">
         <div class="row">
@@ -129,7 +123,7 @@
             <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
           </div>
           <div class="col-md-7 container error-display-container">
-            <div class="col-md-12" ng-repeat="err in su.errorList">
+            <div class="col-md-12" ng-repeat="err in eu.errorList">
               <span class="text-danger">{{err}}</span>
             </div>
           </div>

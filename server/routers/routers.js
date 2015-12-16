@@ -47,7 +47,8 @@ router.get('/auth/google/callback',
   router.get('/api/userData', sendUserData);
   router.get('/users/:id', controllers.getUserInfo);
   router.get('/user/:username', controllers.getUserByUsername);
-  router.get('/user/:username/edit', verifyUser, controllers.getUserByUsername);
+  router.get('/user/:username/verify', verifyUser, controllers.getUserByUsername);
+  router.post('/user/:username/edit', verifyUser, controllers.editUser);
 
 
   /*************************************
