@@ -51,6 +51,23 @@ exports.saveUser = function (user, cb) {
   newUser.save(cb);
 };
 
+exports.updateUser = function (userToUpdate, cb) {
+  db.User.findOne({
+    username: userToUpdate.currentUsername
+  }, function (err, userInDB) {
+    if (!err) {
+      userInDB.username = userToUpdate.username;
+      userInDB.email = userToUpdate.email;
+      userInDB.website = userToUpdate.website;
+      userInDB["first name"] = userToUpdate["first name"];
+      userInDB["last name"] = userToUpdate["last name"];
+      userInDB.password = userToUpdate.password || userToUpdate["current password"];
+    }
+    userInDB.save(cb);
+  });
+};
+
+
 /********************************************
                      Package Database Helpers
 *********************************************/

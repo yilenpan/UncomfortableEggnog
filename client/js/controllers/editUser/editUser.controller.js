@@ -9,7 +9,10 @@
     var self = this;
 
     self.fields = {
-      "currentUsername": localStorage.username,
+      "currentUsername": {
+        required: true,
+        value: localStorage.username
+      },
       "email": {
         required: true,
         value: ''
@@ -31,12 +34,16 @@
         value: localStorage.username
       },
       "password": {
-        required: true,
+        required: false,
         value: '',
         strength: 0
       },
       "password repeat": {
         required: false,
+        value: ''
+      },
+      "current password": {
+        required: true,
         value: ''
       }
     };
@@ -51,24 +58,13 @@
     };
 
 
-    ApiFactory.get('/user/' + self.fields.username.value + '/edit')
+    ApiFactory.get('/user/' + self.fields.username.value + '/verify')
       .then(function (user) {
-        console.log(user);
         self.fields["first name"].value = user["first name"];
         self.fields["last name"].value = user["last name"];
         self.fields.email.value = user.email;
         self.fields.website.value = user.website;
       });
-
-    self.isPassStrengthStrong = function () {
-      return self.fields.password.strength > 70;
-    };
-    self.isPassStrengthGood = function () {
-      return self.fields.password.strength > 30 && self.fields.password.strength <= 70;
-    };
-    self.isPassStrengthWeak = function () {
-      return self.fields.password.strength <= 30;
-    };
 
     self.post = function () {
       var user = {};
@@ -78,9 +74,7 @@
           user[key] = field.value;
         }
       }
-      ApiFactory.post('/signup', user)
-        // username: self.fields.username.value,
-        // password: self.fields.password.value
+      ApiFactory.post('/user/' + self.fields.username.value + '/edit', user)
       .then(function (result) {
         if (result.error) {
           self.errorList = [result.error];
@@ -88,13 +82,10 @@
           self.fields['password repeat'].value = '';
           console.log('error: ', result.error);
         } else if (result.token) {
-          // Should return with a token
-            // if token, store it in local
-            // if username, store that in local as well
           localStorage.setItem('token', result.token);
           localStorage.setItem('username', result.username);
           // Redirect to userPackages page
-          $state.go('userPackages', {userName: result.username});
+          $state.go('user', {userName: result.username});
         } else {
           $state.go('login');
           // if for some reason no token, redirect to login
@@ -102,26 +93,19 @@
       });
     };
 
-    $scope.$watch('su.fields.password.value', function (pass) {
-      var strength = SignUpFactory.getPasswordStrength(pass);
-      self.fields.password.strength = strength;
-    });
-
-
     self.validateAndPost = function () {
       var validated = true;
       self.errorList = [];
-      $scope.signupForm.$setDirty(true);
-          for (var key in self.fields) {
-            var field = self.fields[key];
-            if (field.required) {
-              if (!field.value) {
-                $scope.signupForm[key].$dirty = true;
-                self.errorList.push('Please enter your ' + key + '.');
-                validated = false;
-              }
+        for (var key in self.fields) {
+          var field = self.fields[key];
+          if (field.required) {
+            if (!field.value) {
+              self.errorList.push('Please enter your ' + key + '.');
+              console.log(self.errorList);
+              validated = false;
             }
           }
+        }
       //check password validation
       if (self.fields.password.value !== self.fields['password repeat'].value) {
         self.fields.password.value = '';
