@@ -66,14 +66,10 @@ i {
   float:right;
 }
 
-#top-ten-title {
-
-}
 .rating {
   font-size: 175%;
   padding: 0 0.5em;
 }
-
 
 .rating > a {
   text-decoration: none;
