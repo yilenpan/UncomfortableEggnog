@@ -15,6 +15,9 @@
     var init = function () {
       get('/api/package/' + packageName)
         .then(function (data) {
+          if (data === "Not Found") {
+            $state.go('main');
+          }
           self.info = data.package;
           self.user = data.user;
         });

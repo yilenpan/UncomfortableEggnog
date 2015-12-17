@@ -31,8 +31,13 @@
 
     ApiFactory.get('/user/' + self.fields.username)
       .then(function (user) {
+        console.log(window.location.hash);
+        if (!user || (window.location.hash === "#/user/")) {
+           $state.go('main');
+        }
           self.fields.email = user.email;
           self.fields.website = user.website;
+
           if (user["first name"]) {
             self.fields.fullname = user["first name"];
           }
@@ -50,6 +55,9 @@
 
     ApiFactory.get('/api/users/' + self.fields.username + '/packages')
       .then(function (data) {
+        if (!data) {
+           $state.go('main');
+        }
         self.fields.packages = data;
         self.fields.numPackages = self.countPackages(data.length);
       });
