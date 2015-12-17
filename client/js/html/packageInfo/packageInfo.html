@@ -1,0 +1,34 @@
+<!--         <div class="packageDetails thumbnail">
+          <div class="row-fluid top-half">
+            <a class="package-logo span4" href="">
+              <img class="logo" style="float:left" src="http://www.40dollarlogo.com/img/package.png">
+            </a>
+            <div class="starrating">
+              <div class="stars" ng-if="package.countReviews > 0">
+                <span class="star-container" ng-repeat="i in landing.makeStars(package) track by $index">
+                  <i ng-class="i"></i>
+                </span>({{package.countReviews}})
+              </div>
+              <span ng-if="package.countReviews === 0">No Ratings Yet</span>
+            </div>
+            <div class="name">
+              <a ui-sref="package({packageName: package.title})">{{package.title.slice(0, 12)}}</a>
+              <span ng-if="package.title.length > 12" class="name">...</span>
+            </div>
+          </div>
+          <div class="icons">
+            <td class="col-md-2">
+              <a class="download" href="{{'/api/download/' + package._id}}">
+                <i class="glyphicon glyphicon-cloud-download"></i>
+              </a>
+              <span>({{package.downloads}})</span>
+            </td>
+          </div>
+        <br>
+        <div class="desc">{{package.description.slice(0, 85)}}
+          <span ng-if="package.description.length > 85">...
+            <a ui-sref="package({packageName: package.title})">(Read More)</a>
+          </span>
+        </div>
+        <p class="card-text date"><small class="text-muted">Last updated: {{landing.formatDate(package)}}</small></p>
+      </div> -->
