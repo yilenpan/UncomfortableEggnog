@@ -31,7 +31,6 @@
 
     ApiFactory.get('/user/' + self.fields.username)
       .then(function (user) {
-        console.log(window.location.hash);
         if (!user || (window.location.hash === "#/user/")) {
            $state.go('main');
         }
