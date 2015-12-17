@@ -28,7 +28,7 @@ module.exports.searchTerm = function (req, res) {
 module.exports.getPackage = function (req, res) {
   var title = req.params.packageName;
   helpers.findPackageByTitle(title, function (err, entry) {
-    if (err) {
+    if (err || !entry.length) {
       res.send(404);
     } else {
       helpers.findUserById(entry[0].userId, function (err, user) {
