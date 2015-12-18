@@ -9,7 +9,7 @@
     var services = {
       get : get,
       post: post,
-      apiDelele: apiDelele
+      apiDelete: apiDelete
     };
     return services;
 
@@ -61,7 +61,7 @@
       }).then(parse).catch(errorHandler);
     }
 
-    function apiDelele (url) {
+    function apiDelete (url) {
       checkToken();
       return $http({
         method: 'DELETE',
