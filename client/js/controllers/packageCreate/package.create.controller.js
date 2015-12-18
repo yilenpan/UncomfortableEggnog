@@ -130,7 +130,7 @@
         packageContents: pkgContents
       }).then(function (r) {
         // if successful, redirect to recently added package
-        $state.go('package', {packageName: self.fields.title});
+        $state.go('user', {userName: localStorage.username});
       });
     };
 

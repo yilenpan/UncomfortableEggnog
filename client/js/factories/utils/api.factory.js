@@ -8,7 +8,8 @@
   function ApiFactory ($http) {
     var services = {
       get : get,
-      post: post
+      post: post,
+      apiDelele: apiDelele
     };
     return services;
 
@@ -51,7 +52,6 @@
      * @param {object} data - data to be sent to end point
      * @return {object}
      */
-
     function post (url, data) {
       checkToken();
       return $http({
@@ -60,6 +60,13 @@
         data: data
       }).then(parse).catch(errorHandler);
     }
-  }
 
+    function apiDelele (url) {
+      checkToken();
+      return $http({
+        method: 'DELETE',
+        url: url
+      }).then(parse).catch(errorHandler);
+    }
+  }
 })();

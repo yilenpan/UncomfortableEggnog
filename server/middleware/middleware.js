@@ -32,7 +32,6 @@ module.exports = {
     console.log("is logged in");
    // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
-      console.log('is authenticated');
       return next();
     }
 
