@@ -9,7 +9,7 @@
     var self = this;
     var get = ApiFactory.get;
     var post = ApiFactory.post;
-    var apiDelele = ApiFactory.apiDelele;
+    var apiDelete = ApiFactory.apiDelete;
     self.commands = [];
 
     self.addCommand = function () {
@@ -55,7 +55,7 @@
     };
 
     self.deletePackage = function () {
-      apiDelele('/api/package/' + self.package._id)
+      apiDelete('/api/package/' + self.package._id)
         .then(function (data) {
           $state.go('user', {userName: localStorage.username});
       });
