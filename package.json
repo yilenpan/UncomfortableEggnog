@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
-    "start": "grunt run",
+    "start": "nodemon server/server.js",
     "lint": "jscs ./"
   },
   "pre-commit": "lint",
