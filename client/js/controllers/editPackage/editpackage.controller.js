@@ -9,6 +9,7 @@
     var self = this;
     var get = ApiFactory.get;
     var post = ApiFactory.post;
+    var apiDelele = ApiFactory.apiDelele;
     self.commands = [];
 
     self.addCommand = function () {
@@ -51,6 +52,13 @@
           // redirects to new package page
           $state.go('package', {packageName: data.title});
         });
+    };
+
+    self.deletePackage = function () {
+      apiDelele('/api/package/' + self.package._id)
+        .then(function (data) {
+          $state.go('user', {userName: localStorage.username});
+      });
     };
 
   }
