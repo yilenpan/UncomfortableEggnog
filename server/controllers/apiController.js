@@ -90,6 +90,16 @@ module.exports.editPackage = function (req, res) {
   });
 };
 
+module.exports.deletePackage = function (req, res) {
+  helpers.deletePackage(req.params.packageID, function (err, success) {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.json("Package deleted.");
+    }
+  });
+};
+
 module.exports.addReview = function (req, res) {
   var id = req.params.id;
   var stars = req.body.stars;

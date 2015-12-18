@@ -11,4 +11,5 @@ module.exports = function (app) {
   app.post('/search', apiController.searchTerm); // NOTE: No need to verify user here
   app.post('/package/:packageName/edit', verifyUser, apiController.editPackage);
   app.get('/package/:packageName/edit', verifyUser, apiController.isUserPackage);
+  app.delete('/package/:packageID/', verifyUser, apiController.deletePackage);
 };

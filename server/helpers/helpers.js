@@ -145,6 +145,17 @@ exports.savePackage = function (user, entry, cb) {
   });
 };
 
+exports.deletePackage = function (packageID, cb) {
+  db.PackageEntry.findByIdAndRemove(packageID, function (err) {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, "Package deleted");
+    }
+
+  });
+};
+
 exports.findPackagesByUsername = function (username, cb) {
   // finds user, then finds the packages associated to user
   exports.findUserByUsername(username, function (err, user) {
