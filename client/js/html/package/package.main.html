@@ -10,7 +10,7 @@
     <p>{{package.user.github}}</p>
   </div>
   <div>
-    <div rating score="package.stars" package="package.info"></div>
+    <div rating score=0 package="package.info"></div>
     <div ng-repeat="review in package.info.reviews track by $index">
       <p>{{review}}</p>
     </div>
