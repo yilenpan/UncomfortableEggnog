@@ -24,6 +24,7 @@
         var id = scope.packageEntry._id;
         post('/api/package/' + id, {
           stars: scope.score,
+          totalStars: 5,
           review: scope.review
         })
           .then(function (res) {

@@ -104,8 +104,9 @@ module.exports.addReview = function (req, res) {
   var id = req.params.id;
   var stars = req.body.stars;
   var review = req.body.review;
+  var total = req.body.totalStars;
   stars = typeof stars !== 'number' ? 0 : stars;
-  helpers.addReview(id, stars, review, function (err, packageEntry) {
+  helpers.addReview(id, stars, review, total, function (err, packageEntry) {
     if (err) {
       res.redirect('/');
     } else {
