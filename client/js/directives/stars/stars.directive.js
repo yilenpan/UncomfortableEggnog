@@ -7,16 +7,11 @@
     var directive = {
       restrict: 'AE',
       template: '<a ng-click="setRating($index)" ng-mouseover="hover($index)" \n\
-        ng-mouseleave="stopHover()" ng-repeat="star in stars">\n\
-        <i class="fa" ng-class="starClass(star, $index)"></i></a>',
-      // controller: function (scope, element) {
-      //   if (attrs.type === "rating") {
-      //     // $compile()
-      //   }
-      //     },
+        ng-mouseleave="stopHover()" ng-repeat="star in stars track by $index">\n\
+        <i class="fa" ng-class=star></i></a>',
       link: link,
       // replace: 'true',
-      scope: {max: '@'}
+      scope: {max: '@', type: '@', score: '@'}
     };
 
     return directive;
@@ -26,16 +21,20 @@
         var index = 0;
         scope.stars = [];
         for (index = 0; index < scope.max; index++) {
-          scope.stars.push({
-            full: scope.score > index
-          });
+          if (scope.score >= index + 1) {
+            scope.stars.push('fa-star');
+          } else if (scope.score > index) {
+            scope.stars.push('fa-star-half-o');
+          } else {
+            scope.stars.push('fa-star-o');
+          }
         }
       };
       scope.starClass = function (star, index) {
-        var starClass = 'fa-star-o';
-        if (scope.stars[index].full) {
-          starClass = 'fa-star';
-        }
+        // var starClass = 'fa-star-o';
+        // if (scope.stars[index].full) {
+          starClass = stars[index];
+        // }
 
         return starClass;
       };
@@ -47,7 +46,10 @@
       });
 
       scope.setRating = function (index) {
-        scope.score = index + 1;
+        if (scope.type === "rating") {
+          scope.score = Math.ceil(index + 1);
+          console.log(scope.score);
+        }
       };
       scope.hover = function (index) {
         scope.hoverIndex = index;
