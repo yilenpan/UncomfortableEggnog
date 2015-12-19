@@ -15,13 +15,14 @@
       calculateAvg();
       getUserData();
     });
-    self.makeStars = PackageFactory.makeStars;
+    // self.makeStars = PackageFactory.makeStars;
+    self.getRating = PackageFactory.getRating;
     self.formatDate = PackageFactory.formatDate;
 
   function calculateAvg () {
     var avg;
     for (var i = 0; i < self.packages.length; i++) {
-      avg = parseInt(self.packages[i].stars / self.packages[i].countReviews * 20);
+      avg = parseInt(self.packages[i].stars / self.packages[i].totalStars);
       self.packages[i].average = avg || 0;
     }
   }

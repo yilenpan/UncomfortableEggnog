@@ -4,12 +4,12 @@
               <img class="logo" style="float:left" src="http://www.40dollarlogo.com/img/package.png">
             </a>
             <div class="starrating">
-              <div class="stars" ng-if="package.countReviews > 0">
+              <div class="stars" ng-if="package.totalStars > 0">
                 <span class="star-container" ng-repeat="i in landing.makeStars(package) track by $index">
                   <i ng-class="i"></i>
-                </span>({{package.countReviews}})
+                </span>({{package.totalStars}})
               </div>
-              <span ng-if="package.countReviews === 0">No Ratings Yet</span>
+              <span ng-if="package.totalStars === 0">No Ratings Yet</span>
             </div>
             <div class="name">
               <a ui-sref="package({packageName: package.title})">{{package.title.slice(0, 12)}}</a>

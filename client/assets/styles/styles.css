@@ -122,12 +122,11 @@ i {
   float: right;
 }
 
-.star-container {
+.stars > a {
   padding: 0;
   margin: 0;
 }
-
-.star-container > i {
+stars > a > i {
   padding: 0 2px;
   margin: 0;
 }

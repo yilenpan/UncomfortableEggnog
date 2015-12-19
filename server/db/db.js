@@ -64,7 +64,7 @@ var PackageEntrySchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  countReviews: {
+  totalStars: {
     type: Number,
     default: 0
   },

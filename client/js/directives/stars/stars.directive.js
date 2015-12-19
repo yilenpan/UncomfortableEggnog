@@ -44,7 +44,6 @@
       scope.setRating = function (index) {
         if (scope.type === 'rating') {
           scope.score = Math.ceil(index + 1);
-          // scope.rated = true;
           console.log('changed rating to', scope.score);
         }
       };
@@ -59,7 +58,7 @@
 
       scope.starColor = function (index) {
         var starClass = 'rating-normal';
-        if (star.full || index <= scope.hoverIndex) {
+        if (scope.type === 'rating' && star.full || index <= scope.hoverIndex) {
          starClass = 'rating-highlight';
         }
         return starClass;
