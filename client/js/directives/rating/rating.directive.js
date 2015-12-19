@@ -9,7 +9,7 @@
       templateUrl: 'js/html/rating/rating.main.html',
       link: link,
       scope: {
-        score: '@score',
+        score: '=',
         review: '=review',
         packageEntry: '=package'
       }
@@ -20,8 +20,6 @@
     return directive;
 
     function link(scope, elem, attrs) {
-
-
       scope.submitReview = function () {
         var id = scope.packageEntry._id;
         post('/api/package/' + id, {

@@ -2,6 +2,8 @@
   <div>
     <textarea class="form-control" rows="3" ng-model="review"></textarea>
     <button type="button" ng-click="submitReview()" class="btn btn-default">Submit</button>
+    <div>
+      <stars max=5 type="rating" score="score"></stars>
+    </div>
   </div>
-  <stars max=10 score="package.stars"></stars>
 </div>
