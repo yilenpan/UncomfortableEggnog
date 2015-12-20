@@ -26,8 +26,8 @@
     </td>
   </div>
   <br>
-  <div class="desc">{{pkg.description.slice(0, 85)}}
-    <span ng-if="pkg.description.length > 85">...
+  <div class="desc">{{pkg.description}}
+    <span ng-if="pkg.description.length >= 85 && view === 'card'">...
       <a ui-sref="package({packageName: pkg.title})">(Read More)</a>
     </span>
   </div>

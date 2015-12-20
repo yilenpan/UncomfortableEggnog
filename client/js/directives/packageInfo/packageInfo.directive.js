@@ -9,7 +9,8 @@
       templateUrl: 'js/html/packageInfo/packageInfo.html',
       link: link,
       scope: {
-        pkg: '=pkg'
+        pkg: '=pkg',
+        view: '@'
       },
       controller: function ($scope, PackageFactory) {
         $scope.getRating = PackageFactory.getRating;
@@ -21,6 +22,10 @@
     return directive;
 
     function link(scope, elem, attrs) {
+      console.log(scope.view);
+      if (scope.view === "card") {
+        scope.pkg.description = scope.pkg.description.slice(0, 85);
+      }
     }
   }
 })();
