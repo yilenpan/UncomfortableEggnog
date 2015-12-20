@@ -1,5 +1,5 @@
 
-<div class="packageDetails thumbnail">
+<div class="packageDetails" ng-class="{'thumbnail': view==='card'}">
 <link rel="stylesheet" href="../../assets/styles/packages/package.styles.css">
   <div class="row-fluid top-half">
     <a class="package-logo span4" href="">
@@ -13,8 +13,8 @@
     <span ng-if="pkg.totalStars === 0">No Ratings Yet</span>
     </div>
     <div class="name">
-      <a ui-sref="package({packageName: pkg.title})">{{pkg.title.slice(0, 12)}}</a>
-      <span ng-if="pkg.title.length > 12" class="name">...</span>
+      <a ui-sref="package({packageName: pkg.title})">{{pkg.title}}</a>
+      <span ng-if="pkg.title.length >= 12 && view === 'card'" class="name">...</span>
     </div>
   </div>
   <div class="icons">
@@ -31,5 +31,7 @@
       <a ui-sref="package({packageName: pkg.title})">(Read More)</a>
     </span>
   </div>
-  <p class="card-text date"><small class="text-muted">Last updated: {{formatDate(pkg)}}</small></p>
+  <div class="date">
+    <span class="card-text"><small class="text-muted">Last updated: {{formatDate(pkg)}}</small></span>
+  <div>
 </div>
