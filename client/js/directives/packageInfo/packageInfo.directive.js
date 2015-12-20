@@ -14,7 +14,8 @@
       controller: function ($scope, PackageFactory) {
         $scope.getRating = PackageFactory.getRating;
         $scope.formatDate = PackageFactory.formatDate;
-      }
+      },
+      replace: true
     };
 
     return directive;
