@@ -13,10 +13,6 @@
   padding: 0 5px;
 }
 
-.thumbnail {
-  height: 120px;
-}
-
 .package-container {
   background-color: #424242;
   border: 1px solid #ECF0F1;
@@ -28,12 +24,18 @@
   border: 1px solid #2e2e2e;
   background-color: #0f1a1c;
 }
-  .thumbnail a > img {
+.thumbnail a > img {
   margin-right: 10px;
 }
 
 .starrating {
   float: right;
+}
+
+.thumbnail {
+  height: 120px;
+  margin-bottom: 0;
+  margin-left: 0;
 }
 
 .stars > a {
@@ -61,18 +63,11 @@ stars > a > i {
   font-size: 10pt;
   margin: 0 10px 15px 10px;
 }
-.commands {
-  overflow: auto;
-  height: 100px;
-  border: 1px black solid;
-  border-radius: 5px;
-}
+
 
 .date {
   position: absolute;
-  bottom: 15px;
+  bottom: 0;
+  margin-left: 10px;
+  margin-bottom: 0;
 }
-
-/** {
-  background-color: hotpink;
-}*/

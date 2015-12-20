@@ -83,6 +83,12 @@ i {
   color: #3C3C3C;
 }
 
+.commands {
+  overflow: auto;
+  height: 100px;
+  border: 1px black solid;
+  border-radius: 5px;
+}
 
 
 /*===============PACKAGES==================*/
@@ -149,12 +155,7 @@ stars > a > i {
   font-size: 10pt;
   margin: 0 10px 15px 10px;
 }
-.commands {
-  overflow: auto;
-  height: 100px;
-  border: 1px black solid;
-  border-radius: 5px;
-}
+
 
 .date {
   position: absolute;
