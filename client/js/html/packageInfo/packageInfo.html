@@ -1,12 +1,17 @@
+
 <div class="packageDetails thumbnail">
+<link rel="stylesheet" href="../../assets/styles/packages/package.styles.css">
   <div class="row-fluid top-half">
     <a class="package-logo span4" href="">
       <img class="logo" style="float:left" src="http://www.40dollarlogo.com/img/package.png">
     </a>
     <div class="starrating">
-      <stars type="view" max="5" score="getRating(pkg)*5"></stars>({{pkg.reviews.length}})
-    </div>
+      <span ng-if="pkg.totalStars > 0">
+        <stars type="view" max="5" score="getRating(pkg)*5"></stars>
+      ({{pkg.reviews.length}})
+      </span>
     <span ng-if="pkg.totalStars === 0">No Ratings Yet</span>
+    </div>
     <div class="name">
       <a ui-sref="package({packageName: pkg.title})">{{pkg.title.slice(0, 12)}}</a>
       <span ng-if="pkg.title.length > 12" class="name">...</span>
