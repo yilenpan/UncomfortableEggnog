@@ -9,14 +9,17 @@
       templateUrl: 'js/html/packageInfo/packageInfo.html',
       link: link,
       scope: {
-        info: '='
+        pkg: '=pkg'
+      },
+      controller: function ($scope, PackageFactory) {
+        $scope.getRating = PackageFactory.getRating;
+        $scope.formatDate = PackageFactory.formatDate;
       }
     };
 
     return directive;
 
     function link(scope, elem, attrs) {
-      console.log('cards');
     }
   }
 })();

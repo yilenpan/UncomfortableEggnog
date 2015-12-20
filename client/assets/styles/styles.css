@@ -14,7 +14,7 @@ body {
   font-size: 20px;
 }
 
-.btn-primary {
+.btn-primary, .btn-primary:focus {
   background-color: #264348;
   border-color: white;
 }
