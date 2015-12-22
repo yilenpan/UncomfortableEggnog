@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dbUrl = 'mongodb://localhost/taser';
+var dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/taser';
 var helpers = require('../helpers/helpers');
 
 mongoose.connect(dbUrl);
