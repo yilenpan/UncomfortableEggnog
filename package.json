@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
-    "start": "grunt run",
-    "lint": "jscs ./"
+    "start-dev": "grunt run",
+    "start": "node server/server.js",
+    "lint": "jscs ./",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "pre-commit": "lint",
   "repository": {
@@ -24,6 +26,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.0.6",
     "body-parser": "^1.14.1",
+    "bower": "^1.6.5",
     "cors": "^2.7.1",
     "del": "^2.2.0",
     "express": "^4.13.3",
