@@ -13,8 +13,10 @@
     <span ng-if="pkg.totalStars === 0">No Ratings Yet</span>
     </div>
     <div class="name">
-      <a ui-sref="package({packageName: pkg.title})">{{pkg.title}}</a>
-      <span ng-if="pkg.title.length >= 12 && view === 'card'" class="name">...</span>
+      <a ui-sref="package({packageName: pkg.title})">
+        <span ng-if="pkg.title.length >= 12 && view === 'card'" class="name">{{pkg.title.slice(0,12)}}...</span>
+        <span ng-if="pkg.title.length < 12 || view !== 'card'">{{pkg.title}}</span>
+      </a>
     </div>
   </div>
   <div class="icons">
@@ -26,10 +28,11 @@
     </td>
   </div>
   <br>
-  <div class="desc">{{pkg.description}}
-    <span ng-if="pkg.description.length >= 85 && view === 'card'">...
+  <div class="desc">
+    <span ng-if="pkg.description.length >= 85 && view === 'card'">{{pkg.description.slice(0, 85)}}...
       <a ui-sref="package({packageName: pkg.title})">(Read More)</a>
     </span>
+    <span ng-if="pkg.description.length < 85 || view !== 'card'">{{pkg.description}}</span>
   </div>
   <div class="date">
     <span class="card-text"><small class="text-muted">Last updated: {{formatDate(pkg)}}</small></span>
