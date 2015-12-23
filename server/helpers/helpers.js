@@ -171,11 +171,11 @@ exports.findPackagesByUsername = function (username, cb) {
   });
 };
 
-exports.addReview = function (id, stars, review, cb) {
+exports.addReview = function (id, stars, review, total, cb) {
   db.PackageEntry.update({ _id: id },
     {
       $inc: {
-        countReviews: 1,
+        totalStars: total,
         stars: stars
       },
       $push: {

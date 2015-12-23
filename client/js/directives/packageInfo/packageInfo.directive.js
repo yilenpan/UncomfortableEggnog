@@ -7,17 +7,18 @@
     var directive = {
       restrict: 'E',
       templateUrl: 'js/html/packageInfo/packageInfo.html',
-      link: link,
       scope: {
-        info: '='
-      }
+        pkg: '=pkg',
+        view: '@'
+      },
+      controller: function ($scope, PackageFactory) {
+        $scope.getRating = PackageFactory.getRating;
+        $scope.formatDate = PackageFactory.formatDate;
+      },
+      replace: true
     };
 
     return directive;
-
-    function link(scope, elem, attrs) {
-      console.log('cards');
-    }
   }
 })();
 
