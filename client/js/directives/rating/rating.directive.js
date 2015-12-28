@@ -11,28 +11,33 @@
       scope: {
         score: '=',
         review: '=review',
-        packageEntry: '=package'
+        packageEntry: '=package',
+        user: '='
       }
     };
 
     var post = ApiFactory.post;
 
     return directive;
+  }
 
-    function link(scope, elem, attrs) {
-      scope.submitReview = function () {
-        var id = scope.packageEntry._id;
-        post('/api/package/' + id, {
-          stars: scope.score,
-          totalStars: 5,
-          review: scope.review
-        })
-          .then(function (res) {
-            scope.review = "";
-          });
-      };
+  function link(scope, elem, attrs) {
+    // scope.$watch('user', function(newValue, oldValue) {
+    //   console.log(typeof newValue);
+    //   if (newValue !== oldValue) console.log(scope.user);
+    // });
+    scope.submitReview = function () {
+      var id = scope.packageEntry._id;
 
-
-    }
+      post('/api/package/' + id, {
+        stars: scope.score,
+        totalStars: 5,
+        review: scope.review,
+        user: scope.user
+      })
+        .then(function (res) {
+          scope.review = "";
+        });
+    };
   }
 })();

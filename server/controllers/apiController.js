@@ -38,7 +38,10 @@ module.exports.getPackage = function (req, res) {
           var sendObj = {};
           sendObj.package = entry[0];
           sendObj.user = {
-            username: user.username
+            userId: user._id,
+            username: user.username,
+            email: user.email,
+            website: user.website
           };
           res.json(sendObj);
         }
@@ -105,6 +108,7 @@ module.exports.addReview = function (req, res) {
   var stars = req.body.stars;
   var review = req.body.review;
   var total = req.body.totalStars;
+  console.log(req);
   stars = typeof stars !== 'number' ? 0 : stars;
   helpers.addReview(id, stars, review, total, function (err, packageEntry) {
     if (err) {
