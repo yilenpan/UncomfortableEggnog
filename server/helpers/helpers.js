@@ -171,15 +171,22 @@ exports.findPackagesByUsername = function (username, cb) {
   });
 };
 
-exports.addReview = function (id, stars, review, total, cb) {
-  db.PackageEntry.update({ _id: id },
+exports.addReview = function (packageId, review, cb) {
+  db.PackageEntry.update({ _id: packageId },
     {
       $inc: {
-        totalStars: total,
-        stars: stars
+        totalStars: review.totalStars,
+        stars: review.stars
       },
       $push: {
-        reviews: review
+        reviews: {
+          contents: review.contents,
+          //storing username for quick displays
+          username: review.username,
+          userId: review.userId,
+          stars: review.stars,
+          totalStars: review.totalStars
+        }
       }
     },
     function (err, packageEntry) {

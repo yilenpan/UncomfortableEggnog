@@ -104,13 +104,18 @@ module.exports.deletePackage = function (req, res) {
 };
 
 module.exports.addReview = function (req, res) {
+  var review = {};
+
   var id = req.params.id;
-  var stars = req.body.stars;
-  var review = req.body.review;
-  var total = req.body.totalStars;
-  console.log(req);
-  stars = typeof stars !== 'number' ? 0 : stars;
-  helpers.addReview(id, stars, review, total, function (err, packageEntry) {
+
+  review.stars = req.body.stars;
+  review.stars = typeof review.stars !== 'number' ? 0 : review.stars;
+  review.contents = req.body.contents;
+  review.totalStars = req.body.totalStars;
+  review.userId = req.body.user.userId;
+  review.username = req.body.user.username;
+
+  helpers.addReview(id, review, function (err, packageEntry) {
     if (err) {
       res.redirect('/');
     } else {
