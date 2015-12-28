@@ -7,10 +7,10 @@
   <div class="col-xs-4">
     <h3>{{package.user.username}}</h3>
     <p>{{package.user.email}}</p>
-    <p>{{package.user.github}}</p>
+    <p>{{package.user.website}}</p>
   </div>
   <div>
-    <div rating score=0 package="package.info"></div>
+    <div rating score=0 package="package.info" user="package.user"></div>
     <div ng-repeat="review in package.info.reviews track by $index">
       <p>{{review}}</p>
     </div>
