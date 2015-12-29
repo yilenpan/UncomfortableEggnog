@@ -185,7 +185,7 @@ exports.addReview = function (packageId, review, cb) {
           username: review.username,
           userId: review.userId,
           stars: review.stars,
-          totalStars: review.totalStars,
+          totalStars: review.totalStars
         }
       }
     },
@@ -226,7 +226,7 @@ exports.updateReview = function (packageId, review, prevReview, cb) {
           //displaying prior reviews in case a review history occurs for a user.
           prevReview: prevReview
         }
-      },
+      }
     },
     function (err, packageEntry) {
     if (err) {
