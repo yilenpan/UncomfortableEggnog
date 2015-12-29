@@ -23,7 +23,6 @@
     function link (scope, elem, attrs) {
       scope.$watch('packageEntry', function (newValue, oldValue) {
         if (newValue !== oldValue) {
-          console.log('entry', scope.packageEntry, scope.user);
           if (scope.user.prevReview) {
             scope.review = scope.user.prevReview.contents;
             scope.score = scope.user.prevReview.stars / scope.user.prevReview.totalStars * 5;
@@ -36,7 +35,8 @@
       scope.submitReview = function () {
         var id = scope.packageEntry._id;
         if (scope.user.canEditPackage) {
-          console.log('own package or already submitted!');
+          //TODO: add visual display for this message
+          console.log('cannot rate own package!');
           return;
         } else {
           var review = {

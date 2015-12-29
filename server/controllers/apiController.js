@@ -44,16 +44,12 @@ module.exports.getPackage = function (req, res) {
             website: user.website
           };
 
-          //check to see if own package or previous review
-          if (JSON.stringify(user._id) === JSON.stringify(req.user._id)) {
-            sendObj.ownPackage = true;
-          } else {
-            for (var i = 0; i < sendObj.package.reviews.length; i++) {
-              if (JSON.stringify(sendObj.package.reviews[i].userId) ===
-                JSON.stringify(req.user._id)) {
-                sendObj.prevReview = sendObj.package.reviews[i];
-                break;
-              }
+          //check to see and return previous review if exists
+          for (var i = 0; i < sendObj.package.reviews.length; i++) {
+            if (JSON.stringify(sendObj.package.reviews[i].userId) ===
+              JSON.stringify(req.user._id)) {
+              sendObj.prevReview = sendObj.package.reviews[i];
+              break;
             }
           }
           res.json(sendObj);
