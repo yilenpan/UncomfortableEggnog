@@ -20,28 +20,37 @@
 
     return directive;
 
-  function link(scope, elem, attrs) {
-    scope.$watch('packageEntry', function(newValue, oldValue) {
-      console.log(typeof newValue);
-      if (newValue !== oldValue) console.log('entry', scope.packageEntry, scope.packageUser);
-    });
-
-    scope.submitReview = function () {
-      var id = scope.packageEntry._id;
-      if (scope.user.ownPackage || scope.user.prevReview) {
-        console.log('own package or....!');
-        if (scope.user.prevReview) console.log('already submitted');
-        return;
-      }
-
-      post('/api/package/' + id, {
-        stars: scope.score,
-        totalStars: 5,
-        contents: scope.review
-      })
-        .then(function (res) {
-          scope.review = "";
-        });
+    function link (scope, elem, attrs) {
+      scope.$watch('packageEntry', function (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          console.log('entry', scope.packageEntry, scope.user);
+          if (scope.user.prevReview) {
+            scope.review = scope.user.prevReview.contents;
+            scope.score = scope.user.prevReview.stars / scope.user.prevReview.totalStars * 5;
+            scope.submitOrUpdateReview = 'Update';
+          } else {
+            scope.submitOrUpdateReview = 'Submit';
+          }
+        }
+      });
+      scope.submitReview = function () {
+        var id = scope.packageEntry._id;
+        if (scope.user.ownPackage) {
+          console.log('own package or already submitted!');
+          return;
+        } else {
+          var review = {
+            stars: scope.score,
+            totalStars: 5,
+            contents: scope.review,
+            prevReview: scope.user.prevReview
+          };
+          post('/api/package/' + id, review)
+          .then(function (res) {
+            scope.review = "";
+            console.log('updated or submitted:', res);
+          });
+        }
       };
     }
   }

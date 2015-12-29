@@ -198,6 +198,46 @@ exports.addReview = function (packageId, review, cb) {
   });
 };
 
+exports.updateReview = function (packageId, review, prevReview, cb) {
+
+  var netTotalStars = review.totalStars - prevReview.totalStars;
+  var netStars = review.stars - prevReview.stars;
+
+  var inc = {
+    stars: netStars,
+    totalStars: netTotalStars
+  };
+
+  db.PackageEntry.update({
+    _id: packageId,
+    "reviews.userId": prevReview.userId
+    },
+    {
+      $inc: inc,
+      $set: {'reviews.$': {
+          contents: review.contents,
+          //storing username for quick displays
+          username: review.username,
+          userId: review.userId,
+          stars: review.stars,
+          totalStars: review.totalStars
+        },
+        prevReviews: prevReview
+      }
+    },
+    function (err, packageEntry) {
+    if (err) {
+      cb(err);
+    } else {
+      console.log(packageEntry);
+      cb(null, packageEntry);
+    }
+  });
+};
+
+
+
+
 exports.findPackageById = function (id, cb) {
   db.PackageEntry.find({_id: id}, function (err, packageEntry) {
     if (err) {
