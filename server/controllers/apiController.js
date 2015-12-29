@@ -38,11 +38,24 @@ module.exports.getPackage = function (req, res) {
           var sendObj = {};
           sendObj.package = entry[0];
           sendObj.user = {
-            userId: user._id,
+            // userId: user._id,
             username: user.username,
             email: user.email,
             website: user.website
           };
+
+          //check to see if own package or previous review
+          if (JSON.stringify(user._id) === JSON.stringify(req.user._id)) {
+            sendObj.ownPackage = true;
+          } else {
+            for (var i = 0; i < sendObj.package.reviews.length; i++) {
+              if (JSON.stringify(sendObj.package.reviews[i].userId) ===
+                JSON.stringify(req.user._id)) {
+                sendObj.prevReview = sendObj.package.reviews[i];
+                break;
+              }
+            }
+          }
           res.json(sendObj);
         }
       });
@@ -104,6 +117,7 @@ module.exports.deletePackage = function (req, res) {
 };
 
 module.exports.addReview = function (req, res) {
+
   var review = {};
 
   var id = req.params.id;
@@ -112,8 +126,8 @@ module.exports.addReview = function (req, res) {
   review.stars = typeof review.stars !== 'number' ? 0 : review.stars;
   review.contents = req.body.contents;
   review.totalStars = req.body.totalStars;
-  review.userId = req.body.user.userId;
-  review.username = req.body.user.username;
+  review.userId = req.user._id;
+  review.username = req.user.username;
 
   helpers.addReview(id, review, function (err, packageEntry) {
     if (err) {

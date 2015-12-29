@@ -12,7 +12,9 @@
     var packageName = $state.params.packageName;
     self.hello = packageName;
     self.user;
+
     var init = function () {
+
       get('/api/package/' + packageName)
         .then(function (data) {
           if (data === "Not Found") {
@@ -20,6 +22,8 @@
           }
           self.info = data.package;
           self.user = data.user;
+          self.user.prevReview = data.prevReview || null;
+          self.user.ownPackage = data.ownPackage || false;
         });
     };
 
