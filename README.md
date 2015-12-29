@@ -40,41 +40,37 @@
 >    - del specifies the delimiter.
 >    - quote specifies if the argument is surrounded by quotes.  Values can either be true or false.
 >    - case specifies whether the argument is 'upper', 'lower' or 'proper' case.
->    - Ex: "open https://en.wikipedia.org/wiki/< ARG del='_' / >"
+>    - Ex: "open < ARG del='\\\ ' capitalize=true/ >.app"
 >
 >
 > - __Edit or Delete a package__
+> To edit or delete a package, click on the title of a package that you created, then click on "Edit this package".  When editing a package, please follow the same rules as in create package.  To delete a package, click on "Delete Package" towards the bottom of the screen.
+>
 >
 > - __Search packages by title or description__
-> - __Add a review / Rate a package__
+> You can search for a package by title or description.  Enter a search query in the search box and click "Submit".
+>
+>
+> - __Add a review / Rate a package / Download a package__
+> To write a review, rate a package, or download a package to your
 
+> - __Further Instructions__
+> Visit our GitHub repo for Jarvis Voice Command Desktop Application for further instructions on how to use the desktop app.
 
-
-
-## Requirements
-
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
 ### Installing Dependencies
 
-From within the root directory:
+From within the project root directory:
 
 ```sh
 sudo npm install -g bower
 npm install
 bower install
+
 ```
-
-### Roadmap
-
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
+You will also need MongoDB.  If you don't have MongoDB installed, follow the installation steps on [docs.mongodb.org](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)
 
 ## Contributing
 
