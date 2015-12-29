@@ -21,9 +21,8 @@
     <div ng-repeat="review in package.info.reviews track by $index">
       <p>{{review.contents}}<span><stars type="view" max="5" score="review.stars / review.totalStars*5"></stars></span></p>
     </div>
-    </div>
-    <a href="/api/download/{{package.info._id}}">
-      <button type="button" class="btn btn-default">Download</button>
-    </a>
-<!-- <package-info pkg="package"></package-info> -->
+  </div>
+  <a href="/api/download/{{package.info._id}}">
+    <button type="button" class="btn btn-default">Download</button>
+  </a>
 </div>

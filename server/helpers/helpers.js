@@ -185,7 +185,7 @@ exports.addReview = function (packageId, review, cb) {
           username: review.username,
           userId: review.userId,
           stars: review.stars,
-          totalStars: review.totalStars
+          totalStars: review.totalStars,
         }
       }
     },
@@ -202,7 +202,6 @@ exports.updateReview = function (packageId, review, prevReview, cb) {
 
   var netStars = review.stars - prevReview.stars;
   var netTotalStars = review.totalStars - prevReview.totalStars;
-  console.log('nets: total', netTotalStars, 'stars', netStars);
 
   var inc = {
     stars: netStars,
@@ -215,16 +214,19 @@ exports.updateReview = function (packageId, review, prevReview, cb) {
     },
     {
       $inc: inc,
-      $set: {'reviews.$': {
+      $set: {
+        'reviews.$': {
           contents: review.contents,
           //storing username for quick displays
           username: review.username,
           userId: review.userId,
           stars: review.stars,
-          totalStars: review.totalStars
-        },
-        prevReviews: prevReview
-      }
+          totalStars: review.totalStars,
+          //updated reviews contain a nested history of previous reviews.  This can be used for
+          //displaying prior reviews in case a review history occurs for a user.
+          prevReview: prevReview
+        }
+      },
     },
     function (err, packageEntry) {
     if (err) {
