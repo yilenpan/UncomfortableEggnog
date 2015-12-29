@@ -1,12 +1,12 @@
-# Project Name
+# Jarvis - Web Application
 
-> Pithy project description
+> Javis - Web Application is the web component of our [Jarvis Voice Command](github.com/UncomfortableEggnog/UncomfortableEggnog-Desktop) Desktop Application for Mac OS.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Mitchell Wilcox
+  - __Scrum Master__: Tracy Duong
+  - __Development Team Members__: Andres Morales, Yilen Pan
 
 ## Table of Contents
 
