@@ -116,7 +116,7 @@ module.exports.deletePackage = function (req, res) {
   });
 };
 
-module.exports.addReview = function (req, res) {
+module.exports.addOrUpdateReview = function (req, res) {
 
   var review = {};
 
@@ -128,14 +128,27 @@ module.exports.addReview = function (req, res) {
   review.totalStars = req.body.totalStars;
   review.userId = req.user._id;
   review.username = req.user.username;
-
-  helpers.addReview(id, review, function (err, packageEntry) {
-    if (err) {
-      res.redirect('/');
-    } else {
-      res.json(packageEntry);
-    }
-  });
+  var prevReview = req.body.prevReview || null;
+  console.log('prev review?', prevReview);
+  if (!prevReview) {
+    helpers.addReview(id, review, function (err, packageEntry) {
+      if (err) {
+        res.redirect('/');
+      } else {
+        res.json(packageEntry);
+      }
+    });
+  } else {
+    helpers.updateReview(id, review, prevReview, function (err, packageEntry) {
+      if (err) {
+        console.log('error');
+        res.redirect('/');
+      } else {
+        console.log('successfully updated', packageEntry);
+        res.json(packageEntry);
+      }
+    });
+  }
 };
 
 module.exports.downloadPackage = function (req, res, next) {
