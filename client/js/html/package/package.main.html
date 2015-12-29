@@ -2,7 +2,7 @@
   <div class="col-xs-8">
     <h3>
       {{package.info.title}}
-      <a ng-show="package.canEditPackage" class="name" ui-sref="editPackage({packageName: package.info.title})"><button>edit this package</button></a>
+      <a ng-show="package.user.canEditPackage" class="name" ui-sref="editPackage({packageName: package.info.title})"><button>edit this package</button></a>
     </h3>
     <h5>{{package.info.description}}</h5>
     <p>{{package.info.packageContents}}</p>

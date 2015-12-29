@@ -22,7 +22,7 @@
           self.user.prevReview = data.prevReview || null;
           // self.user.ownPackage = data.ownPackage || false;
         if (self.user.username === localStorage.username) {
-          self.canEditPackage = true;
+          self.user.canEditPackage = true;
         }
       });
     };
