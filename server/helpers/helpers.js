@@ -200,8 +200,9 @@ exports.addReview = function (packageId, review, cb) {
 
 exports.updateReview = function (packageId, review, prevReview, cb) {
 
-  var netTotalStars = review.totalStars - prevReview.totalStars;
   var netStars = review.stars - prevReview.stars;
+  var netTotalStars = review.totalStars - prevReview.totalStars;
+  console.log('nets: total', netTotalStars, 'stars', netStars);
 
   var inc = {
     stars: netStars,
