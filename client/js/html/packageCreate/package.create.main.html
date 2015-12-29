@@ -11,18 +11,26 @@
     <div class="col-md-12 form-group">
       <div class="col-md-9" ng-class="{'has-error': pk.isInputInvalid(newPackageForm['title']), 'has-success': pk.isInputValid(newPackageForm['title'])}">
         <input ng-model="pk.fields.title" id="title" name="title" type="text" placeholder="Title*"
-          class="form-control input-md required" ng-pattern="/^[A-Za-z0-9]+$/" required>
+          class="form-control input-md required" ng-maxlength="15" ng-pattern="/^[A-Za-z0-9 ]+$/" required>
       </div>
       <div class="col-md-12">
         <span class="text-danger" ng-show="newPackageForm.title.$dirty && newPackageForm.title.$error.pattern">
                 {{pk.errorMessages.title}}</span>
+      </div>
+      <div class="col-md-12">
+          <span class="text-danger" ng-show="newPackageForm.title.$error.maxlength">
+            {{pk.errorMessages.titleLength}}</span>
       </div>
     </div>
 
     <!-- Description -->
     <div class="col-md-12 form-group">
       <div class="col-md-9">
-          <input type="text" placeholder="Description" name="description" class="form-control input-md" ng-model="pk.fields.description">
+          <input type="text" placeholder="Description" name="description" class="form-control input-md" ng-model="pk.fields.description" ng-maxlength="100">
+      </div>
+      <div class="col-md-12">
+          <span class="text-danger" ng-show="newPackageForm.description.$error.maxlength">
+            {{pk.errorMessages.description}}</span>
       </div>
     </div>
 

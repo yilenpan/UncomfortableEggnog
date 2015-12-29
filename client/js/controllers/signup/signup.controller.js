@@ -70,8 +70,6 @@
         }
       }
       ApiFactory.post('/signup', user)
-        // username: self.fields.username.value,
-        // password: self.fields.password.value
       .then(function (result) {
         if (result.error) {
           self.errorList = [result.error];
