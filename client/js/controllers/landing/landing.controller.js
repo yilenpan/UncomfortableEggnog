@@ -30,7 +30,6 @@
   function getUserData () {
     get('/api/userData').then(function (user) {
       if (user.username !== undefined) {
-        console.log(user);
         var token;
         if (user.username.facebook !== undefined) {
           token = user.username.facebook.token;

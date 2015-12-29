@@ -16,11 +16,9 @@
     };
     // Logout
     self.destroySession = function () {
-      console.log('destroy');
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       get('/logout').then(function (result) {
-        console.log('logged out');
       });
     };
     // pulls token out of localStorage and checks to see if it exists

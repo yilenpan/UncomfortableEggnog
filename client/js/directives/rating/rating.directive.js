@@ -35,7 +35,7 @@
       });
       scope.submitReview = function () {
         var id = scope.packageEntry._id;
-        if (scope.user.ownPackage) {
+        if (scope.user.canEditPackage) {
           console.log('own package or already submitted!');
           return;
         } else {
