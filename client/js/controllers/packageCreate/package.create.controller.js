@@ -57,7 +57,7 @@
         self.fields.errorList.push(self.errorMessages.validCommand);
         validated = false;
       }
-      if (!self.fields.description) {
+      if (!self.fields.description && !self.fields.description.length) {
         validated = false;
       }
       if (validated) {
@@ -138,7 +138,6 @@
         $state.go('user', {userName: localStorage.username});
       });
     };
-
   }
 })();
 
