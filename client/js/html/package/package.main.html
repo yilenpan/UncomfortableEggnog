@@ -12,7 +12,7 @@
   <div>
     <div rating score=0 package="package.info" user="package.user"></div>
     <div ng-repeat="review in package.info.reviews track by $index">
-      <p>{{review.contents}}</p>
+      <p>{{review.contents}}<span><stars type="view" max="5" score="review.totalStars"></stars></span></p>
     </div>
     </div>
     <a href="/api/download/{{package.info._id}}">
