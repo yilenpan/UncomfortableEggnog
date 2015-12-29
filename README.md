@@ -1,6 +1,6 @@
 # Jarvis - Web Application
 
-> Javis - Web Application is the web component of our [Jarvis Voice Command](github.com/UncomfortableEggnog/UncomfortableEggnog-Desktop) Desktop Application for Mac OS.
+> Javis - Web Application is the web component of our [Jarvis Voice Command](https://github.com/UncomfortableEggnog/UncomfortableEggnog-Desktop) Desktop Application for Mac OS.  Jarvis - Web Application is deployed at [voicecommand.herokuapp.com](http://voicecommand.herokuapp.com).  You can download the desktop application, create and share packages directly from our website.
 
 ## Team
 
