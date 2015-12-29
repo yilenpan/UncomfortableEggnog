@@ -29,6 +29,7 @@
       quote: "Quote can either have true or false boolean values.",
       dup: "You already have that command.",
       validCommand: "Please add a valid command/action.",
+      validDescription: "Please enter a valid description.",
       validTitle: "Please enter a valid title."
     };
 
@@ -57,7 +58,8 @@
         self.fields.errorList.push(self.errorMessages.validCommand);
         validated = false;
       }
-      if (!self.fields.description && !self.fields.description.length) {
+      if (!self.fields.description) {
+        self.fields.errorList.push(self.errorMessages.validDescription);
         validated = false;
       }
       if (validated) {
@@ -120,6 +122,17 @@
         });
         self.command = '';
         self.action = '';
+      }
+    };
+
+    self.removeCommand = function (commandToRemove) {
+      for (var i = 0; i < self.fields.commands.length; i++) {
+        if (self.fields.commands[i].command === commandToRemove) {
+          self.command = commandToRemove;
+          self.action = self.fields.commands[i].action;
+          self.fields.commands.splice(i, 1);
+          return;
+        }
       }
     };
 
