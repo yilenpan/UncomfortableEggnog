@@ -1,24 +1,88 @@
-<div class="row" ng-controller="EditPackageCtrl as edit">
-  <h3>{{edit.package.title}}</h3>
-  <form>
-    <p>
-      <input ng-model="edit.package.title" type="text" placeholder="Title">
-    </p>
-    <p>
-      <textarea ng-model="edit.package.description" name="Description" id="desc" cols="30" rows="10"></textarea>
-    </p>
-    <p>
-      <button ng-click="edit.addCommand()" class="btn btn-primary">
-        Add Command
-      </button>
-      <form>
-        <p ng-repeat="command in edit.commands track by $index">
-          <input ng-model="command.command" type="text" name="command{{$index}}" placeholder="Command">
-          <input ng-model="command.action" type="text" name="command{{$index}}" placeholder="Action">
-        </p>
-        <input ng-click="edit.postEdit()" type="submit" value="submit" class="btn btn-success">
-        <input ng-click="edit.deletePackage()" type="submit" value="Delete Package" class="btn btn-success">
-      </form>
-    </p>
+<div ng-controller="EditPackageCtrl as edit">
+
+  <form name="newPackageForm" novalidate>
+    <div class="col-md-12 form-group">
+      <div class="col-md-9">
+        <h4>Edit {{edit.fields.originalTitle}} Package</h4>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="col-md-12 form-group">
+      <div class="col-md-9" ng-class="{'has-error': edit  .isInputInvalid(newPackageForm['title']), 'has-success': edit.isInputValid(newPackageForm['title'])}">
+        <input ng-model="edit.fields.title" id="title" name="title" type="text" placeholder="Title*"
+          class="form-control input-md required" ng-maxlength="15" ng-pattern="/^[A-Za-z0-9 ]+$/" required>
+      </div>
+      <div class="col-md-12">
+        <span class="text-danger" ng-show="newPackageForm.title.$dirty && newPackageForm.title.$error.pattern">
+                {{edit.errorMessages.title}}</span>
+      </div>
+      <div class="col-md-12">
+          <span class="text-danger" ng-show="newPackageForm.title.$error.maxlength">
+            {{edit.errorMessages.titleLength}}</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="col-md-12 form-group">
+      <div class="col-md-9">
+          <input type="text" placeholder="Description*" name="description" class="form-control input-md required" ng-model="edit.fields.description" ng-maxlength="100" required>
+      </div>
+      <div class="col-md-12">
+          <span class="text-danger" ng-show="newPackageForm.description.$error.maxlength">
+            {{edit.errorMessages.description}}</span>
+      </div>
+    </div>
+
+    <!-- where command : action  key:value are displayed after being added-->
+    <div class="col-md-12 form-group">
+      <div class="col-md-9">
+        <p>Package Content *:</p>
+        <div class="col-md-12 commands">
+        <div ng-repeat="command in edit.fields.commands">
+          <div class="displayedCommand">
+          <span>"{{command.command}}" : </span>
+          <span>"{{command.action}}"</span>
+          <span ng-click="edit.removeCommand(command.command)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adding new command:action pairs -->
+    <div class="col-md-12 form-group">
+      <div class="col-md-9 row">
+        <div class="col-md-5" ng-class="{'has-error': edit.isInputInvalid(newPackageForm['command'])}">
+          <input ng-model="edit.command" type="text" name="command" placeholder="Command" class="form-control input-md" ng-pattern="/^[A-Za-z0-9 ]+$/">
+        </div>
+        <div class="col-md-5">
+          <input ng-model="edit.action" type="text" name="action" placeholder="Action" class="form-control input-md">
+        </div>
+        <div class="col-md-2">
+         <button ng-click="edit.addCommand()" class="btn btn-primary">Add Command</button>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <span class="text-danger" ng-show="newPackageForm.command.$dirty && newPackageForm.command.$error.pattern">
+                {{edit.errorMessages.command}}</span>
+      </div>
+    </div>
+
+    <!--submit package -->
+    <div class="col-md-12">
+      <div class="col-md-4">
+        <span><input ng-click="edit.validateAndPost()" type="submit"  value="Submit Package" class="btn btn-success"></span>
+        <span><input ng-click="edit.deletePackage()" type="submit" value="Delete Package" class="btn btn-success"></span>
+      </div>
+
+      <div class="col-md-6 container error-display-container">
+        <div class="col-md-12" ng-repeat="err in edit.fields.errorList">
+          <span class="text-danger">{{err}}</span>
+        </div>
+      </div>
+
+    </div>
   </form>
 </div>
+
