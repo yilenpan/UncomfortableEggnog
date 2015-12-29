@@ -19,7 +19,9 @@
     };
 
     self.errorMessages = {
-      title: 'Please only use letters and numbers.',
+      title: 'Please only use letters, numbers, and spaces.',
+      titleLength: "Title is limited to 15 characters.",
+      description: 'Description is limited to 100 characters.',
       command: 'Please only use letters, numbers, and spaces.',
       variable: "Please format variable as follow: \<ARG del='+' quote=true case='proper'\>",
       del: "Delimiter(del) can only have 5 or fewer characters of: space, '+', '-', '_', '*', '.'",
@@ -53,6 +55,9 @@
       }
       if (self.fields.commands.length < 1) {
         self.fields.errorList.push(self.errorMessages.validCommand);
+        validated = false;
+      }
+      if (!self.fields.description && !self.fields.description.length) {
         validated = false;
       }
       if (validated) {
@@ -133,7 +138,6 @@
         $state.go('user', {userName: localStorage.username});
       });
     };
-
   }
 })();
 

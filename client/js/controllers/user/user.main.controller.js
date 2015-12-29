@@ -18,7 +18,7 @@
       numPackages: 0,
       canEditProfile: false,
       canEditPackages: false
-      };
+    };
 
     self.countPackages = function (count) {
         if (count === 1) {
