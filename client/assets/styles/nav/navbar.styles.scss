@@ -3,6 +3,13 @@
 
 .navbar {
   background-color: $secondary-background-color;
+  .navbar-right {
+    li {
+      a {
+        color: $secondary-font-color;
+      }
+    }
+  }
 }
 
 form.navbar-form {
@@ -23,7 +30,7 @@ div.search {
     &:focus {
       background-color: $primary-font-color;
       border: 3px solid #990000;
-      @include input-transition();
+      @include fade-transition();
       outline: none;
     }
   }

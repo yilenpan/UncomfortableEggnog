@@ -1,0 +1,21 @@
+@import '../color-palette';
+
+#footer {
+  margin-top: 10px;
+  div {
+    text-align: center;
+    background-color: $third-background-color;
+    padding: 3px;
+    border: 2px solid $primary-background-color;
+    a {
+      &:link, &:visited {
+        color: $secondary-font-color;
+      }
+      &:hover {
+        color: $star-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+

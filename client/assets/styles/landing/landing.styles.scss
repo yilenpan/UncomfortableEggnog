@@ -1,4 +1,5 @@
 @import '../color-palette';
+@import '../effects-mixins';
 
 body {
   background-color: black;
@@ -23,11 +24,13 @@ h1.title {
 
 
 .btn-primary, .btn-primary:focus {
+  @include fade-transition();
   background-color: #264348;
   border-color: $primary-font-color;
 }
 
 .btn-primary:hover {
+  @include fade-transition();
   background-color: $primary-font-color;
   color: black;
 }
