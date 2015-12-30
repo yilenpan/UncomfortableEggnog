@@ -37,11 +37,17 @@
 >
 >  - **action**: The shell script to be executed upon utterance of the corresponding command.  You can have zero, one, or multiple arguments in an action.  
 >    - Arguments must be in the following format: _< ARG del='+' quote=true case='proper' >_
->    - del specifies the delimiter.
->    - quote specifies if the argument is surrounded by quotes.  Values can either be true or false.
->    - case specifies whether the argument is 'upper', 'lower' or 'proper' case.
->    - Ex: "open < ARG del='\\\ ' capitalize=true/ >.app"
->
+>    - del specifies the delimiter. RegExp: 'del="(?:.{1,5})"'
+>    - quote specifies if the argument is surrounded by quotes.  Values can either be true or false. RegExp: 'quote=(?:true|false)'
+>    - case specifies whether the argument is 'upper', 'lower' or 'proper' case. RegExp: 'case=(?:"upper"|"lower"|"proper")'
+>    - Example without argument:
+>     ```sh
+>     say $(date +'%r')
+>     ```
+>    - Example with argument:
+>      ```sh
+>      open <ARG del='\\ ' capitalize=true/>.app
+>      ```
 >
 > - __Edit or Delete a package__
 > To edit or delete a package, click on the title of a package that you created, then click on "Edit this package".  When editing a package, please follow the same rules as in create package.  To delete a package, click on "Delete Package" towards the bottom of the screen.
