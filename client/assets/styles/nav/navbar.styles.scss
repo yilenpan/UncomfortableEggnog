@@ -1,0 +1,30 @@
+@import '../color-palette';
+.navbar {
+  background-color: $secondary-background-color;
+}
+
+form.navbar-form {
+  width: 65%;
+}
+
+div.search {
+  padding: 0;
+  input {
+    width: 75%;
+    margin: 0;
+    border-radius: 3px;
+    background-color: #eeeeee;
+    &:focus {
+      background-color: $primary-font-color;
+      border-color: red;
+    }
+  }
+  button {
+    width: 15%;
+    /*height: %;*/
+    margin: 0;
+    border-margin: 0;
+    text-align: center;
+  }
+}
+
