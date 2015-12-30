@@ -35,9 +35,9 @@
 >
 >  - **action**: The shell script to be executed upon utterance of the corresponding command.  You can have zero, one, or multiple arguments in an action.  
 >    - Arguments must be in the following format: _< ARG del='+' quote=true case='proper' >_
->    - del specifies the delimiter. RegExp: 'del="(?:.{1,5})"'
->    - quote specifies if the argument is surrounded by quotes.  Values can either be true or false. RegExp: 'quote=(?:true|false)'
->    - case specifies whether the argument is 'upper', 'lower' or 'proper' case. RegExp: 'case=(?:"upper"|"lower"|"proper")'
+>    - del specifies the delimiter. RegExp: _'del="(?:.{1,5})"'_
+>    - quote specifies if the argument is surrounded by quotes.  Values can either be true or false. RegExp: _'quote=(?:true|false)'_
+>    - case specifies whether the argument is 'upper', 'lower' or 'proper' case. RegExp: _'case=(?:"upper"|"lower"|"proper")'_
 >    - Example without argument:
 >     ```sh
 >     say $(date +'%r')
