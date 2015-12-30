@@ -22,7 +22,9 @@ module.exports = function (grunt) {
           'client/assets/styles/landing/landing.styles.css': 'client/assets/styles/landing/landing.styles.scss',
           'client/assets/styles/rating/rating.styles.css': 'client/assets/styles/rating/rating.styles.scss',
           'client/assets/styles/nav/navbar.styles.css': 'client/assets/styles/nav/navbar.styles.scss',
-          'client/assets/styles/color-palette.css': 'client/assets/styles/color-palette.scss'
+          'client/assets/styles/color-palette.css': 'client/assets/styles/color-palette.scss',
+          'client/assets/styles/effects-mixins.css': 'client/assets/styles/effects-mixins.scss'
+
         }
       }
     },
