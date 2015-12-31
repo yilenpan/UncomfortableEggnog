@@ -1,6 +1,22 @@
-@import '../color-palette';
-@import '../effects-mixins';
+@import 'color-palette';
+@import 'effects-mixins';
 
+
+/*Bootstrap Overrides*/
+/*.btn-primary, .btn-primary:focus {
+  @include fade-transition();
+  background-color: #264348;
+  border-color: $primary-font-color;
+}
+
+.btn-primary:hover {
+  @include fade-transition();
+  background-color: $primary-font-color;
+  color: black;
+}*/
+
+
+/*Main Container*/
 body {
   background-color: $primary-background-color;
 }
@@ -9,6 +25,16 @@ body {
   min-height: calc(100vh - 35px);
 }
 
+
+
+
+
+
+
+
+
+
+/*Footer*/
 #footer {
   /*position: absolute;*/
   /*bottom: 5px;*/

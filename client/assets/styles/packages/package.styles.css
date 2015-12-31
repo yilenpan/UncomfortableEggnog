@@ -1,3 +1,4 @@
+/*$star-color: #ff0080;*/
 /*packages*/
 /*$background: red;*/
 .logo {
@@ -11,13 +12,6 @@
 
 .col-xs-4 {
   padding: 0 5px; }
-
-.package-container {
-  background-color: #424242;
-  border: 1px solid #ECF0F1; }
-
-.package-container-title {
-  color: white; }
 
 .packageDetails {
   border: 1px solid #2e2e2e;

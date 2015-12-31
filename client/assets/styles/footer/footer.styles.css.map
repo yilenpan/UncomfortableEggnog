@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AASA,YAAY;AAEZ,qBAAqB;ACTrB,OAAQ;EACN,UAAU,EAAE,IAAI;EAChB,WAAI;IACF,UAAU,EAAE,MAAM;IAClB,gBAAgB,EDCK,OAAO;ICA5B,OAAO,EAAE,GAAG;IACZ,MAAM,EAAE,eAAmC;IAEzC,yCAAkB;MAChB,KAAK,EDRU,OAAO;ICUxB,mBAAQ;MACN,KAAK,EDdA,GAAG;MCeR,eAAe,EAAE,IAAI",
-"sources": ["../color-palette.scss","footer.styles.scss"],
-"names": [],
-"file": "footer.styles.css"
-}
