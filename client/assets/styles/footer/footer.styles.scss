@@ -1,6 +1,10 @@
 @import '../color-palette';
 @import '../effects-mixins';
 
+body {
+  background-color: $primary-background-color;
+}
+
 #footer {
   /*position: absolute;*/
   /*bottom: 5px;*/

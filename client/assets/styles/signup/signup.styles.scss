@@ -1,0 +1,45 @@
+@import '../color-palette';
+@import '../effects-mixins';
+
+body {
+  height: 100%;
+}
+
+legend {
+  font-size: 35px;
+  color: $primary-font-color;
+}
+
+.form-container {
+  position: relative;
+  /*left: 50%;*/
+  /*top: 50%;*/
+  padding: 0 20px 20px 20px;
+  transform: translateX(20%);
+  margin: 15px;
+  background-color: $secondary-background-color;
+    width: 70%;
+  .form-signup {
+    /*position: absolute;*/
+    /*left: 20%;*/
+    /*top: 20%;*/
+    /*transform: translate(-20%, -20%);*/
+    /*width: 70%;*/
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+  }
+
+}
+
+fieldset {
+  margin: 0;
+  width: 100%;
+
+}
+
+/*.error-display-container*/
+.ng-show-add {
+  /*@include fade-transition();*/
+  @extend .fadeIn;
+}
