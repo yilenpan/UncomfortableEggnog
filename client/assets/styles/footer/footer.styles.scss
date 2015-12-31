@@ -1,21 +1,34 @@
 @import '../color-palette';
+@import '../effects-mixins';
 
 #footer {
+  /*position: absolute;*/
+  /*bottom: 5px;*/
   margin-top: 10px;
-  div {
+  @include buttonReset();
+
+  button {
+    /*line-height: 30px;*/
+    padding: 20px;
     text-align: center;
     background-color: $third-background-color;
-    padding: 3px;
+    /*padding: 3px;*/
     border: 2px solid $primary-background-color;
-    a {
+    @include fade-transition();
+/*    a {
       &:link, &:visited {
         color: $secondary-font-color;
-      }
-      &:hover {
-        color: $star-color;
-        text-decoration: none;
-      }
+      }*/
+    color: $secondary-font-color;
+    &:hover {
+      color: $primary-font-color;
+      text-decoration: none;
+    }
+    &:hover {
+      box-shadow: inset 0 0 0 2px $primary-font-color;
     }
   }
 }
+
+
 
