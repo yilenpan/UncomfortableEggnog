@@ -18,19 +18,27 @@ var menu = null;
 
 
 app.on('ready', function () {
-  mainWindow = new BrowserWindow({
-    minWidth: 800,
-    minHeight: 600,
-    maxWidth: 800,
-    maxHeight: 600
-  });
+  if (process.env.NODE_ENV === 'DEV') {
+    mainWindow = new BrowserWindow({
+      width: 800,
+      height: 600
+    });
+    mainWindow.webContents.openDevTools();
+  } else {
+    mainWindow = new BrowserWindow({
+      minWidth: 800,
+      minHeight: 600,
+      maxWidth: 800,
+      maxHeight: 600
+    });
+  }
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
 
   // Open the DevTools when in dev mode
-  if (process.env.NODE_ENV === 'DEV') {
-    mainWindow.webContents.openDevTools();
-  }
+  // if (process.env.NODE_ENV === 'DEV') {
+  //   mainWindow.webContents.openDevTools();
+  // }
 
   //start listening when the app starts
   mainWindow.webContents.on('dom-ready', function () {

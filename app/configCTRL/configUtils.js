@@ -3,10 +3,14 @@ var utils = require('../utils/utils');
 var _ = require('underscore');
 var path = require('path');
 var rootPath = localStorage.getItem('appPath');
-var configPath = rootPath + '/app/configCTRL/config.json';
+if (process.env.NODE_ENV === 'DEV') {
+  var configPath = rootPath + '/app/configCTRL/config-dev.json';
+} else {
+  var configPath = rootPath + '/app/configCTRL/config.json';
+}
 
 var getConfig = function (cb) {
-  console.log('configPath, ', configPath);
+  // console.log('configPath, ', configPath);
   fs.readFile(configPath, 'utf8', function (err, data) {
     if (err) {
       cb(err);
@@ -41,8 +45,13 @@ var writeConfig = function (config, cb) {
   });
 };
 
+var writeConfigSync = function (config) {
+  fs.writeFileSync(configPath, JSON.stringify(config), 'utf8');
+};
+
 module.exports = {
   getConfig: getConfig,
   writeConfig: writeConfig,
-  saveConfig: saveConfig
+  saveConfig: saveConfig,
+  writeConfigSync: writeConfigSync
 };

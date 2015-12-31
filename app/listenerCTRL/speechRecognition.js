@@ -29,9 +29,14 @@ ipcRenderer.on('listening', function (event) {
       console.log(err);
     }
     var config = JSON.parse(data);
-    commandsUtil.loadPackage(JSON.parse(data), function (err, data) {
-      configUtils.saveConfig(config);
+    if (config.commandsPath === '') {
+      config.commandsPath = localStorage.getItem('appPath') + '/app/packages/commands.json';
+      config.phrasesPath = localStorage.getItem('appPath') + '/app/packages/phrases.json';
+    }
+    configUtils.saveConfig(config);
+    commandsUtil.loadPackage(config, function (err, data) {
       prefixRecognition.start();
+      configUtils.writeConfigSync(config);
     });
   });
 });
