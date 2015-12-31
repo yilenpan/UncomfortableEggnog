@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,yDAA0D;EACxD,KAAK,EAAE,OAAO;EACd,6DAAE;IACA,eAAe,EAAE,IAAI;;AAIzB,mDAAoD;EAClD,KAAK,EAAE,OAAO",
-"sources": ["rating.styles.scss"],
-"names": [],
-"file": "rating.styles.css"
-}
