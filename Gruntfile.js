@@ -1,15 +1,17 @@
 module.exports = function (grunt) {
 
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
+          reporter: 'nyan'
         },
         src: ['test/**/*.js']
       }
     },
+<<<<<<< HEAD
     nodemon: {
       dev: {
         script: 'server/server.js'
@@ -31,33 +33,51 @@ module.exports = function (grunt) {
       }
     },
 
+=======
+>>>>>>> 08350805f48f466c582041a5fd2ad0c4ccd29fbc
     docco: {
       debug: {
-        src: ['client/*.js', 'server/**/*.js'],
+        src: ['electron/**/*.js'],
         options: {
           output: 'docs/'
         }
       }
     },
+<<<<<<< HEAD
     watch: {
       css: {
         files: '**/*.scss',
         tasks: ['sass']
+=======
+    shell: {
+      options: {
+        stderr: false
+      },
+      build: {
+        command: 'electron-packager . Jarvis --platform=darwin --arch=x64 --version=0.35.4 --icon=./app/assets/icons/jarvis.icns --overwrite; cp ./app/assets/icons/jarvis.icns ./Jarvis-darwin-x64/Jarvis.app/Contents/Resources/atom.icns'
+      },
+      dev: {
+        command: 'NODE_ENV=DEV electron .'
+>>>>>>> 08350805f48f466c582041a5fd2ad0c4ccd29fbc
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-docco');
+<<<<<<< HEAD
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+=======
+  grunt.loadNpmTasks('grunt-shell');
+>>>>>>> 08350805f48f466c582041a5fd2ad0c4ccd29fbc
 
   grunt.registerTask('test', [
     'mochaTest'
   ]);
 
+<<<<<<< HEAD
   grunt.registerTask('run', ['sass',
     'nodemon'
   ]);
@@ -69,7 +89,19 @@ module.exports = function (grunt) {
   grunt.registerTask('deploy', [
     'test',
     'run'
+=======
+  grunt.registerTask('docs', [
+    'docco'
   ]);
+
+  grunt.registerTask('build', [
+    'shell:build'
+>>>>>>> 08350805f48f466c582041a5fd2ad0c4ccd29fbc
+  ]);
+  grunt.registerTask('dev', [
+    'shell:dev'
+  ]);
+
 
   // grunt.registerTask('default',['watch']);
 

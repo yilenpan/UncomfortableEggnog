@@ -3,4 +3,12 @@ client/assets/vendor/
 **/.DS_STORE
 server/config/authKeys.js
 .DS_Store
+<<<<<<< HEAD
 *.css.map
+=======
+electron/main/dist/bundle.js
+**/bundle.js
+electron/packages/newphrases.json
+Jarvis-darwin-x64/
+npm-debug.log
+>>>>>>> 08350805f48f466c582041a5fd2ad0c4ccd29fbc
