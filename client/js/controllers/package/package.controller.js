@@ -15,8 +15,9 @@
       get('/api/package/' + packageName)
       .then(function (data) {
         if (data === "Not Found") {
-          $state.go('main');
+          $state.go('login');
         }
+        console.log(data);
         self.info = data.package;
         if (data.user) {
           self.user = data.user;

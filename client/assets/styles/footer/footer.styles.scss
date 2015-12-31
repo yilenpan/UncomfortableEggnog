@@ -5,6 +5,10 @@ body {
   background-color: $primary-background-color;
 }
 
+.main-content {
+  min-height: calc(100vh - 35px);
+}
+
 #footer {
   /*position: absolute;*/
   /*bottom: 5px;*/
