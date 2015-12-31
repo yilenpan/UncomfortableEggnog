@@ -23,6 +23,7 @@ var newPhrases = function (rawCommands) {
 
 var initPhrases = function (commandsObj, cb) {
   read(commandsObj.phrasesPath, function (err, phrases) {
+    console.log(phrases);
     if (err) {
       commandsObj.phrases = newPhrases(commandsObj.rawCommands);
       cb(null, commandsObj);
